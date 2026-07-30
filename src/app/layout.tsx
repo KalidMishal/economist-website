@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "The Economist - World News, Politics, Economics, Business & Finance",
   description: "Clone of The Economist",
 };
+import SubscriptionBanner from "@/components/SubscriptionBanner";
 
 export default function RootLayout({
   children,
@@ -29,6 +30,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans bg-white text-[#0F0F0F]">
         {children}
+        <SubscriptionBanner />
       </body>
     </html>
   );

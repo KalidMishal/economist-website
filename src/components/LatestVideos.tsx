@@ -101,7 +101,6 @@ export default function LatestVideos() {
 
   return (
     <div className="w-full mt-2 mb-0 relative">
-      <div className="w-full h-[1px] bg-black mb-4"></div>
       <h2 className="text-[21px] font-bold font-sans text-black mb-5 flex items-center group cursor-pointer w-fit tracking-tight">
         Latest videos <span className="ml-1 text-[20px] transition-transform group-hover:translate-x-1">→</span>
       </h2>
@@ -126,7 +125,7 @@ export default function LatestVideos() {
             <div 
               key={idx} 
               className="relative flex-shrink-0 snap-start cursor-pointer group"
-              style={{ width: 'calc(23.5% - 11.25px)' }}
+              style={{ width: 'calc(19.1% - 12px)' }}
             >
               <div className="w-full relative aspect-[2/3.8] bg-[#111] overflow-hidden">
                 <img src={vid.img} alt={vid.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />

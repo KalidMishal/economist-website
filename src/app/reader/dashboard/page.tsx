@@ -31,7 +31,7 @@ export default function ReaderDashboard() {
         <button 
           onClick={() => {
             localStorage.removeItem('user');
-            router.push('/admin/login');
+            router.push('/login');
           }}
           className="text-sm font-bold text-gray-500 hover:text-black uppercase tracking-widest"
         >

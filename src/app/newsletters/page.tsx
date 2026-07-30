@@ -6,10 +6,10 @@ const newsletters = [
   {
     title: "World",
     frequency: "",
-    description: "China, Europe, Britain, Middle East, Africa, Asia, USA"
+    description: "United States, China, Europe, Britain, Middle East, Africa, Asia"
   },
   {
-    title: "Business & Economics",
+    title: "Finance & Economics",
     frequency: "",
     description: "Business, Opinions, Cost of Living, Stock Markets, Cryptocurrency, Leadership"
   },
@@ -19,14 +19,14 @@ const newsletters = [
     description: "Elections, The White House, Congress, International Relations, Human Rights, Law & Justice"
   },
   {
-    title: "Finance & Technology",
+    title: "Technology",
     frequency: "",
     description: "Artificial intelligence, Innovations, Banking, Investment"
   },
   {
     title: "Industries",
     frequency: "",
-    description: "Energy, Real Estate, Agriculture, Healthcare, Tourism & Hospitality- Culture, Sports"
+    description: "Energy, Real Estate, Agriculture, Healthcare, Entertainment, Tourism & Hospitality, Culture, Sports"
   }
 ];
 
