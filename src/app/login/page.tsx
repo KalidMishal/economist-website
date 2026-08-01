@@ -66,7 +66,7 @@ export default function LoginPage() {
         <div className="w-full max-w-[460px] flex flex-col">
           
           <div className="flex justify-center mb-8">
-            <img src="/Logo Newyork Capital.svg" alt="Website Logo" className="h-[140px] w-auto object-contain" />
+            <img src="/Logo 2 Newyork capital.svg" alt="Website Logo" className="h-[115px] w-auto object-contain" />
           </div>
           
           <h1 className="text-[28px] font-serif font-bold text-[#0f0f0f] mb-1 text-center">Log into your account</h1>
