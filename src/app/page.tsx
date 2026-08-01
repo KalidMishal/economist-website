@@ -294,7 +294,7 @@ export default function Home() {
 
             {/* ADVERTISEMENT 1 */}
             <div className="w-[110%] h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mb-6 ml-[-2%] pr-5">
-              <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
+              <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT (336 x 770)</span>
             </div>
 
             {/* TOP HIGHLIGHTS */}
@@ -354,7 +354,7 @@ export default function Home() {
             {/* Vertical Advertisement Text */}
             <div className="absolute left-2 top-0 bottom-0 flex items-center justify-center w-[20px]">
               <span className="text-[10px] text-[#767676] font-medium tracking-widest -rotate-90 whitespace-nowrap">
-                ADVERTISEMENT
+                ADVERTISEMENT (970 x 400)
               </span>
             </div>
           </div>
@@ -543,7 +543,7 @@ export default function Home() {
             {/* Advertisement Banner */}
             <div className="w-full aspect-[1.15] bg-[#f9f9f9] border border-[#e6e6e6] flex flex-col items-center justify-center relative">
               <span className="text-[10px] text-[#767676] font-medium tracking-widest absolute top-2 text-center w-full">
-                ADVERTISEMENT
+                ADVERTISEMENT (300 x 260)
               </span>
             </div>
           </div>
@@ -774,7 +774,7 @@ export default function Home() {
           {/* Right Column (25%) Advertisement */}
           <div className="hidden lg:flex w-full lg:w-[28%] flex-col pt-0 pl-8 border-l border-[#e6e6e6]">
             <div className="w-full h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mt-2">
-              <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
+              <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT (336 x 770)</span>
             </div>
           </div>
           
@@ -980,7 +980,7 @@ export default function Home() {
             {/* Right Column (25%) Advertisement */}
             <div className="hidden lg:flex w-full lg:w-[25%] flex-col pt-0 pl-8 pb-8">
               <div className="w-full bg-[#f9f9f9] border border-[#e6e6e6] h-full flex items-start justify-center pt-4">
-                <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
+                <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT (300 x 600)</span>
               </div>
             </div>
 
@@ -990,7 +990,7 @@ export default function Home() {
         <div className="w-full max-w-[1600px] mx-auto mb-16 mt-24 flex justify-center px-4 xl:px-0">
           <div className="w-full max-w-[1150px] bg-[#f9f9f9] border border-[#e6e6e6] h-[380px] flex items-center relative">
             <div className="absolute -left-[30px] w-[100px] text-center -rotate-90">
-              <span className="text-[10px] text-[#767676] font-medium tracking-widest">ADVERTISEMENT</span>
+              <span className="text-[10px] text-[#767676] font-medium tracking-widest">ADVERTISEMENT (1150 x 380)</span>
             </div>
           </div>
         </div>
