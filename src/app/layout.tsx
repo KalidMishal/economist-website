@@ -36,7 +36,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#0F0F0F]">
+      <body className="min-h-full flex flex-col font-sans bg-white text-[#0F0F0F] overflow-x-hidden w-full max-w-[100vw]">
         {children}
         <SubscriptionBanner />
       </body>

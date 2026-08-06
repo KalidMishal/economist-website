@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ArticleToolbar from "@/components/ArticleToolbar";
+import ShareDropdown from "@/components/ShareDropdown";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -130,6 +132,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <main className="w-full flex-grow pt-8 pb-16">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
           
+          {/* Toolbar */}
+          <ArticleToolbar article={{ ...article, slug }} />
+
           {/* Article Layout Container */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 w-full">
             
@@ -169,7 +174,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </h2>
                 
                 {/* Author Block */}
-                <div className="flex items-center gap-3 mb-6 border-b border-gray-200 pb-6">
+                <div className="flex items-center gap-3 mb-6 border-y border-[#e6e6e6] py-6">
                   <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author" className="w-10 h-10 rounded-full object-cover" />
                   <div className="flex flex-col">
                     <div className="flex items-center gap-1.5">
@@ -277,14 +282,16 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           {/* Share Button Section */}
           <div className="w-full lg:w-[75%] mt-6 border-t border-gray-300 pt-8 mb-4">
             <div className="flex">
-              <button className="flex items-center gap-3 border border-gray-300 rounded-full px-8 py-3 hover:bg-gray-50 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                  <polyline points="16 6 12 2 8 6"></polyline>
-                  <line x1="12" y1="2" x2="12" y2="15"></line>
-                </svg>
-                <span className="text-[16px] font-bold">Share</span>
-              </button>
+              <ShareDropdown title={article?.title}>
+                <button className="flex items-center gap-3 border border-gray-300 rounded-full px-8 py-3 hover:bg-gray-50 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                    <polyline points="16 6 12 2 8 6"></polyline>
+                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                  </svg>
+                  <span className="text-[16px] font-bold">Share</span>
+                </button>
+              </ShareDropdown>
             </div>
           </div>
 

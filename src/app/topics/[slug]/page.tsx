@@ -238,7 +238,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
       <Header />
 
       <main className="w-full">
-        <div className="max-w-[1380px] mx-auto px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           
           {/* Topic Header */}
           <div className="mt-8 mb-4">

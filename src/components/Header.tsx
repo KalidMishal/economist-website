@@ -1,8 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import ReaderProfileSettingsModal from './ReaderProfileSettingsModal';
 
 const sections = [
   { label: "United States", href: "/topics/united-states" },
@@ -32,6 +33,46 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  
+  const [user, setUser] = useState<{name: string, email: string, role: string} | null>(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [profileData, setProfileData] = useState({ fullName: '', photo: '' });
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser);
+        setUser(parsed);
+        const storedProfile = localStorage.getItem(`userProfile_${parsed.email}`) || localStorage.getItem('userProfile');
+        if (storedProfile) {
+          setProfileData(JSON.parse(storedProfile));
+        } else {
+          setProfileData({
+            fullName: parsed.name || 'Mishal Zuhrie',
+            photo: 'https://randomuser.me/api/portraits/men/32.jpg'
+          });
+        }
+      } catch(e) {}
+    }
+  }, []);
+
+  const handleSignOut = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,6 +99,7 @@ export default function Header() {
   }, [isOpen]);
 
   return (
+    <>
     <header className="w-full bg-white font-sans text-black relative z-[100] mb-[55px]">
       {/* Advertisement removed as per user request */}
       
@@ -66,14 +108,14 @@ export default function Header() {
 
       {/* Main Header Row */}
       <div className={`w-full bg-white z-[110] transition-all duration-200 ${(isScrolled || isOpen) ? 'fixed top-0 left-0 border-b border-gray-300 shadow-sm' : 'relative'} ${isScrolled ? 'animate-slide-down' : ''}`}>
-        <div className={`max-w-[1600px] mx-auto flex items-center justify-between ${(isScrolled && !isOpen) ? 'h-[65px]' : 'h-[80px]'} px-4 xl:px-0 transition-all duration-200`}>
+        <div className={`max-w-[1600px] mx-auto flex items-center justify-between ${(isScrolled && !isOpen) ? 'h-[65px]' : 'h-[80px]'} w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] transition-all duration-200`}>
           
           {/* Left Logo */}
-          <Link href="/" onClick={() => setIsOpen(false)} className={`flex-shrink-0 h-full flex ${(!isScrolled && pathname !== '/subscribe') ? 'items-start' : 'items-center'}`}>
+          <Link href="/" onClick={() => setIsOpen(false)} className={`flex-shrink-0 h-full flex ${(!(isScrolled || isOpen) && pathname !== '/subscribe') ? 'items-start' : 'items-center'}`}>
             <img 
-              src={isScrolled && pathname !== '/subscribe' ? "/Logo 2 Newyork capital.svg" : "/Logo Newyork Capital.svg"} 
+              src={(isScrolled || isOpen) && pathname !== '/subscribe' ? "/Logo 2 Newyork capital.svg" : "/Logo Newyork Capital.svg"} 
               alt="Newyork Capital" 
-              className={`${isScrolled && pathname !== '/subscribe' ? 'h-[25px]' : 'h-[165px]'} w-auto object-contain`} 
+              className={`${(isScrolled || isOpen) && pathname !== '/subscribe' ? 'h-[25px]' : 'h-[60px] lg:h-[105px] xl:h-[135px] 2xl:h-[165px]'} w-auto object-contain`} 
             />
           </Link>
 
@@ -93,9 +135,61 @@ export default function Header() {
 
             <div className="w-[1px] h-[16px] bg-[#ccc] hidden lg:block"></div>
 
-            <Link href="/login" className="hover:text-[#E3120B] transition-colors hidden lg:block">
-              Log in
-            </Link>
+            {user ? (
+              <div className="relative hidden lg:block" ref={dropdownRef}>
+                <button 
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 focus:outline-none relative"
+                >
+                  <img src={profileData.photo} alt="Profile" className="w-full h-full object-cover" />
+                </button>
+                <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full z-10 pointer-events-none"></div>
+                
+                {isProfileOpen && (
+                  <div className="absolute right-0 top-[120%] w-64 bg-white border border-gray-200 shadow-xl py-2 z-[200]">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-bold text-gray-900 leading-none mb-1">{profileData.fullName}</p>
+                      <p className="text-xs text-gray-500 truncate">{user.email || 'mishalzuh@gmail.com'}</p>
+                    </div>
+                    <div className="py-1 border-b border-gray-100">
+                      {user.role === 'writer' ? (
+                        <>
+                          <Link href="/writer/dashboard" onClick={() => setIsProfileOpen(false)} className="w-full text-left px-4 py-2.5 text-[13px] text-[#00508f] font-medium hover:bg-gray-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                            Author Workspace
+                          </Link>
+                          <button onClick={() => { setIsProfileOpen(false); setIsSettingsModalOpen(true); }} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Profile Settings
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link href="/reader/dashboard" onClick={() => setIsProfileOpen(false)} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            Readers Dashboard
+                          </Link>
+                          <button onClick={() => { setIsProfileOpen(false); setIsSettingsModalOpen(true); }} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Profile Settings
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    <div className="py-1">
+                      <button onClick={handleSignOut} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link href="/login" className="hover:text-[#E3120B] transition-colors hidden lg:block">
+                Log in
+              </Link>
+            )}
 
             <div className="w-[1px] h-[16px] bg-[#ccc] hidden lg:block"></div>
 
@@ -134,11 +228,11 @@ export default function Header() {
       {/* Sub Nav (hidden when open or on newsletters/subscribe page) */}
       {!isOpen && pathname !== '/newsletters' && pathname !== '/subscribe' && (
         <div className="w-full border-t border-black border-b border-[#e6e6e6]">
-          <div className="max-w-[1600px] mx-auto px-4 xl:px-0 py-2.5">
-            <ul className="flex items-center justify-between md:pl-[170px] lg:pl-[210px] xl:pl-[230px] w-full flex-wrap gap-y-[10px] gap-x-2">
+          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] py-2.5">
+            <ul className="flex items-center justify-between md:pl-[170px] lg:pl-[170px] xl:pl-[210px] 2xl:pl-[250px] w-full flex-wrap gap-y-[10px] gap-x-2">
               {sections.map((section, idx) => (
                 <li key={idx} className="shrink-0">
-                  <Link href={section.href} className="text-[15px] lg:text-[15.5px] font-extrabold text-[#333] hover:text-[#00508f] hover:underline decoration-1 underline-offset-4 transition-colors whitespace-nowrap">
+                  <Link href={section.href} className="text-[13px] lg:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#333] hover:text-[#00508f] hover:underline decoration-1 underline-offset-4 transition-colors whitespace-nowrap">
                     {section.label}
                   </Link>
                 </li>
@@ -150,8 +244,8 @@ export default function Header() {
 
       {/* Mega Menu Dropdown */}
       {isOpen && (
-        <div className="fixed top-[80px] left-0 w-full overflow-y-auto bg-white z-[105] shadow-lg border-t border-[#e6e6e6] pt-[120px] pb-12 max-h-[calc(100vh-80px)]">
-          <div className="max-w-[1600px] mx-auto px-4 xl:px-0">
+        <div className="fixed top-[80px] left-0 w-full overflow-y-auto bg-white z-[105] shadow-lg border-t border-[#e6e6e6] pt-[90px] lg:pt-8 pb-12 max-h-[calc(100vh-80px)]">
+          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-12">
               
               {/* Col 1: World */}
@@ -238,6 +332,22 @@ export default function Header() {
         </div>
       )}
     </header>
+
+      {/* Mobile Menu Backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Profile Settings Modal */}
+      <ReaderProfileSettingsModal 
+        isOpen={isSettingsModalOpen} 
+        onClose={() => setIsSettingsModalOpen(false)} 
+        onProfileUpdate={(newProfile) => setProfileData(newProfile)}
+      />
+    </>
   );
 }
 

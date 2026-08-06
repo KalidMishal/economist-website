@@ -26,7 +26,7 @@ export default function RegisterPage() {
         
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 flex items-center mb-10">
-          <img src="/Logo 2 Newyork capital.svg" alt="Newyork Capital" className="h-[115px] w-auto object-contain" />
+          <img src="/Logo 2 Newyork capital.svg" alt="Newyork Capital" className="h-[25px] w-auto object-contain" />
         </Link>
 
         <div className="w-full flex flex-col">

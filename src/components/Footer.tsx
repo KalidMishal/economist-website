@@ -31,8 +31,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#1c1c1c] text-white pt-10 pb-8 px-4 xl:px-0">
-      <div className="max-w-[1380px] mx-auto w-full">
+    <footer className="bg-[#1c1c1c] w-full text-white pt-10 pb-8">
+      <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
         
         {/* Top Row: Social + App */}
         <div className="flex flex-col md:flex-row items-center gap-5 mb-8">

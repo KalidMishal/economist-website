@@ -49,7 +49,7 @@ export default function SubscriptionBanner() {
       onClick={toggleBanner}
       className={`fixed bottom-0 left-0 w-full bg-[#1c1f51] text-white z-[100] cursor-pointer transition-all duration-300 ease-in-out border-t-2 border-[#1c1f51] ${isExpanded ? 'h-[110px]' : 'h-[50px]'}`}
     >
-      <div className="max-w-[1380px] mx-auto h-full px-4 xl:px-0 flex items-center justify-between relative">
+      <div className="max-w-[1600px] mx-auto h-full w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] flex items-center justify-between relative">
         
         {isExpanded ? (
           <div className="flex w-full items-center justify-between">

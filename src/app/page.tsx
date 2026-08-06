@@ -10,10 +10,10 @@ export default function Home() {
       <main className="w-full flex-grow">
         
         {/* Top Hero Section */}
-        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           
           {/* Left + Center Wrapper */}
-          <div className="w-full lg:w-[75%] flex flex-col pr-5">
+          <div className="w-full lg:w-[70%] flex flex-col pr-5">
             
             {/* Top Row: Original Left and Center */}
             <div className="flex flex-col lg:flex-row mb-6">
@@ -21,7 +21,7 @@ export default function Home() {
               <div className="w-full lg:w-[48%] flex flex-col items-start text-left pt-2 pr-4">
                 <span className="text-[#E3120B] text-[13px] xl:text-[14px] font-bold uppercase tracking-widest mb-3">Law &amp; Justice</span>
                 <Link href="/article/donald-trump-doj">
-                  <h2 className="text-[38px] lg:text-[44px] xl:text-[54px] font-serif font-bold text-[#0f0f0f] mb-4 leading-[1.1] tracking-tight cursor-pointer hover:text-[#003a6a] hover:underline hover:decoration-1 hover:underline-offset-[3px] hover:decoration-[#003a6a] transition-all">
+                  <h2 className="text-[38px] lg:text-[38px] xl:text-[45px] 2xl:text-[54px] font-serif font-bold text-[#0f0f0f] mb-4 leading-[1.1] tracking-tight cursor-pointer hover:text-[#003a6a] hover:underline hover:decoration-1 hover:underline-offset-[3px] hover:decoration-[#003a6a] transition-all">
                     Donald Trump’s<br />gutting of the<br />Department of Justice
                   </h2>
                 </Link>
@@ -113,7 +113,7 @@ export default function Home() {
                <Link href="/article/more-news" className="group flex flex-col items-center w-full">
                  <img src="/imgi_13_20260718_BLP502-1-1024x576.jpg" className="w-full h-auto object-cover mb-5" alt="Man sitting on couch" />
                  
-                 <h3 className="text-[20px] md:text-[24px] lg:text-[27px] font-serif text-[#0f0f0f] mb-3 leading-tight tracking-tight text-center w-full whitespace-nowrap group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
+                 <h3 className="text-[20px] md:text-[24px] lg:text-[20px] 2xl:text-[27px] font-serif text-[#0f0f0f] mb-3 leading-tight tracking-tight text-center w-full group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
                    10 Ways Small Businesses Can Use AI To Grow—And Even Hire More Workers
                  </h3>
                </Link>
@@ -144,33 +144,33 @@ export default function Home() {
               <div className="w-full md:w-[47%] flex flex-col md:pl-6">
                 
                 {/* China AI Romances */}
-                <Link href="/article/china-ai" className="group flex flex-row items-start justify-between border-b border-[#e6e6e6] pb-4 mb-4 cursor-pointer">
+                <Link href="/article/china-ai" className="group flex flex-row items-start justify-between border-b border-[#e6e6e6] pb-4 mb-4 lg:pb-2 lg:mb-3 2xl:pb-4 2xl:mb-4 cursor-pointer">
                   <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
                     <span className="text-[#E3120B] text-[13px] font-bold uppercase tracking-wider mb-2">China</span>
-                    <h4 className="text-[23px] xl:text-[25px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
-                      <span className="whitespace-nowrap">China wants to end AI</span><br />romances
+                    <h4 className="text-[19px] 2xl:text-[25px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
+                      China wants to end AI romances
                     </h4>
-                    <p className="text-[16.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
-                      They are having too much impact on<br />young people's lives
+                    <p className="text-[14px] 2xl:text-[16.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
+                      They are having too much impact on young people's lives
                     </p>
                     <span className="text-[#767676] text-[12px] font-semibold mt-auto">4 min read</span>
                   </div>
-                  <img src="/imgi_573_20260718_CND001.jpg" alt="China AI romances" className="w-[195px] aspect-[1.4] object-cover flex-shrink-0" />
+                  <img src="/imgi_573_20260718_CND001.jpg" alt="China AI romances" className="w-[120px] md:w-[130px] 2xl:w-[195px] aspect-[1.4] object-cover flex-shrink-0" />
                 </Link>
 
                 {/* Panama Canal */}
                 <Link href="/article/panama-canal" className="group flex flex-row items-start justify-between cursor-pointer mt-[-5px]">
                   <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
                     <span className="text-[#E3120B] text-[13px] font-bold uppercase tracking-wider mb-2">The Americas</span>
-                    <h4 className="text-[23px] xl:text-[25px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
-                      <span className="whitespace-nowrap">The Panama Canal is</span><br /><span className="whitespace-nowrap">growing more</span><br />important
+                    <h4 className="text-[19px] 2xl:text-[25px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
+                      The Panama Canal is growing more important
                     </h4>
-                    <p className="text-[16.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
-                      And the challenges to it are getting<br />more acute
+                    <p className="text-[14px] 2xl:text-[16.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
+                      And the challenges to it are getting more acute
                     </p>
                     <span className="text-[#767676] text-[12px] font-semibold mt-auto mb-1">6 min read</span>
                   </div>
-                  <img src="/imgi_574_20260718_AMP001.jpg" alt="Panama Canal" className="w-[195px] aspect-[1.4] object-cover flex-shrink-0" />
+                  <img src="/imgi_574_20260718_AMP001.jpg" alt="Panama Canal" className="w-[120px] md:w-[130px] 2xl:w-[195px] aspect-[1.4] object-cover flex-shrink-0" />
                 </Link>
 
               </div>
@@ -187,7 +187,7 @@ export default function Home() {
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Graphic detail</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Russia is losing its grip on Crimea
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">2 min read</span>
@@ -195,13 +195,13 @@ export default function Home() {
               </div>
               
               {/* Col 2 */}
-              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l border-[#e6e6e6]">
+              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l-0 md:border-l border-[#e6e6e6]">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_576_20260718_EUD000.jpg" alt="Scandinavia Playground" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Charlemagne on Europe</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     In praise of Scandinavia's risky and dirty playgrounds
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">5 min read</span>
@@ -209,13 +209,13 @@ export default function Home() {
               </div>
 
               {/* Col 3 */}
-              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l border-[#e6e6e6]">
+              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l-0 md:border-l border-[#e6e6e6]">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_577_20260718_EUP002.jpg" alt="Carbon Pricing" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Europe</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Europe seems set to ease its carbon pricing
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">3 min read</span>
@@ -223,13 +223,13 @@ export default function Home() {
               </div>
 
               {/* Col 4 */}
-              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l border-[#e6e6e6]">
+              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l-0 md:border-l border-[#e6e6e6]">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_578_20260718_CUP506.jpg" alt="Christopher Nolan" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Culture</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Why Sir Christopher Nolan inspires such devotion&mdash;and contempt
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">4 min read</span>
@@ -239,7 +239,7 @@ export default function Home() {
           </div>
 
           {/* Right Column: Latest News & Top Highlights */}
-          <div className="hidden lg:flex w-full lg:w-[25%] flex-col pl-6 border-l border-[#e6e6e6] mt-8 lg:mt-0">
+          <div className="hidden lg:flex w-full lg:w-[30%] flex-col pl-6 border-l-0 md:border-l border-[#e6e6e6] mt-8 lg:mt-0">
             {/* LATEST NEWS */}
             <h2 className="text-[21px] font-bold font-serif text-[#0f0f0f] mb-4">Latest News</h2>
             
@@ -293,7 +293,7 @@ export default function Home() {
             </Link>
 
             {/* ADVERTISEMENT 1 */}
-            <div className="w-[110%] h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mb-6 ml-[-2%] pr-5 relative">
+            <div className="w-full lg:w-[110%] lg:h-[550px] 2xl:h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mb-6 ml-0 lg:ml-[-2%] pr-0 lg:pr-5 relative">
               <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <span className="text-[26px] text-[#767676] font-medium tracking-wider">336 x 770</span>
@@ -353,7 +353,7 @@ export default function Home() {
 
         {/* Horizontal Advertisement (Centered) */}
         <div className="w-full flex justify-center mt-10 mb-16 px-4">
-          <div className="w-full max-w-[970px] h-[400px] bg-[#f9f9f9] border border-[#e6e6e6] relative flex">
+          <div className="w-full max-w-[970px] h-[250px] bg-[#f9f9f9] border border-[#e6e6e6] relative flex">
             {/* Vertical Advertisement Text */}
             <div className="absolute left-2 top-0 bottom-0 flex items-center justify-center w-[20px]">
               <span className="text-[10px] text-[#767676] font-medium tracking-widest -rotate-90 whitespace-nowrap">
@@ -361,13 +361,13 @@ export default function Home() {
               </span>
             </div>
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-[26px] text-[#767676] font-medium tracking-wider">970 x 400</span>
+              <span className="text-[26px] text-[#767676] font-medium tracking-wider">970 x 250</span>
             </div>
           </div>
         </div>
 
         {/* Latest Videos Section (Full Width) */}
-        <div className="max-w-[1600px] mx-auto w-full px-4 xl:px-0 mb-10">
+        <div className="max-w-[1600px] mx-auto w-full w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-10">
           <LatestVideos />
         </div>
 
@@ -375,8 +375,8 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-6"></div>
 
         {/* BOTTOM SECTION (Recent Highlights etc) */}
-        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 px-4 xl:px-0">
-          <div className="w-full lg:w-[75%] flex flex-col pr-5">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+          <div className="w-full lg:w-[70%] 2xl:w-[75%] flex flex-col pr-5">
 
             {/* Fourth Row: 4 Column Grid */}
             <h2 className="text-[14px] font-extrabold font-sans text-[#E3120B] uppercase tracking-widest mb-2 mt-2">POLITICAL HIGHLIGHTS</h2>
@@ -388,7 +388,7 @@ export default function Home() {
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Graphic detail</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Russia is losing its grip on Crimea
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">2 min read</span>
@@ -396,13 +396,13 @@ export default function Home() {
               </div>
               
               {/* Col 2 */}
-              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l border-[#e6e6e6]">
+              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l-0 md:border-l border-[#e6e6e6]">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_576_20260718_EUD000.jpg" alt="Scandinavia Playground" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Charlemagne on Europe</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     In praise of Scandinavia's risky and dirty playgrounds
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">5 min read</span>
@@ -410,13 +410,13 @@ export default function Home() {
               </div>
 
               {/* Col 3 */}
-              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l border-[#e6e6e6]">
+              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l-0 md:border-l border-[#e6e6e6]">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_577_20260718_EUP002.jpg" alt="Carbon Pricing" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Europe</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Europe seems set to ease its carbon pricing
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">3 min read</span>
@@ -424,13 +424,13 @@ export default function Home() {
               </div>
 
               {/* Col 4 */}
-              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l border-[#e6e6e6]">
+              <div className="w-full md:w-[25%] md:px-4 flex flex-col border-l-0 md:border-l border-[#e6e6e6]">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_578_20260718_CUP506.jpg" alt="Christopher Nolan" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
                     <span className="text-[#E3120B] text-[13px] font-sans">Culture</span>
                   </div>
-                  <h4 className="text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
+                  <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Why Sir Christopher Nolan inspires such devotion&mdash;and contempt
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">4 min read</span>
@@ -449,7 +449,7 @@ export default function Home() {
                 <div className="w-[60%] pr-4 flex flex-col">
                   <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Europe</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
-                    Russians are growing<br className="hidden lg:block" />anxious and angry
+                    Russians are growing anxious and angry
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">5 min read</span>
                 </div>
@@ -459,11 +459,11 @@ export default function Home() {
               </Link>
               
               {/* Col 2 */}
-              <Link href="/article/fallback-article" className="w-full md:w-[50%] pl-6 flex flex-row border-l border-[#e6e6e6] group cursor-pointer">
+              <Link href="/article/fallback-article" className="w-full md:w-[50%] pl-6 flex flex-row border-l-0 md:border-l border-[#e6e6e6] group cursor-pointer">
                 <div className="w-[60%] pr-4 flex flex-col">
                   <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Briefing</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
-                    How dementia is being<br className="hidden lg:block" />defeated
+                    How dementia is being defeated
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">14 min read</span>
                 </div>
@@ -480,7 +480,7 @@ export default function Home() {
                 <div className="w-[60%] pr-4 flex flex-col">
                   <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Finance & economics</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
-                    Is The Economist always<br className="hidden lg:block" />wrong?
+                    Is The Economist always wrong?
                   </h4>
                   <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">6 min read</span>
                 </div>
@@ -490,7 +490,7 @@ export default function Home() {
               </Link>
               
               {/* Col 2 */}
-              <Link href="/article/fallback-article" className="w-full md:w-[50%] pl-6 flex flex-row border-l border-[#e6e6e6] group cursor-pointer">
+              <Link href="/article/fallback-article" className="w-full md:w-[50%] pl-6 flex flex-row border-l-0 md:border-l border-[#e6e6e6] group cursor-pointer">
                 <div className="w-[60%] pr-4 flex flex-col">
                   <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Essay</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
@@ -508,39 +508,39 @@ export default function Home() {
           </div>
           
           {/* Right Column: Stories most read & Ad */}
-          <div className="hidden lg:flex w-full lg:w-[25%] flex-col pl-4 border-l border-[#e6e6e6] mt-8 lg:mt-0">
+          <div className="hidden lg:flex w-full lg:w-[30%] 2xl:w-[25%] flex-col pl-4 border-l-0 md:border-l border-[#e6e6e6] mt-8 lg:mt-0">
             <div className="w-full flex flex-col items-start pl-10 pr-4">
-              <h3 className="text-[18px] font-bold font-sans text-black mb-6">Stories most read by subscribers</h3>
+              <h3 className="text-[18px] font-bold font-sans text-black mb-6 lg:mb-4 2xl:mb-6">Stories most read by subscribers</h3>
             
-            <ol className="flex flex-col w-full mb-10">
-              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4">
+            <ol className="flex flex-col w-full mb-10 lg:mb-5 2xl:mb-10">
+              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4 lg:pb-2 lg:mb-3 2xl:pb-4 2xl:mb-4">
                 <span className="text-[#E3120B] font-black text-[52px] leading-[0.8] w-[48px] flex-shrink-0 mt-1">1</span>
-                <Link href="/article/most-read-1" className="text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
-                  A very silly adaptation of "The<br className="hidden lg:block" />Odyssey"
+                <Link href="/article/most-read-1" className="text-[15.5px] 2xl:text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
+                  A very silly adaptation of "The Odyssey"
                 </Link>
               </li>
-              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4">
+              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4 lg:pb-2 lg:mb-3 2xl:pb-4 2xl:mb-4">
                 <span className="text-[#E3120B] font-black text-[52px] leading-[0.8] w-[48px] flex-shrink-0 mt-1">2</span>
-                <Link href="/article/most-read-2" className="text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
-                  The world's most, and least,<br className="hidden lg:block" />liveable cities in 2026
+                <Link href="/article/most-read-2" className="text-[15.5px] 2xl:text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
+                  The world's most, and least, liveable cities in 2026
                 </Link>
               </li>
-              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4">
+              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4 lg:pb-2 lg:mb-3 2xl:pb-4 2xl:mb-4">
                 <span className="text-[#E3120B] font-black text-[52px] leading-[0.8] w-[48px] flex-shrink-0 mt-1">3</span>
-                <Link href="/article/most-read-3" className="text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
-                  Donald Trump has no good<br className="hidden lg:block" />options for reopening the Strait<br className="hidden lg:block" />of Hormuz
+                <Link href="/article/most-read-3" className="text-[15.5px] 2xl:text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
+                  Donald Trump has no good options for reopening the Strait of Hormuz
                 </Link>
               </li>
-              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4">
+              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-4 lg:pb-2 lg:mb-3 2xl:pb-4 2xl:mb-4">
                 <span className="text-[#E3120B] font-black text-[52px] leading-[0.8] w-[48px] flex-shrink-0 mt-1">4</span>
-                <Link href="/article/most-read-4" className="text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
-                  Eli Lilly is reinventing the<br className="hidden lg:block" />pharma business
+                <Link href="/article/most-read-4" className="text-[15.5px] 2xl:text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
+                  Eli Lilly is reinventing the pharma business
                 </Link>
               </li>
-              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-0">
+              <li className="flex flex-row items-start border-b border-[#e6e6e6] pb-4 mb-0 lg:pb-2 lg:mb-0 2xl:pb-4 2xl:mb-0">
                 <span className="text-[#E3120B] font-black text-[52px] leading-[0.8] w-[48px] flex-shrink-0 mt-1">5</span>
-                <Link href="/article/most-read-5" className="text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
-                  Storm clouds gather over<br className="hidden lg:block" />America's financial supremacy
+                <Link href="/article/most-read-5" className="text-[15.5px] 2xl:text-[17px] font-serif font-medium text-[#3b3b3b] leading-[1.3] group-hover:text-[#003a6a] hover:underline transition-all mt-1">
+                  Storm clouds gather over America's financial supremacy
                 </Link>
               </li>
             </ol>
@@ -562,7 +562,7 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-8"></div>
         
         {/* "This week" Section */}
-        <div className="max-w-[1600px] mx-auto w-full mb-16 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <h2 className="text-[19px] font-bold font-sans text-black mb-6 tracking-tight">Trending Stories</h2>
           
           <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -642,7 +642,7 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-8"></div>
 
         {/* Section: World news & Business / Advertisement */}
-        <div className="max-w-[1600px] mx-auto w-full mb-16 px-4 xl:px-0 flex flex-col lg:flex-row gap-8">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] flex flex-col lg:flex-row gap-8">
           
           {/* Left Column (75%) */}
           <div className="w-full lg:w-[72%] flex flex-col pr-0 lg:pr-8">
@@ -781,7 +781,7 @@ export default function Home() {
           </div>
 
           {/* Right Column (25%) Advertisement */}
-          <div className="hidden lg:flex w-full lg:w-[28%] flex-col pt-0 pl-8 border-l border-[#e6e6e6]">
+          <div className="hidden lg:flex w-full lg:w-[28%] flex-col pt-0 pl-8 border-l-0 md:border-l border-[#e6e6e6]">
             <div className="w-full h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mt-2 relative">
               <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -795,7 +795,7 @@ export default function Home() {
                 {/* Full-width line below finance and economics */}
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-4 mt-12"></div>
 
-        <div className="max-w-[1600px] mx-auto w-full mb-16 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <div className="w-full flex flex-col">
 {/* Data That Tells Stories Section */}
             <div className="w-full mt-2">
@@ -808,7 +808,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
                     <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
-                    <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors whitespace-nowrap">
+                    <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Where is the home of football?
                     </h4>
                     <span className="text-[#3b3b3b] text-[12.5px] font-sans mt-auto">2 min read</span>
@@ -893,7 +893,7 @@ export default function Home() {
           </div>
         </div>
 {/* Business Weekend Section */}
-        <div className="max-w-[1600px] mx-auto w-full mt-12 mb-16 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-full mt-12 mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <div className="w-full flex flex-col lg:flex-row gap-8">
             
             {/* Main Content Column (75%) */}
@@ -929,14 +929,14 @@ export default function Home() {
                     <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
                       <span className="text-[#E3120B] text-[12.5px] font-medium mb-1">Culture</span>
                       <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
-                        Why Gen Z hikers keep<br />getting lost up<br />mountains
+                        Why Gen Z hikers keep getting lost up mountains
                       </h4>
                       <p className="text-[15.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
-                        Following social media, they set<br />off with more inspiration than<br />preparation
+                        Following social media, they set off with more inspiration than preparation
                       </p>
                       <span className="text-[#767676] text-[12px] font-semibold mt-auto">2 min read</span>
                     </div>
-                    <img src="/imgi_576_20260718_EUD000.jpg" alt="Hikers" className="w-[280px] aspect-[1.7] object-cover flex-shrink-0" />
+                    <img src="/imgi_576_20260718_EUD000.jpg" alt="Hikers" className="w-[140px] md:w-[180px] 2xl:w-[280px] aspect-[1.7] object-cover flex-shrink-0" />
                   </Link>
 
                   {/* Colson Whitehead */}
@@ -944,14 +944,14 @@ export default function Home() {
                     <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
                       <span className="text-[#E3120B] text-[12.5px] font-medium mb-1">Culture</span>
                       <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
-                        Colson Whitehead<br />concludes his three-<br />part love letter to New<br />York
+                        Colson Whitehead concludes his three-part love letter to New York
                       </h4>
                       <p className="text-[15.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
-                        And reminds readers that crime<br />fiction is the best urban genre
+                        And reminds readers that crime fiction is the best urban genre
                       </p>
                       <span className="text-[#767676] text-[12px] font-semibold mt-auto">3 min read</span>
                     </div>
-                    <img src="/imgi_460_20260718_DE_AP.jpg" alt="Colson Whitehead" className="w-[280px] aspect-[1.7] object-cover flex-shrink-0" />
+                    <img src="/imgi_460_20260718_DE_AP.jpg" alt="Colson Whitehead" className="w-[140px] md:w-[180px] 2xl:w-[280px] aspect-[1.7] object-cover flex-shrink-0" />
                   </Link>
                 </div>
               </div>
@@ -1002,7 +1002,7 @@ export default function Home() {
           </div>
         </div>
 {/* Horizontal Empty Advertisement */}
-        <div className="w-full max-w-[1600px] mx-auto mb-16 mt-24 flex justify-center px-4 xl:px-0">
+        <div className="w-full max-w-[1600px] mx-auto mb-16 mt-24 flex justify-center w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <div className="w-full max-w-[1150px] bg-[#f9f9f9] border border-[#e6e6e6] h-[380px] flex items-center relative">
             <div className="absolute -left-[30px] w-[100px] text-center -rotate-90">
               <span className="text-[10px] text-[#767676] font-medium tracking-widest">ADVERTISEMENT</span>
@@ -1015,7 +1015,7 @@ export default function Home() {
                 {/* 4 Column Business Section */}
 
         {/* "This week" Section */}
-        <div className="max-w-[1600px] mx-auto w-full mt-32 mb-16 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-full mt-32 mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <h2 className="text-[19px] font-bold font-sans text-black mb-6 tracking-tight">Justice & Human Rights</h2>
           
           <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -1091,7 +1091,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-[1600px] mx-auto w-full mb-16 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <div className="w-full flex flex-col md:flex-row gap-8">
             
             {/* Col 1 */}
@@ -1194,7 +1194,7 @@ export default function Home() {
         </div>
 
         {/* Second 4 Column Section */}
-        <div className="max-w-[1600px] mx-auto w-full mb-16 px-4 xl:px-0">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
           <div className="w-full flex flex-col md:flex-row gap-8">
             
             {/* Col 1 */}

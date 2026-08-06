@@ -83,7 +83,7 @@ export default function SearchPage() {
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      <main className="flex-1 w-full max-w-[1200px] mx-auto px-4 xl:px-0 py-8 pt-32">
+      <main className="flex-1 w-full max-w-[1200px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] py-8 pt-32">
         
         {/* Search Input Row */}
         <div className="flex flex-col md:flex-row items-center gap-6 mb-12 max-w-[1000px] mx-auto">
