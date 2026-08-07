@@ -10,7 +10,7 @@ export default function Home() {
       <main className="w-full flex-grow">
         
         {/* Top Hero Section */}
-        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           
           {/* Left + Center Wrapper */}
           <div className="w-full lg:w-[70%] flex flex-col pr-5">
@@ -52,7 +52,7 @@ export default function Home() {
               {/* Article 1 */}
               <div className="flex flex-col w-full md:w-1/4 pr-5">
                 <Link href="/article/india-gen-z">
-                  <img src="/imgi_259_20260718_ASD000.jpg" alt="Asia" className="w-full h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
+                  <img src="/imgi_259_20260718_ASD000.jpg" alt="Asia" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
                 <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Asia</span>
                 <Link href="/article/india-gen-z">
@@ -66,7 +66,7 @@ export default function Home() {
               {/* Article 2 */}
               <div className="flex flex-col w-full md:w-1/4 px-5">
                 <Link href="/article/europe-defence">
-                  <img src="/imgi_111_20260718_BRP502.jpg" alt="Business" className="w-full h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
+                  <img src="/imgi_111_20260718_BRP502.jpg" alt="Business" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
                 <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Business</span>
                 <Link href="/article/europe-defence">
@@ -80,7 +80,7 @@ export default function Home() {
               {/* Article 3 */}
               <div className="flex flex-col w-full md:w-1/4 px-5">
                 <Link href="/article/china-ai">
-                  <img src="/imgi_139_20221029_OPD002.webp" alt="Finance & economics" className="w-full h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
+                  <img src="/imgi_139_20221029_OPD002.webp" alt="Finance & economics" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
                 <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Finance &amp; economics</span>
                 <Link href="/article/china-ai">
@@ -94,7 +94,7 @@ export default function Home() {
               {/* Article 4 */}
               <div className="flex flex-col w-full md:w-1/4 pl-5">
                 <Link href="/article/cotswolds">
-                  <img src="/imgi_42_culture-desktop.webp" alt="Culture" className="w-full h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
+                  <img src="/imgi_42_culture-desktop.webp" alt="Culture" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
                 <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Culture</span>
                 <Link href="/article/cotswolds">
@@ -259,7 +259,7 @@ export default function Home() {
               <div className="flex flex-col flex-1 mt-[-2px]">
                 <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Markets</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
-                  Global stocks fall as<br />investors weigh Fed<br />rate outlook
+                  Global stocks fall as investors weigh Fed rate outlook
                 </h4>
                 <span className="text-[#767676] text-[11px] font-semibold">2 min read</span>
               </div>
@@ -270,7 +270,7 @@ export default function Home() {
               <div className="flex flex-col flex-1 mt-[-2px]">
                 <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Business</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
-                  OpenAI raises another<br />$20B in fresh funding
+                  OpenAI raises another $20B in fresh funding
                 </h4>
                 <span className="text-[#767676] text-[11px] font-semibold">3 min read</span>
               </div>
@@ -281,7 +281,7 @@ export default function Home() {
               <div className="flex flex-col flex-1 mt-[-2px]">
                 <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Business</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
-                  OpenAI raises another<br />$20B in fresh funding
+                  OpenAI raises another $20B in fresh funding
                 </h4>
                 <span className="text-[#767676] text-[11px] font-semibold">3 min read</span>
               </div>
@@ -293,7 +293,7 @@ export default function Home() {
             </Link>
 
             {/* ADVERTISEMENT 1 */}
-            <div className="w-full lg:w-[110%] lg:h-[550px] 2xl:h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mb-6 ml-0 lg:ml-[-2%] pr-0 lg:pr-5 relative">
+            <div className="w-full lg:h-[550px] 2xl:h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mb-6 relative">
               <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <span className="text-[26px] text-[#767676] font-medium tracking-wider">336 x 770</span>
@@ -353,7 +353,7 @@ export default function Home() {
 
         {/* Horizontal Advertisement (Centered) */}
         <div className="w-full flex justify-center mt-10 mb-16 px-4">
-          <div className="w-full max-w-[970px] h-[250px] bg-[#f9f9f9] border border-[#e6e6e6] relative flex">
+          <div className="w-full max-w-[1000px] h-[250px] md:h-[300px] lg:h-[350px] bg-[#f9f9f9] border border-[#e6e6e6] relative flex">
             {/* Vertical Advertisement Text */}
             <div className="absolute left-2 top-0 bottom-0 flex items-center justify-center w-[20px]">
               <span className="text-[10px] text-[#767676] font-medium tracking-widest -rotate-90 whitespace-nowrap">
@@ -361,13 +361,13 @@ export default function Home() {
               </span>
             </div>
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-[26px] text-[#767676] font-medium tracking-wider">970 x 250</span>
+              <span className="text-[26px] text-[#767676] font-medium tracking-wider">1000 x 350</span>
             </div>
           </div>
         </div>
 
         {/* Latest Videos Section (Full Width) */}
-        <div className="max-w-[1600px] mx-auto w-full w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-10">
+        <div className="max-w-[1600px] mx-auto w-full w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-10">
           <LatestVideos />
         </div>
 
@@ -375,7 +375,7 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-6"></div>
 
         {/* BOTTOM SECTION (Recent Highlights etc) */}
-        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row mt-0 mb-10 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <div className="w-full lg:w-[70%] 2xl:w-[75%] flex flex-col pr-5">
 
             {/* Fourth Row: 4 Column Grid */}
@@ -562,7 +562,7 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-8"></div>
         
         {/* "This week" Section */}
-        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <h2 className="text-[19px] font-bold font-sans text-black mb-6 tracking-tight">Trending Stories</h2>
           
           <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -642,10 +642,10 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-8"></div>
 
         {/* Section: World news & Business / Advertisement */}
-        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] flex flex-col lg:flex-row gap-8">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] flex flex-col lg:flex-row gap-8">
           
-          {/* Left Column (75%) */}
-          <div className="w-full lg:w-[72%] flex flex-col pr-0 lg:pr-8">
+          {/* Left Column (58% lg, 72% xl) */}
+          <div className="w-full lg:w-[58%] xl:w-[72%] flex flex-col pr-0 lg:pr-8">
             
             {/* World news Section */}
             <div className="w-full mb-12">
@@ -780,8 +780,8 @@ export default function Home() {
 
           </div>
 
-          {/* Right Column (25%) Advertisement */}
-          <div className="hidden lg:flex w-full lg:w-[28%] flex-col pt-0 pl-8 border-l-0 md:border-l border-[#e6e6e6]">
+          {/* Right Column (42% lg, 28% xl) Advertisement */}
+          <div className="hidden lg:flex w-full lg:w-[42%] xl:w-[28%] flex-col pt-0 pl-8 border-l-0 md:border-l border-[#e6e6e6]">
             <div className="w-full h-[770px] bg-[#f9f9f9] border border-[#e6e6e6] flex items-start justify-center pt-4 mt-2 relative">
               <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -795,7 +795,7 @@ export default function Home() {
                 {/* Full-width line below finance and economics */}
         <div className="max-w-[1600px] mx-auto w-full border-t-[2px] border-black mb-4 mt-12"></div>
 
-        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <div className="w-full flex flex-col">
 {/* Data That Tells Stories Section */}
             <div className="w-full mt-2">
@@ -893,11 +893,11 @@ export default function Home() {
           </div>
         </div>
 {/* Business Weekend Section */}
-        <div className="max-w-[1600px] mx-auto w-full mt-12 mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto w-full mt-12 mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <div className="w-full flex flex-col lg:flex-row gap-8">
             
-            {/* Main Content Column (75%) */}
-            <div className="w-full lg:w-[75%] flex flex-col">
+            {/* Main Content Column (65% lg, 75% xl) */}
+            <div className="w-full lg:w-[65%] xl:w-[75%] flex flex-col">
               <div className="w-full border-t-[2px] border-black pt-2 pb-3 mb-2">
                 <h2 className="text-[20px] font-bold font-sans text-black flex items-center hover:text-[#003a6a] hover:underline transition-colors cursor-pointer group">
                   Business Weekend
@@ -989,12 +989,12 @@ export default function Home() {
 
             </div>
 
-            {/* Right Column (25%) Advertisement */}
-            <div className="hidden lg:flex w-full lg:w-[25%] flex-col pt-0 pl-8 pb-8">
-              <div className="w-full bg-[#f9f9f9] border border-[#e6e6e6] h-full flex items-start justify-center pt-4 relative">
+            {/* Right Column (35% lg, 25% xl) Advertisement */}
+            <div className="hidden lg:flex w-full lg:w-[35%] xl:w-[25%] flex-col pt-0 pl-8 pb-8 border-l-0 md:border-l border-[#e6e6e6]">
+              <div className="w-full bg-[#f9f9f9] border border-[#e6e6e6] h-[770px] mt-2 flex items-start justify-center pt-4 relative">
                 <span className="text-[10px] text-[#767676] font-medium tracking-wider">ADVERTISEMENT</span>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <span className="text-[26px] text-[#767676] font-medium tracking-wider">300 x 600</span>
+                  <span className="text-[26px] text-[#767676] font-medium tracking-wider">336 x 770</span>
                 </div>
               </div>
             </div>
@@ -1002,8 +1002,8 @@ export default function Home() {
           </div>
         </div>
 {/* Horizontal Empty Advertisement */}
-        <div className="w-full max-w-[1600px] mx-auto mb-16 mt-24 flex justify-center w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
-          <div className="w-full max-w-[1150px] bg-[#f9f9f9] border border-[#e6e6e6] h-[380px] flex items-center relative">
+        <div className="w-full max-w-[1600px] mx-auto mb-16 mt-24 flex justify-center w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
+          <div className="w-full max-w-[1000px] bg-[#f9f9f9] border border-[#e6e6e6] h-[380px] flex items-center relative">
             <div className="absolute -left-[30px] w-[100px] text-center -rotate-90">
               <span className="text-[10px] text-[#767676] font-medium tracking-widest">ADVERTISEMENT</span>
             </div>
@@ -1015,7 +1015,7 @@ export default function Home() {
                 {/* 4 Column Business Section */}
 
         {/* "This week" Section */}
-        <div className="max-w-[1600px] mx-auto w-full mt-32 mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto w-full mt-32 mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <h2 className="text-[19px] font-bold font-sans text-black mb-6 tracking-tight">Justice & Human Rights</h2>
           
           <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -1091,7 +1091,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <div className="w-full flex flex-col md:flex-row gap-8">
             
             {/* Col 1 */}
@@ -1194,7 +1194,7 @@ export default function Home() {
         </div>
 
         {/* Second 4 Column Section */}
-        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+        <div className="max-w-[1600px] mx-auto w-full mb-16 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           <div className="w-full flex flex-col md:flex-row gap-8">
             
             {/* Col 1 */}

@@ -170,7 +170,7 @@ export default function SubscribePage() {
       <main className="w-full flex-grow">
         
         {/* HERO SECTION */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] py-16 flex flex-col lg:flex-row items-center justify-between gap-12">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] py-16 flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Left: Pricing */}
           <div className="w-full lg:w-[45%] flex flex-col">
             <h1 className="text-[38px] md:text-[46px] font-serif font-normal leading-tight mb-4 text-[#0f0f0f]">
@@ -250,7 +250,7 @@ export default function SubscribePage() {
 
         {/* INFO BAR */}
         <div className="w-full max-w-[1600px] mx-auto border-t border-b border-[#0f0f0f] py-8 mb-16 mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
             <div className="flex items-center gap-5 px-2 md:px-6 py-2">
               <div className="flex-shrink-0">
                 <img src="/imgi_3_read.svg" alt="Read" className="w-12 h-12" />
@@ -273,7 +273,7 @@ export default function SubscribePage() {
         </div>
         
         {/* GET A GLOBAL PERSPECTIVE */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-20 relative">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-20 relative">
           <h2 className="text-[44px] md:text-[50px] font-serif font-normal mb-2 text-[#0f0f0f]">Get a global perspective</h2>
           <p className="text-[16px] font-bold text-gray-700 mb-8">Stay informed on the world's most important developments with our incisive coverage</p>
           
@@ -357,7 +357,7 @@ export default function SubscribePage() {
         <div className="w-full border-t border-black max-w-[1600px] mx-auto mb-10"></div>
 
         {/* GAIN CLARITY IN A COMPLEX WORLD */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-20 relative">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-20 relative">
           <h2 className="text-[44px] md:text-[50px] font-serif font-normal mb-2 text-[#0f0f0f]">Gain clarity in a complex world</h2>
           <p className="text-[16px] font-bold text-gray-700 mb-8">Sharpen your understanding with expert insights</p>
           
@@ -419,7 +419,7 @@ export default function SubscribePage() {
         <div className="w-full border-t border-black max-w-[1600px] mx-auto mb-10 mt-16"></div>
 
         {/* WHAT'S INCLUDED */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-20">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-20">
           <h2 className="text-[44px] md:text-[50px] font-serif font-normal mb-10 text-[#0f0f0f]">What's included:</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -456,7 +456,7 @@ export default function SubscribePage() {
         </section>
 
         {/* EXPLORE OTHER SUBSCRIPTIONS */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-32 md:mb-48 border-t border-gray-300 pt-4">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-32 md:mb-48 border-t border-gray-300 pt-4">
           <h2 className="text-[44px] md:text-[50px] font-serif font-normal mb-8 text-[#0f0f0f]">Explore other subscriptions</h2>
           
           <div className="flex flex-wrap gap-3 mb-10">
@@ -553,7 +553,7 @@ export default function SubscribePage() {
         </section>
 
         {/* TRUSTED BY MILLIONS */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-32 border-t border-black pt-20 mt-24">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-32 border-t border-black pt-20 mt-24">
           <h2 className="text-[48px] md:text-[56px] font-serif font-normal mb-16 text-[#0f0f0f]">Trusted by millions of readers worldwide</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
@@ -591,7 +591,7 @@ export default function SubscribePage() {
         </section>
 
         {/* FREQUENTLY ASKED QUESTIONS */}
-        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mb-24">
+        <section className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mb-24">
           <h2 className="text-[48px] md:text-[56px] font-serif font-normal mb-16 text-[#0f0f0f]">Frequently asked questions</h2>
           
           <div className="flex flex-col">

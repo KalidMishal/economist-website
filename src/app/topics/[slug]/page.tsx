@@ -237,10 +237,10 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
     <div className="min-h-screen bg-white">
       <Header />
 
-      <main className="w-full">
-        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+      <main className="w-full flex-grow pt-10 pb-16">
+        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           
-          {/* Topic Header */}
+          {/* Header Section */}
           <div className="mt-8 mb-4">
             <h1 className="text-[42px] font-bold font-serif text-[#0f0f0f] leading-none mb-4">{title}</h1>
             {slug !== 'business' && (

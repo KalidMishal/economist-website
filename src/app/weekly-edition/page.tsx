@@ -1,4 +1,4 @@
-﻿import Header from '@/components/Header';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function WeeklyEditionPage() {
@@ -163,7 +163,7 @@ export default function WeeklyEditionPage() {
       <main className="w-full">
         {/* Hero Section */}
         <div className="w-full bg-[#f4efe6] pt-12 pb-16">
-          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] flex flex-col md:flex-row items-center justify-between">
+          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] flex flex-col md:flex-row items-center justify-between">
             {/* Left side text */}
             <div className="flex flex-col items-center justify-center text-center w-full md:w-1/2 mb-10 md:mb-0">
               <span className="text-[12px] font-bold text-[#e3120b] uppercase tracking-[0.1em] mb-4">Weekly Edition</span>
@@ -197,7 +197,7 @@ export default function WeeklyEditionPage() {
         </div>
 
         {/* Contents Header */}
-        <div className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] mt-10 mb-2">
+        <div className="w-full max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] mt-10 mb-2">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-[32px] font-bold text-[#e3120b] leading-none">Contents</h2>
             <div className="flex items-center gap-3">
@@ -220,7 +220,7 @@ export default function WeeklyEditionPage() {
         </div>
 
         {/* Sections Wrapper */}
-        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] flex flex-col gap-12 pb-24">
+        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] flex flex-col gap-12 pb-24">
           
           {/* The world this week */}
           <section id="the-world-this-week">

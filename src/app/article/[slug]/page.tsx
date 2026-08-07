@@ -130,7 +130,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <Header />
       
       <main className="w-full flex-grow pt-8 pb-16">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
           
           {/* Toolbar */}
           <ArticleToolbar article={{ ...article, slug }} />

@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 
 export default function Footer() {
   const socialIcons = [
@@ -32,7 +32,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#1c1c1c] w-full text-white pt-10 pb-8">
-      <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+      <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
         
         {/* Top Row: Social + App */}
         <div className="flex flex-col md:flex-row items-center gap-5 mb-8">
@@ -103,7 +103,7 @@ export default function Footer() {
             </a>
           </div>
           <p className="mb-1 text-gray-300 font-normal">Registered in England and Wales. No. 236383 | Registered office: The Adelphi, 1-11 John Adam Street, London, WC2N 6HT | VAT Reg No: GB 340 436 876</p>
-          <p className="text-gray-300 font-normal">Â© The Economist Newspaper Limited 2026</p>
+          <p className="text-gray-300 font-normal">© The Economist Newspaper Limited 2026</p>
         </div>
 
       </div>

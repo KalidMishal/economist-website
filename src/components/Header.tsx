@@ -108,7 +108,7 @@ export default function Header() {
 
       {/* Main Header Row */}
       <div className={`w-full bg-white z-[110] transition-all duration-200 ${(isScrolled || isOpen) ? 'fixed top-0 left-0 border-b border-gray-300 shadow-sm' : 'relative'} ${isScrolled ? 'animate-slide-down' : ''}`}>
-        <div className={`max-w-[1600px] mx-auto flex items-center justify-between ${(isScrolled && !isOpen) ? 'h-[65px]' : 'h-[80px]'} w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] transition-all duration-200`}>
+        <div className={`max-w-[1600px] mx-auto flex items-center justify-between ${(isScrolled && !isOpen) ? 'h-[65px]' : 'h-[80px]'} w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] transition-all duration-200`}>
           
           {/* Left Logo */}
           <Link href="/" onClick={() => setIsOpen(false)} className={`flex-shrink-0 h-full flex ${(!(isScrolled || isOpen) && pathname !== '/subscribe') ? 'items-start' : 'items-center'}`}>
@@ -228,7 +228,7 @@ export default function Header() {
       {/* Sub Nav (hidden when open or on newsletters/subscribe page) */}
       {!isOpen && pathname !== '/newsletters' && pathname !== '/subscribe' && (
         <div className="w-full border-t border-black border-b border-[#e6e6e6]">
-          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%] py-2.5">
+          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] py-2.5">
             <ul className="flex items-center justify-between md:pl-[170px] lg:pl-[170px] xl:pl-[210px] 2xl:pl-[250px] w-full flex-wrap gap-y-[10px] gap-x-2">
               {sections.map((section, idx) => (
                 <li key={idx} className="shrink-0">
@@ -245,7 +245,7 @@ export default function Header() {
       {/* Mega Menu Dropdown */}
       {isOpen && (
         <div className="fixed top-[80px] left-0 w-full overflow-y-auto bg-white z-[105] shadow-lg border-t border-[#e6e6e6] pt-[90px] lg:pt-8 pb-12 max-h-[calc(100vh-80px)]">
-          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[85%] xl:w-[85%] 2xl:w-[85%]">
+          <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-12">
               
               {/* Col 1: World */}
