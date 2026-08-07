@@ -28,18 +28,20 @@ export default function Home() {
                 <p className="text-[17px] xl:text-[19px] font-serif text-[#3b3b3b] mb-4 leading-snug pr-4">
                   What the degraded institution means<br />for America—and the risks it poses to<br />the rule of law.
                 </p>
-                <span className="text-[#767676] text-[13px] xl:text-[14px] mb-8 font-semibold">5 min read<span className="text-gray-300 font-normal mx-3">|</span>By John Cassidy</span>
+                <span className="text-[#767676] text-[13px] xl:text-[14px] font-semibold">5 min read<span className="text-gray-300 font-normal mx-3">|</span>By John Cassidy</span>
               </div>
 
               {/* Center Column */}
-              <div className="w-full lg:w-[52%] px-3">
-                <Link href="/article/donald-trump-doj">
-                  <img 
-                    src="/imgi_581_20260718_LDD002_FH.jpg" 
-                    alt="Department of Justice Cover" 
-                    className="w-full aspect-[1.45] object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                  />
-                </Link>
+              <div className="w-full lg:w-[52%] px-3 flex flex-col">
+                <div className="relative w-full h-full">
+                  <Link href="/article/donald-trump-doj" className="w-full h-full block aspect-[1.45] lg:aspect-auto lg:absolute lg:inset-0">
+                    <img 
+                      src="/imgi_581_20260718_LDD002_FH.jpg" 
+                      alt="Department of Justice Cover" 
+                      className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                    />
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -241,7 +243,7 @@ export default function Home() {
           {/* Right Column: Latest News & Top Highlights */}
           <div className="hidden lg:flex w-full lg:w-[30%] flex-col pl-6 border-l-0 md:border-l border-[#e6e6e6] mt-8 lg:mt-0">
             {/* LATEST NEWS */}
-            <h2 className="text-[21px] font-bold font-serif text-[#0f0f0f] mb-4">Latest News</h2>
+            <h2 className="text-[21px] font-bold font-serif text-[#0f0f0f] mb-4 -mt-1.5">Latest News</h2>
             
             <Link href="/article/latest-news-1" className="group flex flex-col mb-6 border-b border-[#e6e6e6] pb-6">
               <img src="/imgi_243_20260718_IRD000.jpg" alt="Latest News 1" className="w-full aspect-[1.7] object-cover mb-3" />
@@ -325,7 +327,7 @@ export default function Home() {
               <img src="/imgi_37_geopolitics-desktop.webp" alt="AI trap" className="w-[110px] aspect-[1.4] object-cover flex-shrink-0" />
             </Link>
 
-            <Link href="/article/chaguan-china" className="group flex flex-row items-center gap-4 mb-5 border-b border-[#e6e6e6] pb-5">
+            <Link href="/article/chaguan-china" className="group flex flex-row items-center gap-4">
               <div className="flex flex-col flex-1">
                 <span className="text-[#E3120B] text-[12.5px] font-bold mb-1">Chaguan on China</span>
                 <h4 className="text-[20px] font-serif font-medium text-[#0f0f0f] leading-tight group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all mb-2">
@@ -334,17 +336,6 @@ export default function Home() {
                 <span className="text-[#767676] text-[11px] font-semibold">5 min read</span>
               </div>
               <img src="/imgi_159_20260718_CNP504.jpg" alt="China assets" className="w-[110px] aspect-[1.4] object-cover flex-shrink-0" />
-            </Link>
-
-            <Link href="/article/ashoka-india" className="group flex flex-row items-center gap-4 mb-8">
-              <div className="flex flex-col flex-1">
-                <span className="text-[#E3120B] text-[12.5px] font-bold mb-1">Ashoka on India</span>
-                <h4 className="text-[20px] font-serif font-medium text-[#0f0f0f] leading-tight group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all mb-2">
-                  An incomplete list of falling objects in India
-                </h4>
-                <span className="text-[#767676] text-[11px] font-semibold">4 min read</span>
-              </div>
-              <img src="/imgi_259_20260718_ASD000.jpg" alt="India objects" className="w-[110px] aspect-[1.4] object-cover flex-shrink-0" />
             </Link>
 
           </div>
@@ -931,9 +922,6 @@ export default function Home() {
                       <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
                         Why Gen Z hikers keep getting lost up mountains
                       </h4>
-                      <p className="text-[15.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
-                        Following social media, they set off with more inspiration than preparation
-                      </p>
                       <span className="text-[#767676] text-[12px] font-semibold mt-auto">2 min read</span>
                     </div>
                     <img src="/imgi_576_20260718_EUD000.jpg" alt="Hikers" className="w-[140px] md:w-[180px] 2xl:w-[280px] aspect-[1.7] object-cover flex-shrink-0" />
@@ -946,9 +934,7 @@ export default function Home() {
                       <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
                         Colson Whitehead concludes his three-part love letter to New York
                       </h4>
-                      <p className="text-[15.5px] font-serif text-[#3b3b3b] mb-3 leading-snug">
-                        And reminds readers that crime fiction is the best urban genre
-                      </p>
+                      
                       <span className="text-[#767676] text-[12px] font-semibold mt-auto">3 min read</span>
                     </div>
                     <img src="/imgi_460_20260718_DE_AP.jpg" alt="Colson Whitehead" className="w-[140px] md:w-[180px] 2xl:w-[280px] aspect-[1.7] object-cover flex-shrink-0" />
@@ -1301,3 +1287,4 @@ export default function Home() {
     </div>
   );
 }
+
