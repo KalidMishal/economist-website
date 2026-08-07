@@ -56,7 +56,7 @@ export default function Home() {
                 <Link href="/article/india-gen-z">
                   <img src="/imgi_259_20260718_ASD000.jpg" alt="Asia" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Asia</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Asia</span>
                 <Link href="/article/india-gen-z">
                   <h4 className="text-[15px] font-bold text-[#0f0f0f] leading-tight mb-2 hover:text-[#003a6a] cursor-pointer">
                     Narendra Modi caves to India's Gen Z
@@ -70,7 +70,7 @@ export default function Home() {
                 <Link href="/article/europe-defence">
                   <img src="/imgi_111_20260718_BRP502.jpg" alt="Business" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Business</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Business</span>
                 <Link href="/article/europe-defence">
                   <h4 className="text-[15px] font-bold text-[#0f0f0f] leading-tight mb-2 hover:text-[#003a6a] cursor-pointer">
                     Investors cool on Europe's old-style defence firms
@@ -84,7 +84,7 @@ export default function Home() {
                 <Link href="/article/china-ai">
                   <img src="/imgi_139_20221029_OPD002.webp" alt="Finance & economics" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Finance &amp; economics</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Finance &amp; economics</span>
                 <Link href="/article/china-ai">
                   <h4 className="text-[15px] font-bold text-[#0f0f0f] leading-tight mb-2 hover:text-[#003a6a] cursor-pointer">
                     Can China dominate AI exports, too?
@@ -98,7 +98,7 @@ export default function Home() {
                 <Link href="/article/cotswolds">
                   <img src="/imgi_42_culture-desktop.webp" alt="Culture" className="w-full h-[110px] xl:h-[120px] 2xl:h-[140px] object-cover mb-2 cursor-pointer hover:opacity-90" />
                 </Link>
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1 uppercase tracking-wider">Culture</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Culture</span>
                 <Link href="/article/cotswolds">
                   <h4 className="text-[15px] font-bold text-[#0f0f0f] leading-tight mb-2 hover:text-[#003a6a] cursor-pointer">
                     How the Cotswolds became a popular lifestyle brand
