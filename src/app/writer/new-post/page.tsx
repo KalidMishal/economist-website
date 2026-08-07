@@ -23,6 +23,9 @@ export default function NewPost() {
   const [cardSummary, setCardSummary] = useState('');
   const [focusKeyword, setFocusKeyword] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
+  const [editedCardSummary, setEditedCardSummary] = useState(false);
+  const [editedFocusKeyword, setEditedFocusKeyword] = useState(false);
+  const [editedMetaDescription, setEditedMetaDescription] = useState(false);
 
   // Image Modal State
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -73,15 +76,13 @@ export default function NewPost() {
       setCardSummary(snippet);
       setMetaDescription(snippet);
       setFocusKeyword(generatedKeyword);
+      setEditedCardSummary(false);
+      setEditedMetaDescription(false);
+      setEditedFocusKeyword(false);
     } else {
-      if (!cardSummary && snippet) setCardSummary(snippet);
-      else if (!snippet && cardSummary) setCardSummary('');
-      
-      if (!metaDescription && snippet) setMetaDescription(snippet);
-      else if (!snippet && metaDescription) setMetaDescription('');
-      
-      if (!focusKeyword && generatedKeyword) setFocusKeyword(generatedKeyword);
-      else if (!generatedKeyword && focusKeyword) setFocusKeyword('');
+      if (!editedCardSummary) setCardSummary(snippet);
+      if (!editedMetaDescription) setMetaDescription(snippet);
+      if (!editedFocusKeyword) setFocusKeyword(generatedKeyword);
     }
   };
 
@@ -261,7 +262,9 @@ export default function NewPost() {
         });
       }
     } else {
-      setSelectedFigure(null);
+      if (!isImageModalOpen) {
+        setSelectedFigure(null);
+      }
     }
   };
 
@@ -1141,7 +1144,7 @@ export default function NewPost() {
                   <textarea 
                     rows={3} 
                     value={cardSummary}
-                    onChange={(e) => setCardSummary(e.target.value)}
+                    onChange={(e) => { setCardSummary(e.target.value); setEditedCardSummary(true); }}
                     placeholder="Concise 1-2 sentence preview details." 
                     className="w-full border border-gray-300 rounded px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#1a65d6] resize-none"
                   ></textarea>
@@ -1153,7 +1156,7 @@ export default function NewPost() {
                   <input 
                     type="text" 
                     value={focusKeyword}
-                    onChange={(e) => setFocusKeyword(e.target.value)}
+                    onChange={(e) => { setFocusKeyword(e.target.value); setEditedFocusKeyword(true); }}
                     placeholder="e.g. Vexillum Minerals" 
                     className="w-full border border-gray-300 rounded px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#1a65d6]" 
                   />
@@ -1180,7 +1183,7 @@ export default function NewPost() {
                   <textarea 
                     rows={3} 
                     value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
+                    onChange={(e) => { setMetaDescription(e.target.value); setEditedMetaDescription(true); }}
                     placeholder="Discover why... — the sentence shown under the title in Google." 
                     className="w-full border border-gray-300 rounded px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#1a65d6] resize-none"
                   ></textarea>
