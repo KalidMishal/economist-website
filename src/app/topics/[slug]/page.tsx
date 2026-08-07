@@ -268,7 +268,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                           </svg>
                         )}
-                        <span className="text-[10px] font-bold text-[#e3120b] hover:text-[#00508f] hover:underline decoration-1 underline-offset-4 tracking-[0.08em] uppercase cursor-pointer">
+                        <span className="text-[#E3120B] text-[11px] font-bold hover:text-[#00508f] hover:underline decoration-1 underline-offset-4 cursor-pointer">
                           {article.category}
                         </span>
                       </div>

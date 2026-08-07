@@ -131,7 +131,7 @@ export default function Home() {
               <div className="w-full md:w-[53%] flex flex-col pr-6 md:border-r border-[#e6e6e6] mb-8 md:mb-0">
                 <Link href="/article/andy-burnham" className="group flex flex-col cursor-pointer">
                   <img src="/imgi_572_20260718_BRD001.jpg" alt="Andy Burnham" className="w-full aspect-[2.1] object-cover mb-4" />
-                  <span className="text-[#E3120B] text-[13px] font-bold uppercase tracking-widest mb-2">Britain</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-2">Britain</span>
                   <h3 className="text-[32px] lg:text-[38px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
                     Can Andy Burnham keep his own<br />MPs under control?
                   </h3>
@@ -148,7 +148,7 @@ export default function Home() {
                 {/* China AI Romances */}
                 <Link href="/article/china-ai" className="group flex flex-row items-start justify-between border-b border-[#e6e6e6] pb-4 mb-4 lg:pb-2 lg:mb-3 2xl:pb-4 2xl:mb-4 cursor-pointer">
                   <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
-                    <span className="text-[#E3120B] text-[13px] font-bold uppercase tracking-wider mb-2">China</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-2">China</span>
                     <h4 className="text-[19px] 2xl:text-[25px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
                       China wants to end AI romances
                     </h4>
@@ -163,7 +163,7 @@ export default function Home() {
                 {/* Panama Canal */}
                 <Link href="/article/panama-canal" className="group flex flex-row items-start justify-between cursor-pointer mt-[-5px]">
                   <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
-                    <span className="text-[#E3120B] text-[13px] font-bold uppercase tracking-wider mb-2">The Americas</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-2">The Americas</span>
                     <h4 className="text-[19px] 2xl:text-[25px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all">
                       The Panama Canal is growing more important
                     </h4>
@@ -187,7 +187,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_575_20260718_WOT913.png" alt="Ukraine" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Graphic detail</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Russia is losing its grip on Crimea
@@ -201,7 +201,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_576_20260718_EUD000.jpg" alt="Scandinavia Playground" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Charlemagne on Europe</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Charlemagne on Europe</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     In praise of Scandinavia's risky and dirty playgrounds
@@ -215,7 +215,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_577_20260718_EUP002.jpg" alt="Carbon Pricing" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Europe</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Europe</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Europe seems set to ease its carbon pricing
@@ -229,7 +229,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_578_20260718_CUP506.jpg" alt="Christopher Nolan" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Culture</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Culture</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Why Sir Christopher Nolan inspires such devotion&mdash;and contempt
@@ -259,7 +259,7 @@ export default function Home() {
             <Link href="/article/latest-news-2" className="group flex flex-row items-start gap-4 mb-5 border-b border-[#e6e6e6] pb-5">
               <img src="/imgi_158_20260718_FNP503.jpg" alt="Latest News 2" className="w-[145px] aspect-[1.4] object-cover flex-shrink-0" />
               <div className="flex flex-col flex-1 mt-[-2px]">
-                <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Markets</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Markets</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
                   Global stocks fall as investors weigh Fed rate outlook
                 </h4>
@@ -270,7 +270,7 @@ export default function Home() {
             <Link href="/article/latest-news-3" className="group flex flex-row items-start gap-4 mb-5 border-b border-[#e6e6e6] pb-5">
               <img src="/imgi_16_image.webp" alt="Latest News 3" className="w-[145px] aspect-[1.4] object-cover flex-shrink-0" />
               <div className="flex flex-col flex-1 mt-[-2px]">
-                <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Business</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Business</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
                   OpenAI raises another $20B in fresh funding
                 </h4>
@@ -281,7 +281,7 @@ export default function Home() {
             <Link href="/article/latest-news-4" className="group flex flex-row items-start gap-4 mb-6">
               <img src="/imgi_16_image.webp" alt="Latest News 4" className="w-[145px] aspect-[1.4] object-cover flex-shrink-0" />
               <div className="flex flex-col flex-1 mt-[-2px]">
-                <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Business</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Business</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
                   OpenAI raises another $20B in fresh funding
                 </h4>
@@ -307,7 +307,7 @@ export default function Home() {
             
             <Link href="/article/andy-burnham" className="group flex flex-col mb-6 border-b border-[#e6e6e6] pb-6">
               <img src="/imgi_572_20260718_BRD001.jpg" alt="Andy Burnham" className="w-full aspect-[1.6] object-cover mb-3" />
-              <span className="text-[#E3120B] text-[10px] font-bold mb-1">Britain</span>
+              <span className="text-[#E3120B] text-[11px] font-bold mb-1">Britain</span>
               <h3 className="text-[22px] font-serif text-[#0f0f0f] leading-tight group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-colors mb-2">
                 Can Andy Burnham keep his own MPs under control?
               </h3>
@@ -318,7 +318,7 @@ export default function Home() {
 
             <Link href="/article/telegram-geopolitics" className="group flex flex-row items-center gap-4 mb-5 border-b border-[#e6e6e6] pb-5">
               <div className="flex flex-col flex-1">
-                <span className="text-[#E3120B] text-[12.5px] font-bold mb-1">The Telegram on geopolitics</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">The Telegram on geopolitics</span>
                 <h4 className="text-[20px] font-serif font-medium text-[#0f0f0f] leading-tight group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all mb-2">
                   When China's open-source AI is a trap
                 </h4>
@@ -329,7 +329,7 @@ export default function Home() {
 
             <Link href="/article/chaguan-china" className="group flex flex-row items-center gap-4 mt-auto">
               <div className="flex flex-col flex-1">
-                <span className="text-[#E3120B] text-[12.5px] font-bold mb-1">Chaguan on China</span>
+                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Chaguan on China</span>
                 <h4 className="text-[20px] font-serif font-medium text-[#0f0f0f] leading-tight group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all mb-2">
                   A squeezed China is trying to wring more from its state assets
                 </h4>
@@ -377,7 +377,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_575_20260718_WOT913.png" alt="Ukraine" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Graphic detail</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Russia is losing its grip on Crimea
@@ -391,7 +391,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_576_20260718_EUD000.jpg" alt="Scandinavia Playground" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Charlemagne on Europe</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Charlemagne on Europe</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     In praise of Scandinavia's risky and dirty playgrounds
@@ -405,7 +405,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_577_20260718_EUP002.jpg" alt="Carbon Pricing" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Europe</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Europe</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Europe seems set to ease its carbon pricing
@@ -419,7 +419,7 @@ export default function Home() {
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
                   <img src="/imgi_578_20260718_CUP506.jpg" alt="Christopher Nolan" className="w-full aspect-[3/2] object-cover mb-3" />
                   <div className="min-h-[40px] flex items-start">
-                    <span className="text-[#E3120B] text-[13px] font-sans">Culture</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold">Culture</span>
                   </div>
                   <h4 className="text-[16px] xl:text-[16.5px] 2xl:text-[19px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Why Sir Christopher Nolan inspires such devotion&mdash;and contempt
@@ -438,7 +438,7 @@ export default function Home() {
               {/* Col 1 */}
               <Link href="/article/fallback-article" className="w-full md:w-[50%] pr-6 flex flex-row group cursor-pointer">
                 <div className="w-[60%] pr-4 flex flex-col">
-                  <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Europe</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Europe</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Russians are growing anxious and angry
                   </h4>
@@ -452,7 +452,7 @@ export default function Home() {
               {/* Col 2 */}
               <Link href="/article/fallback-article" className="w-full md:w-[50%] pl-6 flex flex-row border-l-0 md:border-l border-[#e6e6e6] group cursor-pointer">
                 <div className="w-[60%] pr-4 flex flex-col">
-                  <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Briefing</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Briefing</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     How dementia is being defeated
                   </h4>
@@ -469,7 +469,7 @@ export default function Home() {
               {/* Col 1 */}
               <Link href="/article/fallback-article" className="w-full md:w-[50%] pr-6 flex flex-row group cursor-pointer">
                 <div className="w-[60%] pr-4 flex flex-col">
-                  <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Finance & economics</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Finance & economics</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     Is The Economist always wrong?
                   </h4>
@@ -483,7 +483,7 @@ export default function Home() {
               {/* Col 2 */}
               <Link href="/article/fallback-article" className="w-full md:w-[50%] pl-6 flex flex-row border-l-0 md:border-l border-[#e6e6e6] group cursor-pointer">
                 <div className="w-[60%] pr-4 flex flex-col">
-                  <span className="text-[#E3120B] text-[13px] font-sans mb-1 mt-[-2px]">Essay</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Essay</span>
                   <h4 className="text-[21px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all">
                     America's Wrecking-ball revolution
                   </h4>
@@ -563,7 +563,7 @@ export default function Home() {
               <div className="w-full relative aspect-[1.6] mb-4 overflow-hidden bg-[#f9f9f9]">
                 <img src="/imgi_329_20260718_WWP001.jpg" alt="Political stories" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
-              <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">The world this week</span>
+              <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">The world this week</span>
               <h3 className="text-[32px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                 This week's most important political stories
               </h3>
@@ -579,7 +579,7 @@ export default function Home() {
               {/* Right Article 1 */}
               <Link href="/article/fallback-article" className="w-full flex flex-row items-start mb-6 pb-0 group cursor-pointer">
                 <div className="w-[65%] pr-6 flex flex-col">
-                  <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">The world this week</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">The world this week</span>
                   <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                     This week's most important business stories
                   </h4>
@@ -596,7 +596,7 @@ export default function Home() {
               {/* Right Article 2 */}
               <Link href="/article/fallback-article" className="w-full flex flex-row items-start mb-6 pb-0 group cursor-pointer">
                 <div className="w-[65%] pr-6 flex flex-col">
-                  <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">Letters</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Letters</span>
                   <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                     The best of your correspondence
                   </h4>
@@ -613,7 +613,7 @@ export default function Home() {
               {/* Right Article 3 */}
               <Link href="/article/fallback-article" className="w-full flex flex-row items-start group cursor-pointer">
                 <div className="w-[65%] pr-6 flex flex-col">
-                  <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">The world this week</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">The world this week</span>
                   <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                     A lighter look at events
                   </h4>
@@ -647,7 +647,7 @@ export default function Home() {
                 {/* Item 1 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Britain</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Britain</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Violence is reshaping British political life
                     </h4>
@@ -661,7 +661,7 @@ export default function Home() {
                 {/* Item 2 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">United States</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">United States</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Cities are rethinking what happens after dark
                     </h4>
@@ -675,7 +675,7 @@ export default function Home() {
                 {/* Item 3 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] md:border-b-0 group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Asia</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Asia</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Is Aung San Suu Kyi dead?
                     </h4>
@@ -689,7 +689,7 @@ export default function Home() {
                 {/* Item 4 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Middle East & Africa</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Middle East & Africa</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       The Ebola epidemic is getting out of control
                     </h4>
@@ -713,7 +713,7 @@ export default function Home() {
                 {/* Item 1 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Business</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Business</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Demis Hassabis has a plan to harness AI safely
                     </h4>
@@ -727,7 +727,7 @@ export default function Home() {
                 {/* Item 2 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Finance & economics</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Finance & economics</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       The stubborn scarcity of female breadwinners
                     </h4>
@@ -741,7 +741,7 @@ export default function Home() {
                 {/* Item 3 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] md:border-b-0 group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Finance & economics</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Finance & economics</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Storm clouds gather over America's financial supremacy
                     </h4>
@@ -755,7 +755,7 @@ export default function Home() {
                 {/* Item 4 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Finance & economics</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Finance & economics</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Three ways the LNG market could crack before winter
                     </h4>
@@ -798,7 +798,7 @@ export default function Home() {
                 {/* Item 1 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Graphic detail</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Where is the home of football?
                     </h4>
@@ -812,7 +812,7 @@ export default function Home() {
                 {/* Item 2 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Graphic detail</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       The world's most, and least, liveable cities in 2026
                     </h4>
@@ -826,7 +826,7 @@ export default function Home() {
                 {/* Item 3 (Dup) */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-6 border-b border-[#e6e6e6] group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Graphic detail</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       The world's most, and least, liveable cities in 2026
                     </h4>
@@ -840,7 +840,7 @@ export default function Home() {
                 {/* Item 3 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full pb-0 group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Graphic detail</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       How Americans see their country's past, present and future
                     </h4>
@@ -854,7 +854,7 @@ export default function Home() {
                 {/* Item 4 */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Graphic detail</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Where will Europe's heatwave be most deadly?
                     </h4>
@@ -868,7 +868,7 @@ export default function Home() {
                 {/* Item 6 (Dup) */}
                 <Link href="/article/fallback-article" className="flex flex-row items-start w-full group cursor-pointer">
                   <div className="w-[60%] pr-4 flex flex-col">
-                    <span className="text-[#E3120B] text-[12px] font-sans mb-1 mt-[-2px] tracking-tight">Graphic detail</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Graphic detail</span>
                     <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                       Where will Europe's heatwave be most deadly?
                     </h4>
@@ -902,7 +902,7 @@ export default function Home() {
                   <div className="hidden md:block absolute right-0 top-0 bottom-6 w-[1px] bg-[#e6e6e6]"></div>
                   <Link href="/article/what-to-watch" className="group flex flex-col cursor-pointer pb-5">
                     <img src="/img_girl_lighter_clear.png" alt="What to watch this week" className="w-full aspect-[1.7] object-cover mb-4" />
-                    <span className="text-[#E3120B] text-[12.5px] font-medium mb-1 mt-1">Culture</span>
+                    <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-1">Culture</span>
                     <h3 className="text-[32px] font-serif text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
                       What to watch this week
                     </h3>
@@ -918,7 +918,7 @@ export default function Home() {
                   {/* Hikers */}
                   <Link href="/article/hikers" className="group flex flex-row items-start justify-between border-b border-[#e6e6e6] pb-5 mb-5 cursor-pointer">
                     <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
-                      <span className="text-[#E3120B] text-[12.5px] font-medium mb-1">Culture</span>
+                      <span className="text-[#E3120B] text-[11px] font-bold mb-1">Culture</span>
                       <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
                         Why Gen Z hikers keep getting lost up mountains
                       </h4>
@@ -930,7 +930,7 @@ export default function Home() {
                   {/* Colson Whitehead */}
                   <Link href="/article/colson-whitehead" className="group flex flex-row items-start justify-between pb-5 cursor-pointer">
                     <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
-                      <span className="text-[#E3120B] text-[12.5px] font-medium mb-1">Culture</span>
+                      <span className="text-[#E3120B] text-[11px] font-bold mb-1">Culture</span>
                       <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-3 group-hover:text-[#003a6a] group-hover:underline transition-all">
                         Colson Whitehead concludes his three-part love letter to New York
                       </h4>
@@ -948,7 +948,7 @@ export default function Home() {
                 <div className="w-full md:w-[48%] flex flex-col pr-6 md:border-r border-[#e6e6e6] mb-8 md:mb-0">
                   <Link href="/article/romans" className="group flex flex-row items-start justify-between cursor-pointer">
                     <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
-                      <span className="text-[#E3120B] text-[12.5px] font-medium mb-1">Culture</span>
+                      <span className="text-[#E3120B] text-[11px] font-bold mb-1">Culture</span>
                       <h4 className="text-[17px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline transition-colors">
                         What did the Romans ever do for<br />Christianity?
                       </h4>
@@ -962,7 +962,7 @@ export default function Home() {
                 <div className="w-full md:w-[52%] flex flex-col md:pl-6">
                   <Link href="/article/graeme-james" className="group flex flex-row items-start justify-between cursor-pointer">
                     <div className="flex flex-col pr-5 flex-1 mt-[-2px]">
-                      <span className="text-[#E3120B] text-[12.5px] font-medium mb-1">Culture</span>
+                      <span className="text-[#E3120B] text-[11px] font-bold mb-1">Culture</span>
                       <h4 className="text-[17px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline transition-colors">
                         The Economist's cover designer, Graeme<br />James, has died, aged 65
                       </h4>
@@ -1011,7 +1011,7 @@ export default function Home() {
               <div className="w-full relative aspect-[1.6] mb-4 overflow-hidden bg-[#f9f9f9]">
                 <img src="/imgi_329_20260718_WWP001.jpg" alt="Political stories" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
-              <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">The world this week</span>
+              <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">The world this week</span>
               <h3 className="text-[32px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                 This week's most important political stories
               </h3>
@@ -1027,7 +1027,7 @@ export default function Home() {
               {/* Right Article 1 */}
               <Link href="/article/fallback-article" className="w-full flex flex-row items-start mb-6 pb-0 group cursor-pointer">
                 <div className="w-[65%] pr-6 flex flex-col">
-                  <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">The world this week</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">The world this week</span>
                   <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                     This week's most important business stories
                   </h4>
@@ -1044,7 +1044,7 @@ export default function Home() {
               {/* Right Article 2 */}
               <Link href="/article/fallback-article" className="w-full flex flex-row items-start mb-6 pb-0 group cursor-pointer">
                 <div className="w-[65%] pr-6 flex flex-col">
-                  <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">Letters</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">Letters</span>
                   <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                     The best of your correspondence
                   </h4>
@@ -1061,7 +1061,7 @@ export default function Home() {
               {/* Right Article 3 */}
               <Link href="/article/fallback-article" className="w-full flex flex-row items-start group cursor-pointer">
                 <div className="w-[65%] pr-6 flex flex-col">
-                  <span className="text-[#E3120B] text-[12px] font-sans font-bold mb-1 mt-[-2px]">The world this week</span>
+                  <span className="text-[#E3120B] text-[11px] font-bold mb-1 mt-[-2px]">The world this week</span>
                   <h4 className="text-[22px] font-serif font-medium text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-colors">
                     A lighter look at events
                   </h4>
