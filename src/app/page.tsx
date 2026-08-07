@@ -243,7 +243,7 @@ export default function Home() {
           {/* Right Column: Latest News & Top Highlights */}
           <div className="hidden lg:flex w-full lg:w-[30%] flex-col pl-6 border-l-0 md:border-l border-[#e6e6e6] mt-8 lg:mt-0">
             {/* LATEST NEWS */}
-            <h2 className="text-[21px] font-bold font-serif text-[#0f0f0f] mb-4 -mt-1.5">Latest News</h2>
+            <h2 className="text-[21px] font-bold font-serif text-[#0f0f0f] mb-4 -mt-[9px]">Latest News</h2>
             
             <Link href="/article/latest-news-1" className="group flex flex-col mb-6 border-b border-[#e6e6e6] pb-6">
               <img src="/imgi_243_20260718_IRD000.jpg" alt="Latest News 1" className="w-full aspect-[1.7] object-cover mb-3" />
