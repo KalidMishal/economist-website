@@ -179,9 +179,9 @@ export default function Home() {
             </div>
 
             {/* Fourth Row: 4 Column Grid */}
-            <div className="w-full h-[1px] bg-[#e6e6e6] mt-2 mb-6"></div>
+            <div className="w-full h-[1px] bg-[#e6e6e6] mt-2 mb-3"></div>
             <h2 className="text-[14px] font-extrabold font-sans text-[#E3120B] uppercase tracking-widest mb-4 mt-2">INSIDE THE WHITE HOUSE</h2>
-            <div className="flex flex-col md:flex-row w-full pb-10 md:-mx-4">
+            <div className="flex flex-col md:flex-row w-full pb-0 md:-mx-4">
               {/* Col 1 */}
               <div className="w-full md:w-[25%] md:px-4 flex flex-col">
                 <Link href="/article/fallback-article" className="group cursor-pointer flex flex-col h-full flex-1">
