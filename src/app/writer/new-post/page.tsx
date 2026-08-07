@@ -1385,26 +1385,6 @@ export default function NewPost() {
             </div>
             <div className="p-6 overflow-y-auto max-h-[70vh]">
               
-              {/* Paste Image URL */}
-              <div className="mb-5">
-                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Paste Image URL</label>
-                <input 
-                  type="text" 
-                  value={imageUrl}
-                  onChange={(e) => { setImageUrl(e.target.value); setImageFile(null); }}
-                  placeholder="https://images.unsplash.com/photo-..." 
-                  className="w-full border border-gray-300 rounded px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#1a65d6]"
-                />
-                <p className="text-[10px] text-gray-400 mt-1.5 font-sans leading-tight">Must be a direct link to an image file (e.g. ends in .jpg). For Unsplash, right-click the image and select "Copy Image Address".</p>
-              </div>
-
-              {/* OR Divider */}
-              <div className="flex items-center gap-3 mb-5">
-                <div className="flex-1 h-px bg-gray-200"></div>
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Or Upload File</span>
-                <div className="flex-1 h-px bg-gray-200"></div>
-              </div>
-
               {/* Choose File */}
               <div className="mb-5">
                 <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Choose Computer File</label>
@@ -1420,7 +1400,9 @@ export default function NewPost() {
                     }}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <span className="text-sm font-mono text-gray-700">{imageFile ? imageFile.name : "Choose file No file chosen"}</span>
+                  <span className="text-sm font-mono text-gray-700">
+                    {imageFile ? imageFile.name : (imageUrl ? "Existing Image Selected" : "Choose file No file chosen")}
+                  </span>
                 </div>
               </div>
 
@@ -1499,7 +1481,7 @@ export default function NewPost() {
                 onClick={handleInsertImage}
                 className="bg-[#e3120b] hover:bg-[#b80f09] text-white font-bold text-[11px] uppercase tracking-widest px-8 py-2.5 rounded transition-colors shadow-sm"
               >
-                Insert Image
+                {isEditingImage ? "Update Image" : "Insert Image"}
               </button>
             </div>
           </div>
