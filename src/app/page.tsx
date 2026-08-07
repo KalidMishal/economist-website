@@ -259,7 +259,7 @@ export default function Home() {
             <Link href="/article/latest-news-2" className="group flex flex-row items-start gap-4 mb-5 border-b border-[#e6e6e6] pb-5">
               <img src="/imgi_158_20260718_FNP503.jpg" alt="Latest News 2" className="w-[145px] aspect-[1.4] object-cover flex-shrink-0" />
               <div className="flex flex-col flex-1 mt-[-2px]">
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Markets</span>
+                <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Markets</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
                   Global stocks fall as investors weigh Fed rate outlook
                 </h4>
@@ -270,7 +270,7 @@ export default function Home() {
             <Link href="/article/latest-news-3" className="group flex flex-row items-start gap-4 mb-5 border-b border-[#e6e6e6] pb-5">
               <img src="/imgi_16_image.webp" alt="Latest News 3" className="w-[145px] aspect-[1.4] object-cover flex-shrink-0" />
               <div className="flex flex-col flex-1 mt-[-2px]">
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Business</span>
+                <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Business</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
                   OpenAI raises another $20B in fresh funding
                 </h4>
@@ -281,7 +281,7 @@ export default function Home() {
             <Link href="/article/latest-news-4" className="group flex flex-row items-start gap-4 mb-6">
               <img src="/imgi_16_image.webp" alt="Latest News 4" className="w-[145px] aspect-[1.4] object-cover flex-shrink-0" />
               <div className="flex flex-col flex-1 mt-[-2px]">
-                <span className="text-[#E3120B] text-[11px] font-bold mb-1">Business</span>
+                <span className="text-[#E3120B] text-[12px] font-bold uppercase tracking-wider mb-1">Business</span>
                 <h4 className="text-[15px] xl:text-[16px] font-bold text-[#0f0f0f] leading-snug group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] transition-all mb-1">
                   OpenAI raises another $20B in fresh funding
                 </h4>
