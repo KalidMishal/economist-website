@@ -52,10 +52,13 @@ export default function NewPost() {
   const editorRef = useRef<HTMLDivElement>(null);
 
   const autoGenerateSEO = (force = false) => {
-    let text = '';
+    let text = subtitle || '';
     if (editorRef.current) {
       // Get text without the initial placeholder <p><br></p> if it's empty
-      text = editorRef.current.innerText.trim();
+      const editorText = editorRef.current.innerText.trim();
+      if (editorText) {
+        text = text ? text + ' ' + editorText : editorText;
+      }
     }
     const snippet = text.length > 155 ? text.substring(0, 155) + '…' : text;
     
@@ -72,8 +75,13 @@ export default function NewPost() {
       setFocusKeyword(generatedKeyword);
     } else {
       if (!cardSummary && snippet) setCardSummary(snippet);
+      else if (!snippet && cardSummary) setCardSummary('');
+      
       if (!metaDescription && snippet) setMetaDescription(snippet);
+      else if (!snippet && metaDescription) setMetaDescription('');
+      
       if (!focusKeyword && generatedKeyword) setFocusKeyword(generatedKeyword);
+      else if (!generatedKeyword && focusKeyword) setFocusKeyword('');
     }
   };
 
@@ -778,6 +786,10 @@ export default function NewPost() {
     }
   }, []);
 
+  useEffect(() => {
+    autoGenerateSEO(false);
+  }, [title, subtitle]);
+
   return (
     <>
     <div className={`min-h-screen flex flex-col bg-[#f8f9fa] font-sans overflow-x-hidden ${isPreviewMode ? 'hidden' : ''}`}>
@@ -906,13 +918,7 @@ export default function NewPost() {
               type="text" 
               placeholder="Add Title..." 
               value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-                if (e.target.value && !focusKeyword) {
-                  const words = e.target.value.split(' ').filter(w => w.trim() !== '');
-                  setFocusKeyword(words.slice(0, 2).join(' ').replace(/'s/g, '').replace(/[^a-zA-Z0-9 ]/g, ''));
-                }
-              }}
+              onChange={(e) => setTitle(e.target.value)}
               className="w-full text-4xl font-serif font-bold text-[#131a26] placeholder:text-gray-300 border-none outline-none focus:ring-0 mb-10 bg-transparent"
             />
             
