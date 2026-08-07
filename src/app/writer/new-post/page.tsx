@@ -461,6 +461,11 @@ export default function NewPost() {
         if (firstImg) firstImageSrc = firstImg.src;
       }
   
+      if (!firstImageSrc) {
+        window.alert("Every article must contain at least one image (either a Cover Image or an inline image) before it can be submitted for review.");
+        return;
+      }
+
       const draftData = {
         title,
         subtitle,
