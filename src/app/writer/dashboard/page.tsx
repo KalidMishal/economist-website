@@ -560,12 +560,13 @@ export default function WriterDashboard() {
             <div className="px-8 py-5 border-t border-gray-100 flex items-center justify-between gap-4">
               <button onClick={() => setIsSettingsOpen(false)} className="flex-1 py-2.5 border border-gray-300 rounded font-bold text-[13px] text-gray-700 hover:bg-gray-50 transition-colors">CANCEL</button>
               <button onClick={() => {
-    if (user) {
-      localStorage.setItem(`userProfile_${user.email}`, JSON.stringify(profileData));
-    }
-    localStorage.setItem('userProfile', JSON.stringify(profileData));
-    setIsSettingsOpen(false);
-  }} className="flex-1 py-2.5 bg-[#00508f] hover:bg-blue-900 rounded font-bold text-[13px] text-white transition-colors">SAVE CHANGES</button>
+                if (user) {
+                  localStorage.setItem(`userProfile_${user.email}`, JSON.stringify(profileData));
+                }
+                localStorage.setItem('userProfile', JSON.stringify(profileData));
+                showToast('Profile Settings saved successfully');
+                setIsSettingsOpen(false);
+              }} className="flex-1 py-2.5 bg-[#00508f] hover:bg-blue-900 rounded font-bold text-[13px] text-white transition-colors">SAVE CHANGES</button>
             </div>
           </div>
         </div>

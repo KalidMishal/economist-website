@@ -11,7 +11,13 @@ export default function ReaderDashboard() {
   const [profileData, setProfileData] = useState({ fullName: '', photo: '' });
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [savedArticles, setSavedArticles] = useState<any[]>([]);
+  
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(''), 3000);
+  };
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -134,6 +140,13 @@ export default function ReaderDashboard() {
           )}
         </div>
         </div>
+        {/* Global Toast Message */}
+        {toastMessage && (
+          <div className="fixed bottom-6 right-6 bg-[#0f0f0f] text-white px-6 py-3 rounded-lg shadow-xl font-bold text-[14px] z-[999] flex items-center gap-3 animate-fade-in-up">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            {toastMessage}
+          </div>
+        )}
       </header>
 
       {/* Main Content Area */}
@@ -208,7 +221,10 @@ export default function ReaderDashboard() {
       <ReaderProfileSettingsModal 
         isOpen={isSettingsModalOpen} 
         onClose={() => setIsSettingsModalOpen(false)} 
-        onProfileUpdate={(newProfile) => setProfileData(newProfile)}
+        onProfileUpdate={(newProfile) => {
+          setProfileData(newProfile);
+          showToast('Profile Settings saved successfully');
+        }}
       />
     </div>
   );
