@@ -327,7 +327,7 @@ export default function Home() {
               <img src="/imgi_37_geopolitics-desktop.webp" alt="AI trap" className="w-[110px] aspect-[1.4] object-cover flex-shrink-0" />
             </Link>
 
-            <Link href="/article/chaguan-china" className="group flex flex-row items-center gap-4">
+            <Link href="/article/chaguan-china" className="group flex flex-row items-center gap-4 mt-auto">
               <div className="flex flex-col flex-1">
                 <span className="text-[#E3120B] text-[12.5px] font-bold mb-1">Chaguan on China</span>
                 <h4 className="text-[20px] font-serif font-medium text-[#0f0f0f] leading-tight group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] transition-all mb-2">
