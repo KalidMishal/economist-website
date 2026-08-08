@@ -110,6 +110,25 @@ export default function NewPost() {
     }
   };
 
+  const handleCreateLink = () => {
+    const url = prompt('Enter link URL');
+    if (!url) return;
+    
+    // Generate a unique dummy URL to find the newly created link
+    const dummyUrl = 'http://temp-dummy-url-' + Date.now();
+    execCommand('createLink', dummyUrl);
+    
+    // Find the link and modify it
+    if (editorRef.current) {
+      const links = editorRef.current.querySelectorAll(`a[href="${dummyUrl}"]`);
+      links.forEach(a => {
+        (a as HTMLAnchorElement).href = url;
+        (a as HTMLAnchorElement).target = '_blank';
+        (a as HTMLAnchorElement).rel = 'noopener noreferrer';
+      });
+    }
+  };
+
   const getCurrentFontSizeIndex = () => {
     let baseSize = parseInt(document.queryCommandValue('fontSize')) || 3;
     if (baseSize === 7) {
@@ -936,7 +955,7 @@ export default function NewPost() {
               </svg>
             </button>
             <div className="w-px h-5 bg-gray-200 mx-1"></div>
-            <button onClick={() => { const url = prompt('Enter link URL'); if (url) execCommand('createLink', url); }} className="p-2 text-gray-500 hover:bg-gray-50 rounded"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
+            <button onClick={handleCreateLink} className="p-2 text-gray-500 hover:bg-gray-50 rounded"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
             <div className="w-px h-5 bg-gray-200 mx-1"></div>
             <button onClick={() => execCommand('insertUnorderedList')} className={`p-2 rounded transition-colors ${activeFormats.ul ? 'bg-gray-200 text-gray-900' : 'text-gray-500 hover:bg-gray-50'}`}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
             <button onClick={() => execCommand('insertOrderedList')} className={`p-2 rounded transition-colors ${activeFormats.ol ? 'bg-gray-200 text-gray-900' : 'text-gray-500 hover:bg-gray-50'}`}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg></button>
