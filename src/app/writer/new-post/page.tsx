@@ -408,8 +408,31 @@ export default function NewPost() {
       });
     }
   }, [selectedFigure]);
+
+  const getCleanEditorContent = () => {
+    if (!editorRef.current) return '';
+    const imgs = editorRef.current.querySelectorAll('img');
+    const oldStyles = Array.from(imgs).map(img => ({ outline: img.style.outline, outlineOffset: img.style.outlineOffset }));
+    
+    imgs.forEach(img => {
+      img.style.outline = '';
+      img.style.outlineOffset = '';
+    });
+    
+    const content = editorRef.current.innerHTML;
+    
+    imgs.forEach((img, i) => {
+      if (oldStyles[i].outline) {
+        img.style.outline = oldStyles[i].outline;
+        img.style.outlineOffset = oldStyles[i].outlineOffset;
+      }
+    });
+    
+    return content;
+  };
+
      const handleSaveDraft = () => {
-      const draftContent = editorRef.current?.innerHTML || previewContent || '';
+      const draftContent = getCleanEditorContent() || previewContent || '';
       
       let firstImageSrc = '';
       if (editorRef.current) {
@@ -473,7 +496,7 @@ export default function NewPost() {
     };
 
     const handleSubmitForReview = () => {
-      const draftContent = editorRef.current?.innerHTML || previewContent || '';
+      const draftContent = getCleanEditorContent() || previewContent || '';
       
       let firstImageSrc = '';
       if (editorRef.current) {
@@ -839,7 +862,7 @@ export default function NewPost() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button onClick={() => { if (editorRef.current) { setPreviewContent(editorRef.current.innerHTML); } setIsPreviewMode(true); }} className="flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider px-4 py-2 rounded transition-colors">
+          <button onClick={() => { if (editorRef.current) { setPreviewContent(getCleanEditorContent()); } setIsPreviewMode(true); }} className="flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider px-4 py-2 rounded transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
               <circle cx="12" cy="12" r="3"></circle>
