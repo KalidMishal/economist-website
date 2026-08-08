@@ -97,7 +97,7 @@ export default function NewPost() {
       pre: document.queryCommandValue('formatBlock') === 'pre',
     });
     if (editorRef.current) {
-      setIsEditorEmpty(editorRef.current.innerText.trim().length === 0);
+      setIsEditorEmpty(editorRef.current.innerText.trim().length === 0 && editorRef.current.querySelectorAll('img').length === 0);
     }
     autoGenerateSEO(false);
   };
@@ -580,6 +580,7 @@ export default function NewPost() {
 
       // 2. Pure DOM insertion using <figure> wrapper for toolbar selection
       const figure = document.createElement('figure');
+      figure.contentEditable = 'false';
       figure.style.width = imageSize.includes('450') ? '450px' : imageSize.includes('Full') ? '100%' : '250px';
       figure.style.maxWidth = '100%';
       figure.style.borderBottom = '1px solid #e6e6e6';
@@ -665,6 +666,13 @@ export default function NewPost() {
             currentRange.deleteContents();
             currentRange.insertNode(figure);
 
+            // Ensure there is a paragraph after the figure to allow typing
+            if (!figure.nextSibling) {
+              const p = document.createElement('p');
+              p.innerHTML = '<br>';
+              figure.parentNode?.appendChild(p);
+            }
+
             const finalRange = document.createRange();
             finalRange.setStartAfter(figure);
             if (selection) {
@@ -673,10 +681,16 @@ export default function NewPost() {
             }
           } else {
             editorRef.current.appendChild(figure);
+            const p = document.createElement('p');
+            p.innerHTML = '<br>';
+            editorRef.current.appendChild(p);
           }
         }
       } catch (e) {
         editorRef.current.appendChild(figure);
+        const p = document.createElement('p');
+        p.innerHTML = '<br>';
+        editorRef.current.appendChild(p);
       }
       checkFormats();
       // updatePreview(); // If updatePreview exists in scope
