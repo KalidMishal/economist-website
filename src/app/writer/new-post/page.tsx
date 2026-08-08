@@ -268,6 +268,15 @@ export default function NewPost() {
     }
   };
 
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+    setIsEditingImage(false);
+    setImageUrl('');
+    setImageFile(null);
+    setImageCaption('');
+    setImageCredit('');
+  };
+
   const handleImageAction = (action: string, e: React.MouseEvent) => {
     e.preventDefault();
     if (!selectedFigure) return;
@@ -909,7 +918,14 @@ export default function NewPost() {
                   setSavedRange(null);
                 }
               }}
-              onClick={() => setIsImageModalOpen(true)} className="text-[#1a65d6] bg-[#f0f5ff] hover:bg-orange-100 font-bold text-[11px] uppercase tracking-widest px-3 py-1.5 rounded flex items-center gap-1.5 ml-2 transition-colors">
+              onClick={() => {
+                setIsImageModalOpen(true);
+                setIsEditingImage(false);
+                setImageUrl('');
+                setImageFile(null);
+                setImageCaption('');
+                setImageCredit('');
+              }} className="text-[#1a65d6] bg-[#f0f5ff] hover:bg-orange-100 font-bold text-[11px] uppercase tracking-widest px-3 py-1.5 rounded flex items-center gap-1.5 ml-2 transition-colors">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
               Insert Image
             </button>
@@ -1016,7 +1032,7 @@ export default function NewPost() {
             <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
             <svg className="text-gray-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2-2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
             <h3 className="font-bold text-sm uppercase tracking-widest text-[#131a26]">Article Settings</h3>
           </div>
@@ -1382,7 +1398,7 @@ export default function NewPost() {
                 <svg className="text-[#e3120b]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                 <h3 className="font-bold text-[#131a26] text-[13px] uppercase tracking-wider">Insert Article Image</h3>
               </div>
-              <button onClick={() => { setIsImageModalOpen(false); setIsEditingImage(false); }} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <button onClick={closeImageModal} className="text-gray-400 hover:text-gray-600 transition-colors">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>
@@ -1404,7 +1420,7 @@ export default function NewPost() {
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
                   <span className="text-sm font-mono text-gray-700">
-                    {imageFile ? imageFile.name : (imageUrl ? "Existing Image Selected" : "Choose file No file chosen")}
+                    {imageFile ? imageFile.name : (imageUrl ? "current_image.jpg" : "Choose file No file chosen")}
                   </span>
                 </div>
               </div>
@@ -1475,7 +1491,7 @@ export default function NewPost() {
             
             <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
               <button 
-                onClick={() => { setIsImageModalOpen(false); setIsEditingImage(false); }}
+                onClick={closeImageModal}
                 className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-[11px] uppercase tracking-widest px-6 py-2.5 rounded transition-colors"
               >
                 Cancel
