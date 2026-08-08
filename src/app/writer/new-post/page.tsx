@@ -55,15 +55,15 @@ export default function NewPost() {
   const editorRef = useRef<HTMLDivElement>(null);
 
   const autoGenerateSEO = (force = false) => {
-    let text = subtitle || '';
+    let text = '';
     if (editorRef.current) {
       // Get text without the initial placeholder <p><br></p> if it's empty
       const editorText = editorRef.current.innerText.trim();
       if (editorText) {
-        text = text ? text + ' ' + editorText : editorText;
+        text = editorText;
       }
     }
-    const snippet = text.length > 155 ? text.substring(0, 155) + '…' : text;
+    const snippet = text.length > 155 ? text.substring(0, 155) + '...' : text;
     
     // Generate keyword from title (first two words, ignore 's)
     let generatedKeyword = '';
