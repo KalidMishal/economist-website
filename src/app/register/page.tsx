@@ -2,10 +2,54 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        setSuccess('Registration successful! Redirecting to login...');
+        setTimeout(() => {
+          router.push('/login');
+        }, 2000);
+      } else {
+        setError(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Network error. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-[#1a1a1a] font-sans flex flex-col justify-center items-center relative py-12 px-4">
@@ -68,7 +112,9 @@ export default function RegisterPage() {
             <div className="flex-1 h-[1px] bg-gray-200"></div>
           </div>
 
-          <form className="flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+          {error && <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm border border-red-200">{error}</div>}
+          {success && <div className="mb-4 p-3 bg-green-50 text-green-600 text-sm border border-green-200">{success}</div>}
+          <form className="flex flex-col gap-5" onSubmit={handleRegister}>
             <p className="text-[12px] text-[#555]">All fields are required</p>
             
             {/* Name Field */}
@@ -76,6 +122,9 @@ export default function RegisterPage() {
               <label className="text-[14px] font-bold text-[#0f0f0f]">Full Name</label>
               <input 
                 type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
                 placeholder="e.g. Ferran Torres"
                 className="w-full border border-gray-300 rounded-[3px] px-3 py-2.5 font-sans text-[15px] focus:outline-none focus:border-[#004e9a] focus:ring-1 focus:ring-[#004e9a] transition-all placeholder:text-gray-400"
               />
@@ -86,6 +135,9 @@ export default function RegisterPage() {
               <label className="text-[14px] font-bold text-[#0f0f0f]">Email address</label>
               <input 
                 type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 placeholder="e.g. Torres@gmail.com"
                 className="w-full border border-gray-300 rounded-[3px] px-3 py-2.5 font-sans text-[15px] focus:outline-none focus:border-[#004e9a] focus:ring-1 focus:ring-[#004e9a] transition-all placeholder:text-gray-400"
               />
@@ -97,6 +149,9 @@ export default function RegisterPage() {
               <div className="relative">
                 <input 
                   type={showPassword ? "text" : "password"} 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                   placeholder="Create secure passcode"
                   className="w-full border border-gray-300 rounded-[3px] px-3 py-2.5 pr-10 font-sans text-[15px] focus:outline-none focus:border-[#004e9a] focus:ring-1 focus:ring-[#004e9a] transition-all placeholder:text-gray-400"
                 />
@@ -129,6 +184,9 @@ export default function RegisterPage() {
               <div className="relative">
                 <input 
                   type={showConfirmPassword ? "text" : "password"} 
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                   placeholder="Verify secure passcode"
                   className="w-full border border-gray-300 rounded-[3px] px-3 py-2.5 pr-10 font-sans text-[15px] focus:outline-none focus:border-[#004e9a] focus:ring-1 focus:ring-[#004e9a] transition-all placeholder:text-gray-400"
                 />
@@ -154,9 +212,10 @@ export default function RegisterPage() {
             
             <button 
               type="submit"
-              className="w-full bg-[#3b4b9b] text-white font-bold text-[15px] py-3 rounded-[3px] hover:bg-[#2c3975] transition-colors mt-4"
+              disabled={loading}
+              className="w-full bg-[#3b4b9b] text-white font-bold text-[15px] py-3 rounded-[3px] hover:bg-[#2c3975] transition-colors mt-4 disabled:opacity-50"
             >
-              Create account
+              {loading ? "Creating account..." : "Create account"}
             </button>
           </form>
 
