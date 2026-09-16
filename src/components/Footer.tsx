@@ -30,7 +30,7 @@ export default function Footer() {
     { label: 'Cookie Policy', href: '/cookies' },
     { label: 'Editorial Policy', href: '/editorial-policy' },
     { label: 'Advertise with us', href: '/advertise-with-us' },
-    { label: 'RSS Feed', href: '/rss' },
+    { label: 'RSS Feed', href: '/rss.xml' },
   ];
 
   const followUsLinks = [
