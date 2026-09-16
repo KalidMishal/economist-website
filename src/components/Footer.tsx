@@ -137,12 +137,12 @@ export default function Footer() {
               </li>
               {/* Newsletter */}
               <li>
-                <a href="#" className="flex items-center gap-3 hover:text-white group transition-colors">
+                <Link href="/newsletters" className="flex items-center gap-3 hover:text-white group transition-colors">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px] text-gray-300 group-hover:text-white">
                     <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
                   </svg>
                   <span>Newsletter</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
