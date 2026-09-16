@@ -28,3 +28,43 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #f6f7f8 4%, #edeef1 25%, #f6f7f8 36%);
+  background-size: 1000px 100%;
+}
+
+
+/* Mobile WYSIWYG overrides to force centering */
+@media (max-width: 767px) {
+  .article-content * {
+    float: none !important;
+  }
+  
+  .article-content img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 2rem auto !important;
+    
+  }
+  
+  .article-content .ql-align-left,
+  .article-content .ql-align-right,
+  .article-content .ql-align-center {
+    text-align: left !important;
+    display: block !important;
+    width: 100% !important;
+  }
+}

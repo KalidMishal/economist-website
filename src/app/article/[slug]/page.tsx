@@ -3,7 +3,10 @@ import Footer from "@/components/Footer";
 import ArticleToolbar from "@/components/ArticleToolbar";
 import ShareDropdown from "@/components/ShareDropdown";
 import Link from "next/link";
+import ResponsiveArticleWrapper from "@/components/ResponsiveArticleWrapper";
 import { Metadata } from "next";
+import AuthorProfile from "@/components/AuthorProfile";
+import ScrollToTop from "@/components/ScrollToTop";
 
 // Mock Data Dictionary
 const articleData: Record<string, any> = {
@@ -112,26 +115,152 @@ const defaultArticle = {
   ]
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const article = articleData[slug] || defaultArticle;
+const WORLD_COUNTRIES = ["United States", "China", "Europe", "Britain", "Middle East", "Africa", "Asia"];
+
+// map backend post to article format
+function mapBackendPost(post: any) {
+  let mainCat = post.main_category || "Uncategorized";
+  let subCat = "";
+  try {
+    const arr = typeof post.sub_categories === 'string' ? JSON.parse(post.sub_categories) : post.sub_categories;
+    if (Array.isArray(arr) && arr.length > 0) {
+      subCat = arr[0];
+    }
+  } catch(e) {}
+  
+  let category = mainCat;
+  if (mainCat === 'World' && WORLD_COUNTRIES.includes(subCat)) {
+    category = `World | ${subCat}`;
+  } else if (WORLD_COUNTRIES.includes(mainCat)) {
+    category = `World | ${mainCat}`;
+  } else if (mainCat === 'World') {
+    category = `World | ${subCat || 'News'}`;
+  }
+  
+  // Format date: e.g. "Jul 22nd 2026"
+  const dateObj = new Date(post.published_at || post.updated_at || post.created_at);
+  const date = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' });
+  const time = dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short', timeZone: 'America/New_York' });
+
   return {
-    title: `${article.title} | The Economist Clone`,
-    description: article.subtitle,
+    isDynamic: true,
+    category,
+    title: post.title,
+    subtitle: post.subtitle || post.card_summary,
+    image: post.image_url || "/imgi_581_20260718_LDD002_FH.jpg",
+    caption: post.meta_description || "",
+    credit: "",
+    date,
+    time,
+    updatedAt: post.updated_at,
+    views: post.views,
+    location: "",
+    readTime: `${post.read_duration || 5} min read`,
+    authorName: post.author_name || "John Cassidy",
+    authorEmail: post.author_email || "",
+    authorId: post.author_id,
+    authorPhoto: post.author_profile_picture,
+    authorLinkedin: post.author_linkedin_url,
+    content: post.content || "",
+    tags: Array.isArray(post.tags) ? post.tags : (typeof post.tags === 'string' && post.tags !== '' && post.tags !== 'null' ? JSON.parse(post.tags || '[]') : [])
   };
 }
 
+
+async function getMoreArticles(category: string, currentId: string) {
+  try {
+    const res = await fetch(`http://localhost:5000/api/admin/published-posts?category=${encodeURIComponent(category)}&limit=10`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.posts.filter((p: any) => p.id?.toString() !== currentId.toString()).slice(0, 6);
+  } catch (e) {
+    return [];
+  }
+}
+
+async function getDynamicArticle(slug: string) {
+  try {
+    const res = await fetch(`http://localhost:5000/api/posts/${slug}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.post) return mapBackendPost(data.post);
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const dynamicArticle = await getDynamicArticle(slug);
+  const article = dynamicArticle || articleData[slug] || defaultArticle;
+  
+  const siteName = "Newyork Capital";
+  const defaultImage = "/Newyork-Capital-Thumbnail.jpg";
+  const imageUrl = article.image || defaultImage;
+
+  return {
+    title: `${article.title} | ${siteName}`,
+    description: article.subtitle,
+    openGraph: {
+      title: `${article.title} | ${siteName}`,
+      description: article.subtitle || "",
+      images: [imageUrl],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${article.title} | ${siteName}`,
+      description: article.subtitle || "",
+      images: [imageUrl],
+    },
+  };
+}
+
+import ViewTracker from "@/components/ViewTracker";
+
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = articleData[slug] || defaultArticle;
+  const dynamicArticle = await getDynamicArticle(slug);
+  const article = dynamicArticle || articleData[slug] || defaultArticle;
+  const categoryParts = (article?.category || '').split('|').map((p: string) => p.trim());
+  let mainCategory = categoryParts[0] || 'News';
+  if (categoryParts.length > 1 && categoryParts[0] === 'World') {
+    mainCategory = categoryParts[1];
+  }
+  const moreArticles = await getMoreArticles(mainCategory, slug);
+
+  let adsMap: Record<string, any> = {};
+  try {
+    const res = await fetch('http://localhost:5000/api/ads/active', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach((ad: any) => {
+        adsMap[ad.slot_id] = ad;
+      });
+    }
+  } catch (error) {
+    console.error('Failed to fetch ads:', error);
+  }
+
+  const getAdHref = (ad: any) => {
+    if (ad.target_type === 'internal' && ad.internal_article_id) {
+      return `/article/${ad.internal_article_slug || ad.internal_article_id}`;
+    }
+    if (ad.target_type === 'external' && ad.target_url && ad.target_url.trim() !== '') {
+      return ad.target_url;
+    }
+    return null;
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Header />
+    <>
+      <ScrollToTop />
+      <ViewTracker id={slug} initialViews={article?.views || 0} updatedAt={article?.updatedAt} />
+      <div className="min-h-screen flex flex-col bg-white">
+        <Header />
       
       <main className="w-full flex-grow pt-8 pb-16">
-        <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
-          
+        <div className="max-w-[1400px] mx-auto w-full px-4 md:px-8 lg:px-12">
           {/* Toolbar */}
           <ArticleToolbar article={{ ...article, slug }} />
 
@@ -142,25 +271,25 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <div className="w-full lg:col-span-9 flex flex-col">
               
               {/* Article Header */}
-              <div className="w-full mb-6">
+              <div className="w-full mb-6 pl-3 md:pl-0">
                 <p className="text-[13px] font-sans font-bold mb-3">
                   {(() => {
                     const parts = article.category.split('|');
                     if (parts.length > 1) {
                       return (
                         <>
-                          <Link href={`/topics/${parts[0].trim().toLowerCase().replace(/\s+/g, '-')}`} className="text-[#E3120B] hover:underline cursor-pointer">
+                      <Link href={`/category/${encodeURIComponent(parts[0].trim().toLowerCase().replace(/\s*&\s*/g, '-and-').replace(/\s+/g, '-'))}`} className="text-[#E3120B] hover:text-[#00508f] transition-colors">
                             {parts[0].trim()}
                           </Link>
                           <span className="text-[#0f0f0f] mx-1.5 font-normal">|</span>
-                          <Link href={`/topics/${parts.slice(1).join('|').trim().toLowerCase().replace(/\s+/g, '-')}`} className="text-[#0f0f0f] hover:underline hover:text-[#00508f] cursor-pointer">
+                          <Link href={`/category/${parts.slice(1).join('|').trim().toLowerCase().replace(/\s*&\s*/g, '-and-').replace(/\s+/g, '-')}`} className="text-[#0f0f0f] hover:underline hover:text-[#00508f] cursor-pointer">
                             {parts.slice(1).join('|').trim()}
                           </Link>
                         </>
                       );
                     }
                     return (
-                      <Link href={`/topics/${article.category.toLowerCase().replace(/\s+/g, '-')}`} className="text-[#E3120B] hover:underline cursor-pointer">
+                      <Link href={`/category/${article.category.toLowerCase().replace(/\s*&\s*/g, '-and-').replace(/\s+/g, '-')}`} className="text-[#E3120B] hover:underline cursor-pointer">
                         {article.category}
                       </Link>
                     );
@@ -169,173 +298,227 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <h1 className="text-[34px] md:text-[40px] lg:text-[44px] font-serif font-bold leading-[1.1] text-[#0f0f0f] mb-4 tracking-tight">
                   {article.title}
                 </h1>
-                <h2 className="text-[20px] md:text-[24px] font-serif text-[#3b3b3b] mb-6 leading-snug">
+                <h2 className="hidden md:block text-[20px] md:text-[24px] font-serif text-[#3b3b3b] mb-6 leading-snug">
                   {article.subtitle}
                 </h2>
                 
                 {/* Author Block */}
-                <div className="flex items-center gap-3 mb-6 border-y border-[#e6e6e6] py-6">
-                  <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author" className="w-10 h-10 rounded-full object-cover" />
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[14px] font-bold text-[#0f0f0f]">By</span>
-                      <Link href="/author/ronda-b" className="text-[14px] font-bold text-[#0f0f0f] hover:underline">
-                        Ronda B
-                      </Link>
-                      <a href="#" aria-label="LinkedIn" className="text-[#0077b5] ml-0.5 -mt-[2px]">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                        </svg>
-                      </a>
-                    </div>
-                    <div className="text-[11px] text-[#767676] font-sans flex items-center gap-1.5 mt-0.5 tracking-wider">
-                      <span>Published <span className="uppercase">{article.date} AT 9:02 AM EDT</span></span>
-                      <span>•</span>
-                      <span>{article.readTime}</span>
-                    </div>
-                  </div>
-                </div>
+                <AuthorProfile 
+                  authorId={article.authorId}
+                  authorName={article.authorName || "Ronda B"} 
+                  authorEmail={article.authorEmail || ""} 
+                  authorPhoto={article.authorPhoto}
+                  authorLinkedin={article.authorLinkedin}
+                  publishDate={`${article.date} AT ${article.time || '9:00 AM EDT'}`}
+                  readTime={article.readTime}
+                />
               </div>
 
               {/* Article Image */}
-              <div className="w-full mb-8">
-                <img 
-                  src={article.image} 
-                  alt={article.title} 
-                  className="w-full h-auto object-cover max-h-[600px]"
-                />
-                <div className="mt-2 text-[11px] font-sans text-[#767676] uppercase tracking-widest">
-                  {article.credit}
+              {(!article.isDynamic || (article.image && !article.content.includes(article.image.split('/').pop().split('?')[0]))) && (
+                <div className="w-full mb-8">
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    className="w-full h-auto object-cover max-h-[600px]"
+                  />
+                  <div className="mt-2 text-[11px] font-sans text-[#767676] uppercase tracking-widest">
+                    {article.credit}
+                  </div>
+                  {article.caption && (
+                    <p className="mt-2 text-[14px] font-serif text-gray-700 italic">
+                      {article.caption}
+                    </p>
+                  )}
                 </div>
-                {article.caption && (
-                  <p className="mt-2 text-[14px] font-serif text-gray-700 italic">
-                    {article.caption}
-                  </p>
+              )}
+
+              {/* Mobile Subtitle (Description) under image */}
+              <h2 className="block md:hidden text-[20px] font-serif text-[#3b3b3b] mb-6 px-3 leading-snug">
+                {article.subtitle}
+              </h2>
+
+              {/* Article Body Container */}
+              <div className="article-content text-[18px] md:text-[20px] font-serif leading-[1.6] text-[#0f0f0f] pt-4">
+                {article.isDynamic ? (
+                  <ResponsiveArticleWrapper 
+                    htmlContent={article.content}
+                    className="article-content prose prose-lg max-w-none flow-root text-[18px] md:text-[20px] font-serif leading-[1.6] text-[#0f0f0f] preview-content break-words break-all [&_a]:text-[#e3120b] [&_a]:underline [&_a]:font-bold [&_a]:transition-all [&_a:hover]:text-[#ff3333] [&_a:hover]:[text-shadow:0_0_8px_rgba(227,18,11,0.5)] [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:ml-6 [&_ol]:ml-6 [&_li]:mb-1 [&_blockquote]:border-l-4 [&_blockquote]:border-[#e3120b] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-4 [&_blockquote]:text-gray-600 [&_blockquote]:bg-gray-50 [&_blockquote]:py-3 [&_blockquote]:pr-4 [&_blockquote]:flow-root [&_pre]:bg-gray-100 [&_pre]:p-4 [&_pre]:rounded [&_pre]:my-4 [&_pre]:font-[inherit] [&_pre]:text-[inherit] [&_pre]:whitespace-pre-wrap [&_pre]:flow-root max-md:[&_blockquote]:!float-none max-md:[&_blockquote]:!w-full max-md:[&_blockquote]:!mx-auto" 
+                  />
+                ) : (
+                  article.paragraphs.map((p: string, idx: number) => {
+                    if (idx === 0) {
+                      return (
+                        <p key={idx} className="mb-6 drop-cap-para">
+                          <span className="float-left text-[6.5rem] leading-[0.75] font-serif mr-3 pt-2 text-black">
+                            {p.charAt(0)}
+                          </span>
+                          {p.slice(1)}
+                        </p>
+                      );
+                    }
+                    return (
+                      <p key={idx} className="mb-6">
+                        {p}
+                      </p>
+                    );
+                  })
                 )}
               </div>
 
-              {/* Article Body Container */}
-              <div className="article-content text-[18px] md:text-[20px] font-serif leading-[1.6] text-[#0f0f0f] pt-4 border-t border-gray-300">
-                {article.paragraphs.map((p: string, idx: number) => {
-                  if (idx === 0) {
-                    return (
-                      <p key={idx} className="mb-6 drop-cap-para">
-                        <span className="float-left text-[6.5rem] leading-[0.75] font-serif mr-3 pt-2 text-black">
-                          {p.charAt(0)}
-                        </span>
-                        {p.slice(1)}
-                      </p>
-                    );
-                  }
-                  return (
-                    <p key={idx} className="mb-6">
-                      {p}
-                    </p>
-                  );
-                })}
-              </div>
-
               {/* Tags Section */}
-              <div className="mt-10 mb-2 pb-2">
-                <div className="flex flex-wrap gap-1.5 text-[13px] font-bold text-[#888] uppercase tracking-wider">
-                  <Link href="#" className="hover:text-[#00508f] transition-colors">#INDIAN STUDENT PROTESTERS</Link><span className="text-gray-300">,</span>
-                  <Link href="#" className="hover:text-[#00508f] transition-colors">#POLICE CRACKDOWN</Link><span className="text-gray-300">,</span>
-                  <Link href="#" className="hover:text-[#00508f] transition-colors">#BLENDING</Link><span className="text-gray-300">,</span>
-                  <Link href="#" className="hover:text-[#00508f] transition-colors">#DIGITAL CULTURE</Link>
+              {article.tags && article.tags.length > 0 && (
+                <div className="mt-10 mb-2 pb-2">
+                  <div className="flex flex-wrap gap-1.5 text-[13px] font-bold text-[#888] uppercase tracking-wider">
+                    {article.tags.map((tag: string, i: number) => (
+                      <span key={tag} className="flex items-center gap-1.5">
+                        <Link href={`/category/${encodeURIComponent(tag.toLowerCase())}`} className="hover:text-[#00508f] transition-colors">
+                          #{tag}
+                        </Link>
+                        {i < article.tags.length - 1 && <span className="text-gray-300">,</span>}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              {/* End of article line removed */}
+              )}
               
             </div>
 
-            {/* Right Sidebar (Recent in Category) */}
-            <div className="w-full lg:col-span-3 flex flex-col pt-1">
-              <h3 className="text-[13px] font-bold font-serif uppercase tracking-widest text-black mb-6 border-b border-gray-900 pb-2">
-                Recent in {article.category.split('|')[0].trim()}
-              </h3>
+                        {/* Right Sidebar (Ads) */}
+            <div className="w-full lg:col-span-3 flex flex-col pt-1 gap-8">
               
-              <div className="flex flex-col gap-6">
-                {[
-                  { title: "Man Arrested in South Yorkshire Over Ann...", date: "Jul 12, 2026", img: "/imgi_572_20260718_BRD001.jpg", slug: "man-arrested-south-yorkshire" },
-                  { title: "China Evacuates Nearly Two Million People as...", date: "Jul 12, 2026", img: "/imgi_573_20260718_CND001.jpg", slug: "china-evacuates-nearly" },
-                  { title: "British Couple Seriously Injured Afte...", date: "Jul 14, 2026", img: "/imgi_574_20260718_AMP001.jpg", slug: "british-couple-injured" },
-                  { title: "China Evacuates Nearly Two Million Residents...", date: "Jul 13, 2026", img: "/imgi_13_20260718_BLP502-1-1024x576.jpg", slug: "china-evacuates-residents" },
-                  { title: "Two Killed, Several Injured in Shooting at...", date: "Jul 12, 2026", img: "/imgi_581_20260718_LDD002_FH.jpg", slug: "two-killed-several-injured" }
-                ].map((item, i) => (
-                  <Link href={`/article/${item.slug}`} key={i} className="flex gap-4 group cursor-pointer border-b border-gray-100 pb-6 last:border-b-0 items-stretch">
-                    <div className="w-[125px] flex-shrink-0 bg-gray-200 overflow-hidden">
-                      <img src={item.img} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" alt="Thumbnail" />
+              {/* Ad 1 */}
+              <div className="flex flex-col items-center w-full">
+                <span className="text-[10px] text-[#999] uppercase tracking-widest mb-1 font-sans">Advertisement</span>
+                {adsMap.details_sidebar_1 ? (
+                  getAdHref(adsMap.details_sidebar_1) ? (
+                    <a href={getAdHref(adsMap.details_sidebar_1)} target="_blank" className="w-full max-w-[300px] h-[600px] relative overflow-hidden bg-gray-50 flex-shrink-0 cursor-pointer hover:opacity-95 transition-opacity">
+                      <img src={adsMap.details_sidebar_1.image_url} alt="Advertisement" className="w-full h-full object-cover" />
+                    </a>
+                  ) : (
+                    <div className="w-full max-w-[300px] h-[600px] relative overflow-hidden bg-gray-50 flex-shrink-0">
+                      <img src={adsMap.details_sidebar_1.image_url} alt="Advertisement" className="w-full h-full object-cover" />
                     </div>
-                    <div className="flex flex-col">
-                      <h4 className="font-serif font-bold text-[15px] leading-snug group-hover:text-[#00508f] group-hover:underline transition-colors line-clamp-3">
-                        {item.title}
-                      </h4>
-                      <span className="text-[11px] font-sans text-gray-400 mt-1 uppercase tracking-wider">{item.date}</span>
-                    </div>
-                  </Link>
-                ))}
+                  )
+                ) : (
+                  <div className="w-full max-w-[300px] h-[600px] bg-gray-50 border border-gray-200 flex flex-col items-center justify-center">
+                    <span className="text-gray-400 font-sans text-[15px] font-bold">300 x 600</span>
+                  </div>
+                )}
               </div>
+
+              {/* Ad 2 */}
+              <div className="flex flex-col items-center w-full mt-4">
+                <span className="text-[10px] text-[#999] uppercase tracking-widest mb-1 font-sans">Advertisement</span>
+                {adsMap.details_sidebar_2 ? (
+                  getAdHref(adsMap.details_sidebar_2) ? (
+                    <a href={getAdHref(adsMap.details_sidebar_2)} target="_blank" className="w-full max-w-[300px] h-[600px] relative overflow-hidden bg-gray-50 flex-shrink-0 cursor-pointer hover:opacity-95 transition-opacity">
+                      <img src={adsMap.details_sidebar_2.image_url} alt="Advertisement" className="w-full h-full object-cover" />
+                    </a>
+                  ) : (
+                    <div className="w-full max-w-[300px] h-[600px] relative overflow-hidden bg-gray-50 flex-shrink-0">
+                      <img src={adsMap.details_sidebar_2.image_url} alt="Advertisement" className="w-full h-full object-cover" />
+                    </div>
+                  )
+                ) : (
+                  <div className="w-full max-w-[300px] h-[600px] bg-gray-50 border border-gray-200 flex flex-col items-center justify-center">
+                    <span className="text-gray-400 font-sans text-[15px] font-bold">300 x 600</span>
+                  </div>
+                )}
+              </div>
+
             </div>
 
-          </div>
-
-          {/* Share Button Section */}
-          <div className="w-full lg:w-[75%] mt-6 border-t border-gray-300 pt-8 mb-4">
-            <div className="flex">
-              <ShareDropdown title={article?.title}>
-                <button className="flex items-center gap-3 border border-gray-300 rounded-full px-8 py-3 hover:bg-gray-50 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                    <polyline points="16 6 12 2 8 6"></polyline>
-                    <line x1="12" y1="2" x2="12" y2="15"></line>
-                  </svg>
-                  <span className="text-[16px] font-bold">Share</span>
-                </button>
-              </ShareDropdown>
-            </div>
           </div>
 
           {/* More from Category */}
           <div className="w-full mt-16 pt-8 border-t-[1px] border-black">
             <div className="flex items-center justify-between mb-8">
               <h3 className="font-bold text-[20px] font-sans flex items-center cursor-pointer hover:text-[#003a6a] hover:underline hover:decoration-1 hover:underline-offset-[3px] hover:decoration-[#003a6a]">
-                More from {article.category.split('|')[0].trim()} 
+                More from {mainCategory} 
                 <span className="ml-1 text-xl">&rarr;</span>
               </h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Article 1 */}
-              <Link href={`/article/fallback-article-1-${Math.random().toString(36).substring(7)}`} className="flex flex-col group">
-                <img src="/imgi_575_20260718_WOT913.png" alt="More 1" className="w-full aspect-[3/2] object-cover mb-3" />
-                <h4 className="text-[19px] font-serif font-bold text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] cursor-pointer transition-colors pr-2">
-                  A new geopolitical reality takes shape
-                </h4>
-                <p className="text-[14px] font-serif text-gray-700">Global alliances are shifting faster than expected.</p>
-              </Link>
-              {/* Article 2 */}
-              <Link href={`/article/fallback-article-2-${Math.random().toString(36).substring(7)}`} className="flex flex-col group">
-                <img src="/imgi_576_20260718_EUD000.jpg" alt="More 2" className="w-full aspect-[3/2] object-cover mb-3" />
-                <h4 className="text-[19px] font-serif font-bold text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] cursor-pointer transition-colors pr-2">
-                  Economic pressures mount in capital cities
-                </h4>
-                <p className="text-[14px] font-serif text-gray-700">Inflation and interest rates continue to squeeze budgets.</p>
-              </Link>
-              {/* Article 3 */}
-              <Link href={`/article/fallback-article-3-${Math.random().toString(36).substring(7)}`} className="flex flex-col group">
-                <img src="/imgi_577_20260718_EUP002.jpg" alt="More 3" className="w-full aspect-[3/2] object-cover mb-3" />
-                <h4 className="text-[19px] font-serif font-bold text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#003a6a] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[3px] group-hover:decoration-[#003a6a] cursor-pointer transition-colors pr-2">
-                  The future of technological innovation
-                </h4>
-                <p className="text-[14px] font-serif text-gray-700">AI and robotics are fundamentally altering the workforce.</p>
-              </Link>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-16">
+              
+              {/* Column 1: Article 1 */}
+              {moreArticles[0] && (
+                <div className="md:col-span-5 flex flex-col">
+                  <Link href={`/article/${moreArticles[0].slug || moreArticles[0].id}`} className="group flex flex-col">
+                    <img src={moreArticles[0].image_url || '/imgi_575_20260718_WOT913.png'} alt={moreArticles[0].title} className="w-full aspect-[1.5] object-cover mb-4" />
+                    <h4 className="line-clamp-2 text-[24px] font-serif text-[#003a6a] leading-tight mb-2 underline decoration-1 underline-offset-[3px] transition-colors">
+                      {moreArticles[0].title}
+                    </h4>
+                    <p className="text-[15px] font-serif text-[#333] mb-3 line-clamp-2">{moreArticles[0].card_summary || moreArticles[0].meta_description || 'Read more about this trending topic.'}</p>
+                    <span className="text-[12px] font-sans text-[#666] tracking-wider uppercase">{moreArticles[0].read_duration ? `${moreArticles[0].read_duration} min read` : "5 min read"}</span>
+                  </Link>
+                </div>
+              )}
+
+              {/* Column 2: Article 2 & 3 */}
+              <div className="md:col-span-4 flex flex-col gap-6">
+                {moreArticles[1] && (
+                  <Link href={`/article/${moreArticles[1].slug || moreArticles[1].id}`} className="group flex flex-row gap-4 items-start pb-6 border-b border-gray-200">
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="line-clamp-2 text-[17px] font-serif text-[#0f0f0f] leading-snug mb-2 group-hover:text-[#00508f] transition-colors">{moreArticles[1].title}</h4>
+                      <p className="text-[14px] font-serif text-[#333] mb-3 line-clamp-2">{moreArticles[1].card_summary || moreArticles[1].meta_description}</p>
+                      <span className="text-[11px] font-sans text-[#666] tracking-wider uppercase">{moreArticles[1].read_duration ? `${moreArticles[1].read_duration} min read` : "5 min read"}</span>
+                    </div>
+                    <img src={moreArticles[1].image_url || '/imgi_576_20260718_EUD000.jpg'} alt={moreArticles[1].title} className="w-[130px] aspect-[1.5] object-cover flex-shrink-0" />
+                  </Link>
+                )}
+                {moreArticles[2] && (
+                  <Link href={`/article/${moreArticles[2].slug || moreArticles[2].id}`} className="group flex flex-row gap-4 items-start pb-6">
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="line-clamp-2 text-[17px] font-serif text-[#0f0f0f] leading-snug mb-2 group-hover:text-[#00508f] transition-colors">{moreArticles[2].title}</h4>
+                      <p className="text-[14px] font-serif text-[#333] mb-3 line-clamp-2">{moreArticles[2].card_summary || moreArticles[2].meta_description}</p>
+                      <span className="text-[11px] font-sans text-[#666] tracking-wider uppercase">{moreArticles[2].read_duration ? `${moreArticles[2].read_duration} min read` : "5 min read"}</span>
+                    </div>
+                    <img src={moreArticles[2].image_url || '/imgi_577_20260718_EUP002.jpg'} alt={moreArticles[2].title} className="w-[130px] aspect-[1.5] object-cover flex-shrink-0" />
+                  </Link>
+                )}
+              </div>
+
+              {/* Column 3: Article 4, 5 & 6 */}
+              <div className="md:col-span-3 flex flex-col gap-6">
+                {moreArticles[3] && (
+                  <Link href={`/article/${moreArticles[3].slug || moreArticles[3].id}`} className="group flex flex-row gap-4 items-start pb-6 border-b border-gray-200">
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="text-[15px] font-serif text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#00508f] transition-colors line-clamp-2">{moreArticles[3].title}</h4>
+                      <span className="text-[11px] font-sans text-[#666] tracking-wider uppercase">{moreArticles[3].read_duration ? `${moreArticles[3].read_duration} min read` : "5 min read"}</span>
+                    </div>
+                    <img src={moreArticles[3].image_url || '/imgi_575_20260718_WOT913.png'} alt={moreArticles[3].title} className="w-[80px] aspect-[1.5] object-cover flex-shrink-0" />
+                  </Link>
+                )}
+                {moreArticles[4] && (
+                  <Link href={`/article/${moreArticles[4].slug || moreArticles[4].id}`} className="group flex flex-row gap-4 items-start pb-6 border-b border-gray-200">
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="text-[15px] font-serif text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#00508f] transition-colors line-clamp-2">{moreArticles[4].title}</h4>
+                      <span className="text-[11px] font-sans text-[#666] tracking-wider uppercase">{moreArticles[4].read_duration ? `${moreArticles[4].read_duration} min read` : "5 min read"}</span>
+                    </div>
+                    <img src={moreArticles[4].image_url || '/imgi_576_20260718_EUD000.jpg'} alt={moreArticles[4].title} className="w-[80px] aspect-[1.5] object-cover flex-shrink-0" />
+                  </Link>
+                )}
+                {moreArticles[5] && (
+                  <Link href={`/article/${moreArticles[5].slug || moreArticles[5].id}`} className="group flex flex-row gap-4 items-start pb-6">
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="text-[15px] font-serif text-[#0f0f0f] leading-tight mb-2 group-hover:text-[#00508f] transition-colors line-clamp-2">{moreArticles[5].title}</h4>
+                      <span className="text-[11px] font-sans text-[#666] tracking-wider uppercase">{moreArticles[5].read_duration ? `${moreArticles[5].read_duration} min read` : "5 min read"}</span>
+                    </div>
+                    <img src={moreArticles[5].image_url || '/imgi_577_20260718_EUP002.jpg'} alt={moreArticles[5].title} className="w-[80px] aspect-[1.5] object-cover flex-shrink-0" />
+                  </Link>
+                )}
+              </div>
+
             </div>
           </div>
 
         </div>
       </main>
-
       <Footer />
     </div>
+    </>
+
   );
 }

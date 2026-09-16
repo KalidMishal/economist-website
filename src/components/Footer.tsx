@@ -1,113 +1,174 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
-  const socialIcons = [
-    { name: 'LinkedIn', path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z' },
-    { name: 'Instagram', path: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z' },
-    { name: 'Facebook', path: 'M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z' },
-    { name: 'X', path: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' },
-    { name: 'TikTok', path: 'M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.24-1.76.14-3.55 1.13-5.01 1.14-1.65 3.11-2.73 5.09-2.87.15-.01.29-.02.44-.02v4.06c-.66.01-1.33.15-1.93.47-1.12.63-1.88 1.83-1.92 3.11-.06 1.16.48 2.29 1.41 2.93.93.63 2.15.72 3.17.27.9-.4 1.55-1.22 1.71-2.19.06-.34.08-.69.07-1.04-.03-4.66-.01-9.33-.02-13.99z' },
-    { name: 'YouTube', path: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.547 12 3.547 12 3.547s-7.505 0-9.377.503a3.015 3.015 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.503 9.377.503 9.377.503s7.505 0 9.377-.503a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' },
-    { name: 'WhatsApp', path: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z' }
+  const newsLinks = [
+    { label: 'World', href: '/category/world' },
+    { label: 'Finance & Economics', href: '/category/finance-and-economics' },
+    { label: 'Politics', href: '/category/politics' },
+    { label: 'Technology', href: '/category/technology' },
+    { label: 'Industries', href: '/category/industries' },
   ];
 
-  const cols = [
-    {
-      title: 'THE ECONOMIST',
-      links: ['About', 'Reuse our content', 'Subscribe', 'Gift subscriptions', 'The Economist Pro', 'SecureDrop']
+  const featuredLinks = [
+    { label: 'Politics', href: '/category/politics' },
+    { label: 'Business', href: '/category/business' },
+    { label: 'Technology', href: '/category/technology' },
+    { label: 'Stockmarkets', href: '/category/stockmarkets' },
+    { label: 'China', href: '/category/china' },
+    { label: 'Asia', href: '/category/asia' },
+    { label: 'Europe', href: '/category/europe' },
+    { label: 'Middle East', href: '/category/middle-east' },
+    { label: 'Sports', href: '/category/sports' },
+  ];
+
+  const aboutLinks = [
+    { label: 'About us', href: '/about-us' },
+    { label: 'Contact us', href: '/contact-us' },
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Cookie Policy', href: '/cookies' },
+    { label: 'Editorial Policy', href: '/editorial-policy' },
+    { label: 'Advertise with us', href: '/advertise-with-us' },
+    { label: 'RSS Feed', href: '/rss' },
+  ];
+
+  const followUsLinks = [
+    { 
+      name: 'Facebook', 
+      path: 'M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z',
+      href: '#'
     },
-    {
-      title: 'THE ECONOMIST GROUP',
-      links: ['The Economist Group', 'Economist Enterprise', 'Economist Enterprise Events', 'Economist Education Courses']
+    { 
+      name: 'LinkedIn', 
+      path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z',
+      href: '#'
     },
-    {
-      title: 'CONTACT',
-      links: ['Help and support', 'Advertise', 'Press centre', 'Affiliate programme']
-    },
-    {
-      title: 'CAREERS',
-      links: ['Working here', 'Executive Jobs']
+    { 
+      name: 'Instagram', 
+      path: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z',
+      href: '#'
     }
   ];
 
+  const Header = ({ title }: { title: string }) => (
+    <h3 className="text-[14px] font-serif font-bold uppercase mb-[18px] text-white">{title}</h3>
+  );
+
   return (
-    <footer className="bg-[#1c1c1c] w-full text-white pt-10 pb-8">
+    <footer className="bg-[#1c1c1c] w-full text-white pt-[60px] pb-[40px]">
       <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
         
-        {/* Top Row: Social + App */}
-        <div className="flex flex-col md:flex-row items-center gap-5 mb-8">
-          <div className="flex flex-row gap-[10px]">
-            {socialIcons.map((icon, idx) => (
-              <a key={idx} href="#" aria-label={icon.name} className="w-[30px] h-[30px] rounded-full bg-white flex items-center justify-center text-[#1c1c1c] hover:bg-gray-300 transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-[15px] h-[15px]">
-                  <path d={icon.path} />
-                </svg>
-              </a>
-            ))}
+        {/* Top Links Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-10 mb-14">
+          
+          {/* NEWS */}
+          <div className="flex flex-col">
+            <Header title="NEWS" />
+            <ul className="flex flex-col gap-3 text-[13.5px] font-sans text-gray-300">
+              {newsLinks.map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="hover:text-white hover:underline transition-colors">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="text-[15px] font-sans font-bold text-white">
-            Get <span className="italic font-serif font-normal">The Economist</span> app on <a href="#" className="underline hover:text-[#439ade] transition-colors">iOS</a> or <a href="#" className="underline hover:text-[#439ade] transition-colors">Android</a>
+
+          {/* FEATURED */}
+          <div className="flex flex-col">
+            <Header title="FEATURED" />
+            <ul className="flex flex-col gap-3 text-[13.5px] font-sans text-gray-300">
+              {featuredLinks.map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="hover:text-white hover:underline transition-colors">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ABOUT */}
+          <div className="flex flex-col">
+            <Header title="ABOUT" />
+            <ul className="flex flex-col gap-3 text-[13.5px] font-sans text-gray-300">
+              {aboutLinks.map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="hover:text-white hover:underline transition-colors">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* EDITIONS */}
+          <div className="flex flex-col">
+            <Header title="EDITIONS" />
+            <ul className="flex flex-col gap-3 text-[13.5px] font-sans">
+              <li>
+                <Link href="/category/united-states" className="text-gray-300 hover:text-white hover:underline transition-colors">United States</Link>
+              </li>
+              <li className="text-gray-500 cursor-default">China</li>
+              <li className="text-gray-500 cursor-default">Europe</li>
+              <li className="text-gray-500 cursor-default">Asia</li>
+              <li className="text-gray-500 cursor-default">Middle East</li>
+            </ul>
+          </div>
+
+          {/* FOLLOW US */}
+          <div className="flex flex-col">
+            <Header title="FOLLOW US" />
+            <ul className="flex flex-col gap-4 text-[13.5px] font-sans text-gray-300">
+              {followUsLinks.map((link, idx) => (
+                <li key={idx}>
+                  <a href={link.href} className="flex items-center gap-3 hover:text-white group transition-colors">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px] text-gray-300 group-hover:text-white">
+                      <path d={link.path} />
+                    </svg>
+                    <span>{link.name}</span>
+                  </a>
+                </li>
+              ))}
+              {/* Rumble */}
+              <li>
+                <a href="#" className="flex items-center gap-3 hover:text-white group transition-colors">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px] text-[#85c742] group-hover:text-[#a1e658]">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                  </svg>
+                  <span>Rumble</span>
+                </a>
+              </li>
+              {/* Newsletter */}
+              <li>
+                <a href="#" className="flex items-center gap-3 hover:text-white group transition-colors">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px] text-gray-300 group-hover:text-white">
+                    <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+                  </svg>
+                  <span>Newsletter</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-        
-        {/* Separator */}
-        <div className="w-full h-px bg-[#333] mb-10"></div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-          {cols.map((col, idx) => (
-            <div key={idx} className="flex flex-col">
-              <h3 className="text-[12px] font-sans font-extrabold uppercase tracking-[0.05em] mb-4 text-white">{col.title}</h3>
-              <ul className="flex flex-col gap-[14px] text-[14px] font-sans font-bold text-white">
-                {col.links.map((link, lidx) => (
-                  <li key={lidx}>
-                    <a href="#" className="hover:text-[#439ade] hover:underline transition-colors">{link}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Separator */}
-        <div className="w-full h-px bg-[#333] mb-6"></div>
-
-        {/* Cookies text */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 text-[12px] font-sans text-white font-bold">
-          <p>
-            To enhance your experience and ensure our website runs smoothly, we use cookies and similar technologies. 
-            <button className="border border-[#767676] px-3 py-1 ml-2 font-bold hover:bg-white hover:text-black transition-colors rounded-sm">Manage cookies</button>
-          </p>
-        </div>
-
-        {/* Separator */}
-        <div className="w-full h-px bg-[#333] mb-5"></div>
+        {/* Separator Line */}
+        <div className="w-full h-[1px] bg-[#333] mb-8"></div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col text-[12px] font-sans font-bold text-white">
-          <div className="flex flex-row flex-wrap gap-x-[14px] gap-y-2 mb-3">
-            <a href="#" className="hover:text-[#439ade] hover:underline transition-colors underline">Terms of use</a>
-            <a href="#" className="hover:text-[#439ade] hover:underline transition-colors underline">Privacy</a>
-            <a href="#" className="hover:text-[#439ade] hover:underline transition-colors underline">Cookie Policy</a>
-            <a href="#" className="hover:text-[#439ade] hover:underline transition-colors underline">Accessibility</a>
-            <a href="#" className="hover:text-[#439ade] hover:underline transition-colors underline">Modern Slavery Statement</a>
-            <a href="#" className="hover:text-[#439ade] hover:underline transition-colors underline">Sitemap</a>
-            <a href="#" className="flex items-center gap-1 hover:text-[#439ade] hover:underline transition-colors underline">
-              <svg viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-[30px] h-auto">
-                <rect x="1" y="1" width="22" height="12" rx="6" />
-                <path d="M12 1H7A6 6 0 0 0 7 13H12V1Z" fill="currentColor" stroke="none" />
-                <path d="M4.5 7l2 2 3-3" stroke="#1c1c1c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M15 5l4 4m0-4l-4 4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Your Privacy Choices
-            </a>
-          </div>
-          <p className="mb-1 text-gray-300 font-normal">Registered in England and Wales. No. 236383 | Registered office: The Adelphi, 1-11 John Adam Street, London, WC2N 6HT | VAT Reg No: GB 340 436 876</p>
-          <p className="text-gray-300 font-normal">© The Economist Newspaper Limited 2026</p>
+        <div className="flex flex-col items-center">
+          <Link href="/">
+            <Image 
+              src="/Logo 2 Newyork capital.svg" 
+              alt="Newyork Capital" 
+              width={260} 
+              height={70} 
+              className="mb-4" 
+              style={{ objectFit: 'contain' }}
+            />
+          </Link>
+          <p className="text-[#a0a0a0] text-[12px] font-sans text-center">
+            © Copyright 2026 Newyork Capital Media LLC. All Rights Reserved. All standard legal notices apply.
+          </p>
         </div>
 
       </div>
     </footer>
   );
 }
-

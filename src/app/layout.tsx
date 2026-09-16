@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   },
 };
 import SubscriptionBanner from "@/components/SubscriptionBanner";
+import GoogleAuthProviderWrapper from "@/components/GoogleAuthProviderWrapper";
 
 export default function RootLayout({
   children,
@@ -34,11 +35,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} h-full antialiased`}
+      className={`${playfair.variable} ${inter.variable} antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#0F0F0F] overflow-x-hidden w-full max-w-[100vw]">
-        {children}
-        <SubscriptionBanner />
+      <body className="min-h-screen flex flex-col font-sans bg-white text-[#0F0F0F] overflow-x-hidden w-full max-w-[100vw]" suppressHydrationWarning>
+        <GoogleAuthProviderWrapper>
+          {children}
+          <SubscriptionBanner />
+        </GoogleAuthProviderWrapper>
       </body>
     </html>
   );

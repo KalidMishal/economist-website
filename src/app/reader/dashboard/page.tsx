@@ -1,9 +1,9 @@
 'use client';
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ReaderProfileSettingsModal from '@/components/ReaderProfileSettingsModal';
+import { SkeletonArticleCard } from '@/components/Skeletons';
 
 export default function ReaderDashboard() {
   const router = useRouter();
@@ -13,6 +13,7 @@ export default function ReaderDashboard() {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [savedArticles, setSavedArticles] = useState<any[]>([]);
+  const [isLoadingBookmarks, setIsLoadingBookmarks] = useState(true);
   
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -32,38 +33,91 @@ export default function ReaderDashboard() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      // Removed the 'reader' role check to allow writers to view it too, since user asked to show 'Writer'
-      setUser(parsedUser);
-      
-      const storedProfile = localStorage.getItem(`userProfile_${parsedUser.email}`) || localStorage.getItem('userProfile');
-      if (storedProfile) {
-        try { 
-          setProfileData(JSON.parse(storedProfile)); 
-        } catch(e) {}
-      } else {
-        setProfileData({
-          fullName: parsedUser.name || 'Mishal Zuhrie',
-          photo: 'https://randomuser.me/api/portraits/men/32.jpg'
-        });
-      }
-      
-      const bookmarks = JSON.parse(localStorage.getItem('bookmarkedArticles') || '[]');
-      setSavedArticles(bookmarks);
-    } else {
+    if (!storedUser) {
       router.push('/login');
+      return;
     }
+    
+    const parsedUser = JSON.parse(storedUser);
+    
+    // Fetch fresh user profile from backend to verify role
+    fetch(`http://localhost:5000/api/users/${parsedUser.id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.user) {
+          const freshUser = { ...parsedUser, ...data.user };
+          localStorage.setItem('user', JSON.stringify(freshUser));
+          
+          // If they got promoted, push them to their new dashboard
+          if (parsedUser.role === 'reader' && freshUser.role !== 'reader') {
+            if (freshUser.role === 'admin') router.push('/admin/dashboard');
+            else if (freshUser.role === 'writer') router.push('/writer/dashboard');
+            else router.push('/');
+            return;
+          }
+          
+          setUser(freshUser);
+          
+          const storedProfile = localStorage.getItem(`userProfile_${freshUser.email}`) ;
+          if (storedProfile) {
+            try { 
+              setProfileData(JSON.parse(storedProfile)); 
+            } catch(e) {}
+          } else {
+            setProfileData({
+              fullName: freshUser.name || '',
+              photo: data.user.profile_picture || 'https://randomuser.me/api/portraits/men/32.jpg'
+            });
+          }
+          
+          const fetchBookmarks = async () => {
+            setIsLoadingBookmarks(true);
+            try {
+              const res = await fetch(`http://localhost:5000/api/bookmarks?email=${freshUser.email}`);
+              const bookmarkData = await res.json();
+              if (bookmarkData.success) {
+                setSavedArticles(bookmarkData.bookmarks);
+              }
+            } catch (err) {
+              console.error(err);
+            } finally {
+              setIsLoadingBookmarks(false);
+            }
+          };
+          fetchBookmarks();
+        } else {
+          router.push('/login');
+        }
+      })
+      .catch(err => {
+        console.error("Error fetching profile:", err);
+        // Fallback to local storage
+        setUser(parsedUser);
+      });
   }, [router]);
 
-  const handleRemoveBookmark = (slug: string) => {
-    const updatedBookmarks = savedArticles.filter(a => a.slug !== slug);
-    setSavedArticles(updatedBookmarks);
-    localStorage.setItem('bookmarkedArticles', JSON.stringify(updatedBookmarks));
+  const handleRemoveBookmark = async (slug: string) => {
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) return;
+    const parsedUser = JSON.parse(storedUser);
+    try {
+      const res = await fetch('http://localhost:5000/api/bookmarks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: parsedUser.email, article_slug: slug }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSavedArticles(savedArticles.filter(a => a.slug !== slug));
+        showToast('Bookmark removed');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('user'); localStorage.removeItem('userProfile'); Object.keys(localStorage).forEach(k => { if (k.startsWith('userProfile_')) localStorage.removeItem(k); });
     localStorage.removeItem('userProfile');
     router.push('/login');
   };
@@ -81,12 +135,12 @@ export default function ReaderDashboard() {
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            Back to News
+            <span className="hidden md:inline">Back to News</span>
           </button>
 
           {/* Center: Title */}
           <div className="flex justify-center w-1/3">
-            <h1 className="text-[20px] font-serif font-black tracking-wider text-[#0f2d4a] uppercase text-center" style={{ textShadow: "0.5px 0.5px 0px rgba(0,0,0,0.1)"}}>
+            <h1 className="text-[14px] md:text-[20px] whitespace-nowrap font-serif font-black tracking-wider text-[#0f2d4a] uppercase text-center" style={{ textShadow: "0.5px 0.5px 0px rgba(0,0,0,0.1)"}}>
               READERS DASHBOARD
             </h1>
           </div>
@@ -95,14 +149,14 @@ export default function ReaderDashboard() {
           <div className="flex justify-end w-1/3 relative" ref={dropdownRef}>
             <button 
               onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-full hover:bg-gray-50 transition-colors focus:outline-none"
+              className="flex items-center gap-0 md:gap-2 px-1 md:px-3 py-1 md:py-1.5 border-0 md:border border-gray-200 rounded-full hover:bg-gray-50 transition-colors focus:outline-none"
             >
             <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-200 relative">
               <img src={profileData.photo} alt="Profile" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'https://randomuser.me/api/portraits/men/32.jpg'; }} />
               <div className="absolute top-0 right-0 w-2 h-2 bg-green-500 border-2 border-white rounded-full z-10 pointer-events-none"></div>
             </div>
-            <span className="text-xs font-bold text-gray-800 tracking-wide">{profileData.fullName}</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`text-gray-400 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`}>
+            <span className="hidden md:inline text-xs font-bold text-gray-800 tracking-wide">{profileData.fullName}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`hidden md:block text-gray-400 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`}>
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
@@ -170,7 +224,14 @@ export default function ReaderDashboard() {
 
         {/* Saved Articles Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {savedArticles.length === 0 ? (
+          {isLoadingBookmarks ? (
+            <>
+              <SkeletonArticleCard />
+              <SkeletonArticleCard />
+              <SkeletonArticleCard />
+              <SkeletonArticleCard />
+            </>
+          ) : savedArticles.length === 0 ? (
             <div className="col-span-full py-12 text-center text-gray-400 font-serif">
               You haven't saved any articles yet.
             </div>
@@ -207,7 +268,7 @@ export default function ReaderDashboard() {
                     </div>
                     
                     <div className="mt-4 pt-3 border-t border-gray-100 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                      BY {article.author}
+                      BY {article.author || 'The Economist'}
                     </div>
                   </div>
                 </Link>

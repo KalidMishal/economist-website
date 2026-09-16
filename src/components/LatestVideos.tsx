@@ -10,8 +10,8 @@ export default function LatestVideos() {
   const checkScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
     }
   };
 
@@ -23,81 +23,46 @@ export default function LatestVideos() {
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -(scrollRef.current.clientWidth * 0.94), behavior: 'smooth' });
+      // Each card is 1/5 of container on desktop; step exactly 5 cards
+      const cardWidth = scrollRef.current.clientWidth / 5;
+      scrollRef.current.scrollBy({ left: -(cardWidth * 5 + 15 * 4), behavior: 'smooth' });
+      setTimeout(checkScroll, 500);
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: scrollRef.current.clientWidth * 0.94, behavior: 'smooth' });
+      const cardWidth = scrollRef.current.clientWidth / 5;
+      scrollRef.current.scrollBy({ left: cardWidth * 5 + 15 * 4, behavior: 'smooth' });
+      setTimeout(checkScroll, 500);
     }
   };
 
-  const videos = [
-    {
-      img: "/imgi_27_image.jpg",
-      category: "United States",
-      title: "Why is New York City building a jail skyscraper?",
-      sub: "",
-      time: "2:50"
-    },
-    {
-      img: "/imgi_29_image.jpg",
-      category: "Middle East",
-      title: "Can Netanyahu win again?",
-      sub: "With our Israel correspondent",
-      time: "2:43"
-    },
-    {
-      img: "/imgi_30_image.jpg",
-      category: "Finance",
-      title: "Are Europe's stock markets worth investing in?",
-      sub: "with our Capital markets correspondent",
-      time: "2:05"
-    },
-    {
-      img: "/imgi_31_image.jpg",
-      category: "International",
-      title: "Could this man change Russia?",
-      sub: "with our Russia editor",
-      time: "2:51"
-    },
-    {
-      img: "/imgi_32_image.jpg",
-      category: "Geopolitics",
-      title: "Could Indonesia disrupt global trade?",
-      sub: "With our Asia diplomatic editor",
-      time: "2:30"
-    },
-    {
-      img: "/imgi_33_image.jpg",
-      category: "Culture",
-      title: "Has it got easier for short men to date?",
-      sub: "",
-      time: "2:17"
-    },
-    {
-      img: "/imgi_34_image.jpg",
-      category: "United States",
-      title: "How powerful is America?",
-      sub: "",
-      time: "2:39"
-    },
-    {
-      img: "/imgi_35_image.jpg",
-      category: "United States",
-      title: "How did the war on terror pave the way for ICE?",
-      sub: "",
-      time: "2:28"
-    },
-    {
-      img: "/imgi_36_image.jpg",
-      category: "Visual investigation",
-      title: "Will Israel withdraw from Lebanon?",
-      sub: "",
-      time: "2:54"
+  const [videos, setVideos] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchShorts = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/shorts-reels');
+        const data = await res.json();
+        if (data.success && data.shorts) {
+          setVideos(data.shorts);
+        }
+      } catch (err) {
+        console.error('Failed to fetch shorts:', err);
+      }
+    };
+    fetchShorts();
+  }, []);
+
+  // Re-check scroll state whenever videos change (after fetch) or on resize
+  useEffect(() => {
+    if (videos.length > 0) {
+      // Allow DOM to paint the new cards before measuring
+      setTimeout(checkScroll, 100);
     }
-  ];
+  }, [videos]);
+
 
   return (
     <div className="w-full mt-2 mb-0 relative">
@@ -109,9 +74,10 @@ export default function LatestVideos() {
         {canScrollLeft && (
           <button 
             onClick={scrollLeft}
-            className="absolute left-[-16px] top-1/2 -translate-y-1/2 z-10 bg-white border border-[#ccc] w-[30px] h-[40px] flex items-center justify-center shadow-sm hover:bg-gray-50"
+            aria-label="Previous videos"
+            className="absolute left-[-20px] md:left-[-50px] top-1/2 -translate-y-1/2 z-10 bg-[#e3120b] hover:bg-[#c8100a] text-white w-[40px] h-[40px] rounded-full flex items-center justify-center shadow-md transition-colors"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
         )}
 
@@ -124,11 +90,11 @@ export default function LatestVideos() {
           {videos.map((vid, idx) => (
             <div 
               key={idx} 
-              className="relative flex-shrink-0 snap-start cursor-pointer group"
-              style={{ width: 'calc(19.1% - 12px)' }}
+              onClick={() => vid.video_url ? window.open(vid.video_url, '_blank') : null}
+              className="relative flex-shrink-0 snap-start cursor-pointer group w-[calc((100%-15px)/2)] sm:w-[calc((100%-30px)/3)] md:w-[calc((100%-60px)/5)]"
             >
               <div className="w-full relative aspect-[2/3.8] bg-[#111] overflow-hidden">
-                <img src={vid.img} alt={vid.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src={vid.thumbnail_url || vid.img} alt={vid.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 
                 {/* Dark gradient overlay for text readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
@@ -139,7 +105,7 @@ export default function LatestVideos() {
                     <div className="w-[20px] h-[20px] rounded-full border-[1.5px] border-white flex items-center justify-center pl-[2px]">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
                     </div>
-                    <span className="text-[12.5px] font-bold font-sans tracking-wide">{vid.time}</span>
+                    <span className="text-[12.5px] font-bold font-sans tracking-wide">{vid.duration || vid.time}</span>
                   </div>
                 </div>
               </div>
@@ -150,9 +116,10 @@ export default function LatestVideos() {
         {canScrollRight && (
           <button 
             onClick={scrollRight}
-            className="absolute right-[-14px] top-1/2 -translate-y-1/2 z-10 bg-white border border-[#ccc] w-[30px] h-[40px] flex items-center justify-center shadow-sm hover:bg-gray-50"
+            aria-label="Next videos"
+            className="absolute right-[-20px] md:right-[-50px] top-1/2 -translate-y-1/2 z-10 bg-[#e3120b] hover:bg-[#c8100a] text-white w-[40px] h-[40px] rounded-full flex items-center justify-center shadow-md transition-colors"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         )}
       </div>

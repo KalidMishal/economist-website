@@ -6,17 +6,17 @@ import { usePathname } from 'next/navigation';
 import ReaderProfileSettingsModal from './ReaderProfileSettingsModal';
 
 const sections = [
-  { label: "United States", href: "/topics/united-states" },
-  { label: "Politics", href: "/topics/politics" },
-  { label: "Business", href: "/topics/business" },
-  { label: "Technology", href: "/topics/technology" },
-  { label: "Stock markets", href: "/topics/stock-markets" },
-  { label: "China", href: "/topics/china" },
-  { label: "Asia", href: "/topics/asia" },
-  { label: "Europe", href: "/topics/europe" },
-  { label: "Middle East", href: "/topics/middle-east" },
-  { label: "Finance & Economics", href: "/topics/finance-and-economics" },
-  { label: "Sports", href: "/topics/sports" }
+  { label: "United States", href: "/category/united-states" },
+  { label: "Politics", href: "/category/politics" },
+  { label: "Business", href: "/category/business" },
+  { label: "Technology", href: "/category/technology" },
+  { label: "Stock markets", href: "/category/stock-markets" },
+  { label: "China", href: "/category/china" },
+  { label: "Asia", href: "/category/asia" },
+  { label: "Europe", href: "/category/europe" },
+  { label: "Middle East", href: "/category/middle-east" },
+  { label: "Finance & Economics", href: "/category/finance-and-economics" },
+  { label: "Sports", href: "/category/sports" }
 ];
 
 const featuredSections = [
@@ -34,11 +34,17 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   
-  const [user, setUser] = useState<{name: string, email: string, role: string} | null>(null);
+  const [user, setUser] = useState<{id?: string | number, name: string, email: string, role: string} | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [profileData, setProfileData] = useState({ fullName: '', photo: '' });
+  const [toastMessage, setToastMessage] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(''), 3000);
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -51,26 +57,32 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        const parsed = JSON.parse(storedUser);
-        setUser(parsed);
-        const storedProfile = localStorage.getItem(`userProfile_${parsed.email}`) || localStorage.getItem('userProfile');
-        if (storedProfile) {
-          setProfileData(JSON.parse(storedProfile));
-        } else {
-          setProfileData({
-            fullName: parsed.name || 'Mishal Zuhrie',
-            photo: 'https://randomuser.me/api/portraits/men/32.jpg'
-          });
-        }
-      } catch(e) {}
-    }
+    const fetchUser = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const parsed = JSON.parse(storedUser);
+          setUser(parsed);
+          const storedProfile = localStorage.getItem(`userProfile_${parsed.email}`) ;
+          if (storedProfile) {
+            setProfileData(JSON.parse(storedProfile));
+          } else {
+            setProfileData({
+              fullName: parsed.name,
+              photo: parsed.profile_picture || 'https://randomuser.me/api/portraits/men/32.jpg'
+            });
+          }
+        } catch(e) {}
+      }
+    };
+    
+    fetchUser();
+    window.addEventListener('userProfileUpdated', fetchUser);
+    return () => window.removeEventListener('userProfileUpdated', fetchUser);
   }, []);
 
   const handleSignOut = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('user'); localStorage.removeItem('userProfile'); Object.keys(localStorage).forEach(k => { if (k.startsWith('userProfile_')) localStorage.removeItem(k); });
     window.location.reload();
   };
 
@@ -108,14 +120,42 @@ export default function Header() {
 
       {/* Main Header Row */}
       <div className={`w-full bg-white z-[110] transition-all duration-200 ${(isScrolled || isOpen) ? 'fixed top-0 left-0 border-b border-gray-300 shadow-sm' : 'relative'} ${isScrolled ? 'animate-slide-down' : ''}`}>
-        <div className={`max-w-[1600px] mx-auto flex items-center justify-between ${(isScrolled && !isOpen) ? 'h-[65px]' : 'h-[80px]'} w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] transition-all duration-200`}>
+        <div className={`max-w-[1600px] mx-auto flex items-center justify-between relative ${(isScrolled && !isOpen) ? 'h-[65px]' : 'h-[80px]'} w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] transition-all duration-200`}>
           
+          
+          {/* Mobile Left Actions (Hamburger + Search) */}
+          <div className="flex md:hidden items-center gap-4 text-[#0f0f0f]">
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className={`flex items-center gap-2 hover:text-[#E3120B] transition-colors font-bold text-black ${isOpen ? 'bg-gray-100 px-2 py-1 rounded-sm' : ''}`}
+            >
+              {isOpen ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              ) : (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              )}
+            </button>
+            <Link href="/search" className="flex items-center justify-center hover:text-[#E3120B] transition-colors" aria-label="Search">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </Link>
+          </div>
+
           {/* Left Logo */}
-          <Link href="/" onClick={() => setIsOpen(false)} className={`flex-shrink-0 h-full flex ${(!(isScrolled || isOpen) && pathname !== '/subscribe') ? 'items-start' : 'items-center'}`}>
+          <Link href="/" onClick={() => { setIsOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); }} className={`flex-shrink-0 h-full flex ${(!(isScrolled || isOpen) && pathname !== '/subscribe') ? 'items-start' : 'items-center'}`}>
             <img 
               src={(isScrolled || isOpen) && pathname !== '/subscribe' ? "/Logo 2 Newyork capital.svg" : "/Logo Newyork Capital.svg"} 
               alt="Newyork Capital" 
-              className={`${(isScrolled || isOpen) && pathname !== '/subscribe' ? 'h-[25px]' : 'h-[60px] lg:h-[105px] xl:h-[135px] 2xl:h-[165px]'} w-auto object-contain`} 
+              className={`${(isScrolled || isOpen) && pathname !== '/subscribe' ? 'h-6 md:h-7 max-w-44' : 'h-[80px] md:h-[60px] lg:h-[105px] xl:h-[135px] 2xl:h-[165px]'} w-auto object-contain`} 
             />
           </Link>
 
@@ -136,7 +176,7 @@ export default function Header() {
             <div className="w-[1px] h-[16px] bg-[#ccc] hidden lg:block"></div>
 
             {user ? (
-              <div className="relative hidden lg:block" ref={dropdownRef}>
+              <div className="relative block md:hidden lg:block" ref={dropdownRef}>
                 <button 
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 focus:outline-none relative"
@@ -157,6 +197,21 @@ export default function Header() {
                           <Link href="/writer/dashboard" onClick={() => setIsProfileOpen(false)} className="w-full text-left px-4 py-2.5 text-[13px] text-[#00508f] font-medium hover:bg-gray-50 flex items-center gap-3">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                             Author Workspace
+                          </Link>
+                          <Link href={`/author/${user.name?.toLowerCase().replace(/\s+/g, '-') || user.id}`} onClick={() => setIsProfileOpen(false)} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            Writer Page
+                          </Link>
+                          <button onClick={() => { setIsProfileOpen(false); setIsSettingsModalOpen(true); }} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Profile Settings
+                          </button>
+                        </>
+                      ) : user.role === 'admin' ? (
+                        <>
+                          <Link href="/admin/dashboard" onClick={() => setIsProfileOpen(false)} className="w-full text-left px-4 py-2.5 text-[13px] text-[#e3120b] font-bold hover:bg-red-50 flex items-center gap-3">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            Editor Control Panel
                           </Link>
                           <button onClick={() => { setIsProfileOpen(false); setIsSettingsModalOpen(true); }} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -179,14 +234,14 @@ export default function Header() {
                     <div className="py-1">
                       <button onClick={handleSignOut} className="w-full text-left px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 flex items-center gap-3">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                        Sign Out
+                        Sign Out Terminal
                       </button>
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <Link href="/login" className="hover:text-[#E3120B] transition-colors hidden lg:block">
+              <Link href="/login" className="hover:text-[#E3120B] transition-colors block md:hidden lg:block">
                 Log in
               </Link>
             )}
@@ -195,7 +250,7 @@ export default function Header() {
 
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className={`flex items-center gap-2 hover:text-[#E3120B] transition-colors font-bold text-black ${isOpen ? 'bg-gray-100 px-3 py-2 rounded-sm' : ''}`}
+              className={`hidden md:flex items-center gap-2 hover:text-[#E3120B] transition-colors font-bold text-black ${isOpen ? 'bg-gray-100 px-3 py-2 rounded-sm' : ''}`}
             >
               {isOpen ? (
                 <>
@@ -229,7 +284,7 @@ export default function Header() {
       {!isOpen && pathname !== '/newsletters' && pathname !== '/subscribe' && (
         <div className="w-full border-t border-black border-b border-[#e6e6e6]">
           <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%] py-2.5">
-            <ul className="flex items-center justify-between md:pl-[170px] lg:pl-[170px] xl:pl-[210px] 2xl:pl-[250px] w-full flex-wrap gap-y-[10px] gap-x-2">
+            <ul className="flex items-center justify-start md:justify-between md:pl-[170px] lg:pl-[170px] xl:pl-[210px] 2xl:pl-[250px] w-full flex-nowrap md:flex-wrap overflow-x-auto md:overflow-x-visible gap-[20px] md:gap-y-[10px] md:gap-[14px] md:gap-x-2 px-2 md:px-0 custom-scrollbar-hide">
               {sections.map((section, idx) => (
                 <li key={idx} className="shrink-0">
                   <Link href={section.href} className="text-[13px] lg:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#333] hover:text-[#00508f] hover:underline decoration-1 underline-offset-4 transition-colors whitespace-nowrap">
@@ -244,86 +299,86 @@ export default function Header() {
 
       {/* Mega Menu Dropdown */}
       {isOpen && (
-        <div className="fixed top-[80px] left-0 w-full overflow-y-auto bg-white z-[105] shadow-lg border-t border-[#e6e6e6] pt-[90px] lg:pt-8 pb-12 max-h-[calc(100vh-80px)]">
+        <div className="fixed top-[80px] left-0 w-full overflow-y-auto bg-white z-[105] shadow-lg border-t border-[#e6e6e6] pt-6 md:pt-[90px] lg:pt-8 pb-12 max-h-[calc(100vh-80px)]">
           <div className="max-w-[1600px] mx-auto w-[90%] md:w-[90%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-6 md:gap-y-12">
               
               {/* Col 1: World */}
               <div className="flex flex-col relative h-full">
-                <Link href="/topics/world" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
+                <Link href="/category/world" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
                   <h4 className="text-[14.5px] font-bold text-[#e3120b] uppercase tracking-wide mb-6">WORLD</h4>
                 </Link>
                 <ul className="flex flex-col gap-[14px] text-[16px] font-medium text-[#333]">
-                  <li><Link href="/topics/united-states" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">United States</Link></li>
-                  <li><Link href="/topics/china" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">China</Link></li>
-                  <li><Link href="/topics/europe" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Europe</Link></li>
-                  <li><Link href="/topics/britain" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Britain</Link></li>
-                  <li><Link href="/topics/middle-east" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Middle East</Link></li>
-                  <li><Link href="/topics/africa" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Africa</Link></li>
-                  <li><Link href="/topics/asia" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Asia</Link></li>
+                  <li><Link href="/category/united-states" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">United States</Link></li>
+                  <li><Link href="/category/china" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">China</Link></li>
+                  <li><Link href="/category/europe" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Europe</Link></li>
+                  <li><Link href="/category/britain" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Britain</Link></li>
+                  <li><Link href="/category/middle-east" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Middle East</Link></li>
+                  <li><Link href="/category/africa" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Africa</Link></li>
+                  <li><Link href="/category/asia" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Asia</Link></li>
                 </ul>
-                <div className="mt-20">
-                  <Link href="/topics/world" onClick={() => setIsOpen(false)} className="text-[12.5px] font-bold text-[#e3120b] uppercase tracking-[0.1em] hover:underline decoration-1 underline-offset-4">VIEW ALL NEWS</Link>
+                <div className="hidden md:block mt-20">
+                  <Link href="/category/world" onClick={() => setIsOpen(false)} className="hidden md:inline-block text-[12.5px] font-bold text-[#e3120b] uppercase tracking-[0.1em] hover:underline decoration-1 underline-offset-4">VIEW ALL NEWS</Link>
                 </div>
               </div>
 
               {/* Col 2: Finance & Economics */}
               <div className="flex flex-col border-l-0 lg:border-l border-[#f0f0f0] lg:pl-8">
-                <Link href="/topics/finance-and-economics" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
+                <Link href="/category/finance-and-economics" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
                   <h4 className="text-[14.5px] font-bold text-[#e3120b] uppercase tracking-wide mb-6">FINANCE &amp; ECONOMICS</h4>
                 </Link>
                 <ul className="flex flex-col gap-[14px] text-[16px] font-medium text-[#333]">
-                  <li><Link href="/topics/business" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Business</Link></li>
-                  <li><Link href="/topics/opinions" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Opinions</Link></li>
-                  <li><Link href="/topics/cost-of-living" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Cost of Living</Link></li>
-                  <li><Link href="/topics/stock-markets" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Stock Markets</Link></li>
-                  <li><Link href="/topics/cryptocurrency" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Cryptocurrency</Link></li>
-                  <li><Link href="/topics/leadership" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Leadership</Link></li>
+                  <li><Link href="/category/business" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Business</Link></li>
+                  <li><Link href="/category/opinions" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Opinions</Link></li>
+                  <li><Link href="/category/cost-of-living" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Cost of Living</Link></li>
+                  <li><Link href="/category/stock-markets" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Stock Markets</Link></li>
+                  <li><Link href="/category/cryptocurrency" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Cryptocurrency</Link></li>
+                  <li><Link href="/category/leadership" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Leadership</Link></li>
                 </ul>
               </div>
 
               {/* Col 3: Politics */}
               <div className="flex flex-col border-l-0 lg:border-l border-[#f0f0f0] lg:pl-8">
-                <Link href="/topics/politics" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
+                <Link href="/category/politics" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
                   <h4 className="text-[14.5px] font-bold text-[#e3120b] uppercase tracking-wide mb-6">POLITICS</h4>
                 </Link>
                 <ul className="flex flex-col gap-[14px] text-[16px] font-medium text-[#333]">
-                  <li><Link href="/topics/elections" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Elections</Link></li>
-                  <li><Link href="/topics/the-white-house" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">The White House</Link></li>
-                  <li><Link href="/topics/congress" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Congress</Link></li>
-                  <li><Link href="/topics/international-relations" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">International Relations</Link></li>
-                  <li><Link href="/topics/human-rights" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Human Rights</Link></li>
-                  <li><Link href="/topics/law-and-justice" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Law &amp; Justice</Link></li>
+                  <li><Link href="/category/elections" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Elections</Link></li>
+                  <li><Link href="/category/the-white-house" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">The White House</Link></li>
+                  <li><Link href="/category/congress" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Congress</Link></li>
+                  <li><Link href="/category/international-relations" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">International Relations</Link></li>
+                  <li><Link href="/category/human-rights" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Human Rights</Link></li>
+                  <li><Link href="/category/law-and-justice" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Law &amp; Justice</Link></li>
                 </ul>
               </div>
 
               {/* Col 4: Technology */}
               <div className="flex flex-col border-l-0 lg:border-l border-[#f0f0f0] lg:pl-8">
-                <Link href="/topics/technology" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
+                <Link href="/category/technology" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
                   <h4 className="text-[14.5px] font-bold text-[#e3120b] uppercase tracking-wide mb-6">TECHNOLOGY</h4>
                 </Link>
                 <ul className="flex flex-col gap-[14px] text-[16px] font-medium text-[#333]">
-                  <li><Link href="/topics/artificial-intelligence" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Artificial intelligence</Link></li>
-                  <li><Link href="/topics/innovations" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Innovations</Link></li>
-                  <li><Link href="/topics/banking" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Banking</Link></li>
-                  <li><Link href="/topics/investment" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Investment</Link></li>
+                  <li><Link href="/category/artificial-intelligence" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Artificial intelligence</Link></li>
+                  <li><Link href="/category/innovations" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Innovations</Link></li>
+                  <li><Link href="/category/banking" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Banking</Link></li>
+                  <li><Link href="/category/investment" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Investment</Link></li>
                 </ul>
               </div>
 
               {/* Col 5: Industries */}
               <div className="flex flex-col border-l-0 lg:border-l border-[#f0f0f0] lg:pl-8">
-                <Link href="/topics/industries" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
+                <Link href="/category/industries" onClick={() => setIsOpen(false)} className="hover:underline decoration-1 underline-offset-4 decoration-[#e3120b] w-fit">
                   <h4 className="text-[14.5px] font-bold text-[#e3120b] uppercase tracking-wide mb-6">INDUSTRIES</h4>
                 </Link>
                 <ul className="flex flex-col gap-[14px] text-[16px] font-medium text-[#333]">
-                  <li><Link href="/topics/energy" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Energy</Link></li>
-                  <li><Link href="/topics/real-estate" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Real Estate</Link></li>
-                  <li><Link href="/topics/agriculture" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Agriculture</Link></li>
-                  <li><Link href="/topics/healthcare" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Healthcare</Link></li>
-                  <li><Link href="/topics/entertainment" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Entertainment</Link></li>
-                  <li><Link href="/topics/tourism-and-hospitality" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Tourism &amp; Hospitality</Link></li>
-                  <li><Link href="/topics/culture" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Culture</Link></li>
-                  <li><Link href="/topics/sports" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Sports</Link></li>
+                  <li><Link href="/category/energy" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Energy</Link></li>
+                  <li><Link href="/category/real-estate" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Real Estate</Link></li>
+                  <li><Link href="/category/agriculture" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Agriculture</Link></li>
+                  <li><Link href="/category/healthcare" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Healthcare</Link></li>
+                  <li><Link href="/category/entertainment" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Entertainment</Link></li>
+                  <li><Link href="/category/tourism-and-hospitality" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Tourism &amp; Hospitality</Link></li>
+                  <li><Link href="/category/culture" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Culture</Link></li>
+                  <li><Link href="/category/sports" onClick={() => setIsOpen(false)} className="hover:text-[#e3120b] transition-colors">Sports</Link></li>
                 </ul>
               </div>
 
@@ -345,8 +400,22 @@ export default function Header() {
       <ReaderProfileSettingsModal 
         isOpen={isSettingsModalOpen} 
         onClose={() => setIsSettingsModalOpen(false)} 
-        onProfileUpdate={(newProfile) => setProfileData(newProfile)}
+        onProfileUpdate={(newProfile) => {
+          setProfileData(newProfile);
+          showToast('Profile updated successfully!');
+        }}
       />
+
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-gray-900 text-white px-6 py-3 rounded shadow-lg z-[400] flex items-center gap-3 animate-fade-in-up">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <span className="text-sm font-medium">{toastMessage}</span>
+        </div>
+      )}
     </>
   );
 }

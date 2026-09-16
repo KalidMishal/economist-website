@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, KeyboardEvent, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import ShareDropdown from '@/components/ShareDropdown';
 import { Spinner } from '@/components/Skeletons';
 import AuthorProfile from '@/components/AuthorProfile';
@@ -13,14 +13,21 @@ const MAIN_DROPDOWN = ["World", "Finance & Economics", "Politics", "Technology",
 const SUB_CATS_LIST = ["Finance & Economics", "Politics", "Technology", "Industries", ...OTHER_CATS];
 
 
-export default function NewPost() {
+export default function ReviewPost() {
   const router = useRouter();
-  const [isSavingDraft, setIsSavingDraft] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [postId, setPostId] = useState<string | null>(null);
+  const params = useParams();
+  const postId = params?.id as string;
   const [activeTab, setActiveTab] = useState<'DETAILS' | 'SEO'>('DETAILS');
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [title, setTitle] = useState('');
+  // Auto-resize title on load
+  useEffect(() => {
+    if (titleRef.current) {
+      titleRef.current.style.height = 'auto';
+      titleRef.current.style.height = titleRef.current.scrollHeight + 'px';
+    }
+  }, [title]);
+
   const [authorName, setAuthorName] = useState('Mishal');
   const [authorEmail, setAuthorEmail] = useState('');
   const [authorPhoto, setAuthorPhoto] = useState('');
@@ -56,6 +63,7 @@ export default function NewPost() {
 
   const [readDuration, setReadDuration] = useState('5');
   const [placement, setPlacement] = useState('None(Category Only)');
+  const [isPlacementDropdownOpen, setIsPlacementDropdownOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
@@ -149,6 +157,7 @@ export default function NewPost() {
   });
 
   const editorRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const toggleBtnRef = useRef<HTMLButtonElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -378,10 +387,10 @@ export default function NewPost() {
         const editorRect = editorRef.current.getBoundingClientRect();
         let centerLeft = figureRect.left + (figureRect.width / 2);
         const toolbarHalfWidth = 200;
-        const edgePadding = 20;
         const minLeft = editorRect.left + toolbarHalfWidth;
         const maxLeft = editorRect.right - toolbarHalfWidth;
         centerLeft = Math.max(minLeft, Math.min(centerLeft, maxLeft));
+
         setFigurePosition({ top: figureRect.top - 55, left: centerLeft });
       }
     } else {
@@ -651,60 +660,60 @@ export default function NewPost() {
       return null;
     };
 
-    
-  
-
-  const handleSaveDraft = async () => {
-    if (isSavingDraft) return;
-    setIsSavingDraft(true);
-    try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
-      const body = { title, subtitle, content: editorRef.current ? editorRef.current.innerHTML.replace(/pointer-events:\s*(none|auto);?/gi, '') : '', mainCategory, selectedSubCats, tags, cardSummary, focusKeyword, metaDescription, readDuration, imageUrl, status: 'draft', author_id: getAuthorId() };
-      const url = postId ? `http://localhost:5000/api/posts/${postId}` : 'http://localhost:5000/api/posts';
-      const method = postId ? 'PUT' : 'POST';
-      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) }, body: JSON.stringify(body) });
-      const data = await res.json();
-      if (data.success) {
-         window.alert('Draft saved!');
-         if (!postId && data.postId) setPostId(data.postId);
-         router.push('/writer/dashboard');
+    const handleUpdateStatus = async (newStatus: 'published' | 'trash' | 'rejected', overrideRejectReason?: string) => {
+      setIsProcessing(true);
+      const postContent = getCleanEditorContent() || previewContent || '';
+      
+      let firstImageSrc = '';
+      if (editorRef.current) {
+        const firstImg = editorRef.current.querySelector('img');
+        if (firstImg) firstImageSrc = firstImg.src;
       }
-      else window.alert('Failed to save draft');
-    } catch(e) { window.alert('Error saving draft'); }
-    setIsSavingDraft(false);
-  };
+  
+      if (newStatus === 'published' && !firstImageSrc) {
+        window.alert("Every article must contain at least one image before it can be published.");
+        setIsProcessing(false);
+        return;
+      }
 
-  const handleSubmitForReview = async () => {
-    if (isSubmitting) return;
-    setIsSubmitting(true);
-    
-    let hasImage = false;
-    if (editorRef.current) {
-      const firstImg = editorRef.current.querySelector('img');
-      if (firstImg && firstImg.src) hasImage = true;
-    }
-    if (imageUrl && imageUrl.trim()) hasImage = true;
-    // Also check for images in content state
-    if (!hasImage && editorRef.current && editorRef.current.innerHTML) {
-      hasImage = editorRef.current.innerHTML.includes('<img');
-    }
+      const updateData = {
+        title,
+        subtitle,
+        content: postContent,
+        mainCategory,
+        selectedSubCats,
+        tags,
+        cardSummary,
+        focusKeyword,
+        metaDescription,
+        readDuration,
+        imageUrl: firstImageSrc,
+        status: newStatus,
+        placement,
+        rejectionReason: overrideRejectReason || null
+      };
+      
+      try {
+        const res = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updateData)
+        });
 
-    if (!hasImage) {
-      window.alert('Every article must contain at least one image before it can be submitted for review.');
-      setIsSubmitting(false);
-      return;
-    }
-    try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
-      const body = { title, subtitle, content: editorRef.current ? editorRef.current.innerHTML.replace(/pointer-events:\s*(none|auto);?/gi, '') : '', mainCategory, selectedSubCats, tags, cardSummary, focusKeyword, metaDescription, readDuration, imageUrl, status: 'pending', author_id: getAuthorId() };
-      const url = postId ? `http://localhost:5000/api/posts/${postId}` : 'http://localhost:5000/api/posts';
-      const method = postId ? 'PUT' : 'POST';
-      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) }, body: JSON.stringify(body) });
-      if (res.ok) { window.alert('Submitted for review!'); router.push('/writer/dashboard'); }
-      else window.alert('Failed to submit for review');
-    } catch(e) { window.alert('Error submitting for review'); }
-    setIsSubmitting(false);
-  };
+        if (res.ok) {
+          sessionStorage.setItem('toastMessage', newStatus === 'published' ? 'Article Approved & Published Successfully' : 'Article Moved to Trash');
+          router.refresh();
+          router.push('/admin/dashboard');
+        } else {
+          window.alert('Failed to update post.');
+        }
+      } catch (e) {
+        window.alert('Network error while updating post.');
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
   const handleInsertImage = () => { setIsInsertingImage(true);
     if (!imageUrl && !imageFile) { setIsInsertingImage(false); return; }
 
@@ -978,21 +987,19 @@ export default function NewPost() {
           const user = JSON.parse(userStr);
           if (user.name) setAuthorName(user.name);
           if (user.email) setAuthorEmail(user.email);
-          if (user.profile_picture) setAuthorPhoto(user.profile_picture);
         } catch(e) {}
       }
       
       const urlParams = new URLSearchParams(window.location.search);
       const mode = urlParams.get('mode');
-            const urlPostId = urlParams.get('id') || urlParams.get('idx');
+      const postId = urlParams.get('id') || urlParams.get('idx');
       
       if (mode === 'new') {
         return;
       }
 
-      if ((mode === 'edit' || mode === 'edit_pending') && urlPostId) {
-        setPostId(urlPostId); // Fix: Set postId in state so submissions use PUT
-        fetch(`http://localhost:5000/api/posts/${urlPostId}`)
+      if ((mode === 'edit' || mode === 'edit_pending') && postId) {
+        fetch(`http://localhost:5000/api/posts/${postId}`)
           .then(res => res.json())
           .then(data => {
             if (data.success && data.post) {
@@ -1028,58 +1035,58 @@ export default function NewPost() {
 
   return (
     <>
-    <div className={`min-h-screen flex flex-col bg-[#f8f9fa] font-sans ${isPreviewMode ? 'hidden' : ''}`}>
-            {/* Top Header Bar */}
-      <div className="w-full bg-[#131a26] text-white flex items-center justify-between px-4 md:px-6 py-3 sticky top-0 z-[100]">
-        <div className="flex items-center gap-3 md:gap-6 overflow-x-auto custom-scrollbar-hide">
+    <div className={`min-h-screen flex flex-col bg-[#f8f9fa] font-sans  ${isPreviewMode ? 'hidden' : ''}`}>
+      {/* Top Header Bar */}
+      <div className="w-full bg-[#131a26] text-white sticky top-0 z-[100] overflow-hidden">
+        <div className="flex items-center justify-between px-4 md:px-6 py-3 overflow-x-auto custom-scrollbar-hide gap-4 w-full">
+        <div className="flex items-center gap-6">
           <button 
             onClick={() => router.back()} 
-            className="flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider flex-shrink-0"
+            className="flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            <span className="hidden sm:inline">Cancel</span>
+            Cancel
           </button>
-          <div className="h-4 w-px bg-gray-600 hidden sm:block"></div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-gray-300 hidden sm:block">
-            {title ? `DRAFTING: ${title.length > 55 ? title.substring(0, 55) + '...' : title}` : "NEW POST"}
+          <div className="h-4 w-px bg-gray-600"></div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-gray-300 max-w-[180px] md:max-w-none truncate inline-block align-middle">
+            {title ? `REVIEWING: ${title.length > 55 ? title.substring(0, 55) + '...' : title}` : "REVIEW POST"}
           </span>
         </div>
-
-        <div className="flex items-center gap-2 md:gap-4">
-          <button onClick={() => { if (editorRef.current) { setPreviewContent(getCleanEditorContent()); } setIsPreviewMode(true); }} className="flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider px-2 md:px-4 py-2 rounded transition-colors">
+        <div className="flex items-center gap-4">
+          <button onClick={() => { if (editorRef.current) { setPreviewContent(getCleanEditorContent()); } setIsPreviewMode(true); }} className="flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider px-4 py-2 rounded transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
               <circle cx="12" cy="12" r="3"></circle>
             </svg>
-            <span className="hidden sm:inline">Preview</span>
+            Preview
             </button>
-          <button onClick={handleSaveDraft} disabled={isSavingDraft} className="text-sm font-bold text-gray-300 hover:text-white uppercase tracking-wider px-2 md:px-4 py-2 border border-gray-600 rounded transition-colors hover:border-gray-400 flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
-            {isSavingDraft ? <Spinner /> : (
+          <button onClick={() => setIsRejectModalOpen(true)} disabled={isProcessing} className="text-sm font-bold text-white uppercase tracking-wider px-4 py-2 bg-[#e3120b] hover:bg-[#b80f09] rounded transition-colors flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+            {isProcessing ? <Spinner /> : (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                <polyline points="7 3 7 8 15 8"></polyline>
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
               </svg>
             )}
-              <span className="hidden sm:inline">{isSavingDraft ? 'Saving...' : 'Save Draft'}</span>
+              REJECT
             </button>
-            <button onClick={handleSubmitForReview} disabled={isSubmitting} className="bg-[#e3120b] hover:bg-[#b80f09] text-white font-bold text-sm px-3 md:px-6 py-2 rounded transition-colors flex items-center gap-2 uppercase tracking-wider shadow-sm disabled:opacity-70 disabled:cursor-not-allowed">
-            {isSubmitting ? <Spinner /> : (
+            <button onClick={() => handleUpdateStatus('published')} disabled={isProcessing} className="bg-[#2e7d32] hover:bg-[#1b5e20] text-white font-bold text-sm px-6 py-2 rounded transition-colors flex items-center gap-2 uppercase tracking-wider shadow-sm disabled:opacity-70 disabled:cursor-not-allowed">
+            {isProcessing ? <Spinner /> : (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
             )}
-              <span className="hidden sm:inline">{isSubmitting ? 'Submitting...' : 'Submit For Review'}</span>
+              APPROVE & PUBLISH
             </button>
         </div>
       </div>
+      </div>
 
       {/* Main Content Area */}
-      <div className={`flex-1 max-w-[1400px] w-full mx-auto px-2 md:px-6 py-8 grid grid-cols-1 gap-8 items-start lg:grid-cols-[1fr_auto]`}>
+      <div className={`flex-1 max-w-[1400px] w-full mx-auto px-6 py-8 grid grid-cols-1 gap-8 items-start lg:grid-cols-[1fr_auto]`}>
         
         {/* Left Column: Editor Wrapper */}
         <div className={`relative flex flex-col w-full max-w-[950px]`}>
@@ -1171,6 +1178,7 @@ export default function NewPost() {
           {/* Editor Area */}
           <div className="flex-1 px-4 md:px-10 pt-4 pb-10 flex flex-col relative">
               <textarea 
+                ref={titleRef}
                 placeholder="Add Title..." 
                 rows={1}
                 value={title}
@@ -1446,7 +1454,46 @@ export default function NewPost() {
                   />
                 </div>
 
-                
+                {/* Homepage Placement */}
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Homepage Placement</label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setIsPlacementDropdownOpen(!isPlacementDropdownOpen)}
+                      className="w-full border border-gray-300 rounded px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#1a65d6] bg-white flex justify-between items-center text-left"
+                    >
+                      <span className="truncate pr-4">{placement || 'None(Category & Search Only)'}</span>
+                      <svg className={`absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none transition-transform ${isPlacementDropdownOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    {isPlacementDropdownOpen && (
+                      <>
+                        <div className="fixed inset-0 z-[190]" onClick={() => setIsPlacementDropdownOpen(false)}></div>
+                        <div className="absolute left-0 w-full bg-white border border-gray-200 shadow-xl rounded-md z-[200] py-1 bottom-full mb-1 max-h-[250px] overflow-y-auto">
+                          {[
+                            "None(Category & Search Only)",
+                            "Home Page A + Section",
+                            "Latest News Section",
+                            "More News Section",
+                            "Top Highlight Section",
+                            "Trending Stories Section",
+                            "Data That Tells Stories Section"
+                          ].map((option) => (
+                            <div
+                              key={option}
+                              onClick={() => { setPlacement(option); setIsPlacementDropdownOpen(false); }}
+                              className={`px-3 py-2.5 text-sm cursor-pointer hover:bg-gray-50 transition-colors ${placement === option ? 'text-[#1a65d6] font-bold bg-blue-50/50' : 'text-gray-700'}`}
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
 
               </div>
             )}
@@ -1555,7 +1602,7 @@ export default function NewPost() {
       </div>
       </div>
       {isPreviewMode && (
-        <div className="min-h-screen flex flex-col bg-white pb-16">
+        <div className="min-h-screen flex flex-col bg-white  pb-16">
           {/* Top Banner */}
           <div className="w-full bg-[#131a26] text-white flex items-center justify-between px-6 py-3 sticky top-0 z-[100]">
             <div className="flex items-center gap-4">
@@ -1888,7 +1935,35 @@ export default function NewPost() {
           </div>
         </div>
       )}
-      
+      {isRejectModalOpen && (
+        <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center">
+          <div className="bg-white p-6 max-w-md w-full mx-4 shadow-xl border-t-4 border-[#e3120b]">
+            <h2 className="text-xl font-bold mb-2 font-serif uppercase tracking-widest text-[#e3120b]">Reject Post</h2>
+            <p className="text-gray-600 mb-4 text-[13px]">Please provide a reason for rejecting this post (optional).</p>
+            <textarea
+              value={rejectReason}
+              onChange={(e) => setRejectReason(e.target.value)}
+              placeholder="Enter reason..."
+              className="w-full h-32 border border-gray-300 p-3 mb-5 focus:outline-none focus:border-[#e3120b] focus:ring-1 focus:ring-[#e3120b] text-[15px] resize-none"
+            ></textarea>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setIsRejectModalOpen(false)} className="px-5 py-2 text-gray-700 font-bold border border-gray-300 hover:bg-gray-50 uppercase tracking-wider text-[13px] transition-colors">
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  setIsRejectModalOpen(false);
+                  handleUpdateStatus("rejected", rejectReason);
+                }} 
+                className="px-5 py-2 bg-[#e3120b] text-white font-bold hover:bg-red-800 uppercase tracking-wider text-[13px] transition-colors"
+              >
+                Submit Rejection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
 
         </>

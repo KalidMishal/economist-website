@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { Spinner } from '@/components/Skeletons';
 
 interface ReaderProfileSettingsModalProps {
   isOpen: boolean;
@@ -11,7 +12,8 @@ interface ReaderProfileSettingsModalProps {
 
 export default function ReaderProfileSettingsModal({ isOpen, onClose, onProfileUpdate }: ReaderProfileSettingsModalProps) {
   const router = useRouter();
-  const [user, setUser] = useState<{name: string, email: string, role: string} | null>(null);
+  const [user, setUser] = useState<{id?: string | number, name: string, email: string, role: string, profile_picture?: string, bio?: string, linkedin_url?: string} | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const [profileData, setProfileData] = useState({
     fullName: '',
     bio: '',
@@ -29,13 +31,19 @@ export default function ReaderProfileSettingsModal({ isOpen, onClose, onProfileU
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
       
-      const storedProfile = localStorage.getItem(`userProfile_${parsedUser.email}`) || localStorage.getItem('userProfile');
+      const storedProfile = localStorage.getItem(`userProfile_${parsedUser.email}`) ;
       if (storedProfile) {
         try { 
           setProfileData(JSON.parse(storedProfile)); 
         } catch(e) {}
       } else {
-        setProfileData(prev => ({ ...prev, fullName: parsedUser.name || 'Mishal Zuhrie' }));
+        setProfileData(prev => ({ 
+          ...prev, 
+          fullName: parsedUser.name || 'Mishal Zuhrie',
+          photo: parsedUser.profile_picture || parsedUser.photo || prev.photo,
+          bio: parsedUser.bio || '',
+          linkedin: parsedUser.linkedin_url || ''
+        }));
       }
     }
   }, [isOpen]);
@@ -68,8 +76,29 @@ export default function ReaderProfileSettingsModal({ isOpen, onClose, onProfileU
           canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx?.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-          setProfileData({ ...profileData, photo: dataUrl });
+          
+          canvas.toBlob(async (blob) => {
+            if (!blob) return;
+            const formData = new FormData();
+            formData.append('folder', 'avatars');
+            formData.append('file', blob, file.name.replace(/\.[^/.]+$/, "") + ".webp");
+            
+            try {
+              const res = await fetch(`http://${window.location.hostname}:5000/api/upload`, {
+                method: 'POST',
+                body: formData
+              });
+              const data = await res.json();
+              if (data.success) {
+                setProfileData({ ...profileData, photo: data.url });
+              } else {
+                alert('Upload failed: ' + data.message);
+              }
+            } catch (err) {
+              console.error('Upload error', err);
+              alert('Network error during upload');
+            }
+          }, 'image/webp', 0.8);
         };
         img.src = reader.result as string;
       };
@@ -81,19 +110,60 @@ export default function ReaderProfileSettingsModal({ isOpen, onClose, onProfileU
     onClose();
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    setIsSaving(true);
+    
+    if (user && user.id) {
+      try {
+        const res = await fetch(`http://${window.location.hostname}:5000/api/users/${user.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: profileData.fullName,
+            bio: profileData.bio,
+            profile_picture: profileData.photo,
+            linkedin_url: profileData.linkedin
+          })
+        });
+        
+        if (res.ok) {
+          const updatedUser = { ...user, name: profileData.fullName, bio: profileData.bio, profile_picture: profileData.photo, linkedin_url: profileData.linkedin, photo: profileData.photo };
+          setUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+        }
+      } catch (err) {
+        console.error("Failed to save profile to backend", err);
+      }
+    }
+
     if (user) {
       localStorage.setItem(`userProfile_${user.email}`, JSON.stringify(profileData));
     }
-    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    
+    
+    window.dispatchEvent(new Event('userProfileUpdated'));
     onProfileUpdate(profileData);
-    handleClose();
+    
+    setTimeout(() => {
+      setIsSaving(false);
+      handleClose();
+    }, 400);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSave();
+    }
   };
 
   if (!isOpen || !user) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[300] flex items-center justify-center p-4 transition-all">
+    <div 
+      className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[300] flex items-center justify-center p-4 transition-all"
+      onKeyDown={handleKeyDown}
+    >
       <div className="bg-white rounded-xl w-full max-w-[500px] overflow-hidden shadow-2xl relative border border-gray-200">
         <div className="h-1 w-full bg-[#c11010]"></div>
         
@@ -170,11 +240,12 @@ export default function ReaderProfileSettingsModal({ isOpen, onClose, onProfileU
         </div>
 
         <div className="px-8 py-5 border-t border-gray-100 flex items-center justify-between gap-4 bg-gray-50">
-          <button onClick={handleClose} className="flex-1 py-2.5 border border-gray-300 rounded font-bold text-[13px] text-gray-700 hover:bg-gray-100 transition-colors text-center">
+          <button onClick={handleClose} disabled={isSaving} className="flex-1 py-2.5 border border-gray-300 rounded font-bold text-[13px] text-gray-700 hover:bg-gray-100 transition-colors text-center disabled:opacity-50">
             CANCEL
           </button>
-          <button onClick={handleSave} className="flex-1 py-2.5 bg-[#00508f] hover:bg-blue-900 rounded font-bold text-[13px] text-white transition-colors">
-            SAVE CHANGES
+          <button onClick={handleSave} disabled={isSaving} className="flex-1 py-2.5 bg-[#00508f] hover:bg-blue-900 rounded font-bold text-[13px] text-white transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+            {isSaving ? <Spinner /> : null}
+            {isSaving ? 'SAVING...' : 'SAVE CHANGES'}
           </button>
         </div>
       </div>

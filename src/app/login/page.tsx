@@ -1,8 +1,9 @@
 'use client';
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { GoogleLogin } from '@react-oauth/google';
+import { Spinner } from '@/components/Skeletons';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,6 +12,37 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const [isForgotOpen, setIsForgotOpen] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotError, setForgotError] = useState('');
+  const [forgotSuccess, setForgotSuccess] = useState('');
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setForgotError('');
+    setForgotSuccess('');
+    setForgotLoading(true);
+    
+    try {
+      const res = await fetch('http://localhost:5000/api/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotEmail })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setForgotSuccess(data.message);
+      } else {
+        setForgotError(data.message);
+      }
+    } catch (err) {
+      setForgotError('Network error. Please try again later.');
+    } finally {
+      setForgotLoading(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +63,7 @@ export default function LoginPage() {
         
         // Redirect to specific dashboards based on role
         if (data.user.role === 'admin') {
-          router.push('/admin/dashboard');
+          router.push('/');
         } else if (data.user.role === 'writer') {
           router.push('/');
         } else if (data.user.role === 'reader') {
@@ -47,6 +79,29 @@ export default function LoginPage() {
       setError('Network error, please try again later.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/google-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: credentialResponse.credential }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+        if (data.user.role === 'admin') router.push('/');
+        else router.push('/');
+      } else {
+        setError(data.message || 'Google Login failed');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Network error during Google login');
     }
   };
 
@@ -125,14 +180,15 @@ export default function LoginPage() {
             </div>
 
             <div className="text-[13px]">
-              <button type="button" className="underline text-gray-600 hover:text-black">Forgot password?</button>
+              <button type="button" onClick={() => setIsForgotOpen(true)} className="underline text-gray-600 hover:text-black">Forgot password?</button>
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className={`w-full py-2.5 mt-2 text-white font-bold text-[14px] bg-[#3a479b] hover:bg-[#2b357a] transition-colors ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`w-full py-2.5 mt-2 text-white font-bold text-[14px] bg-[#3a479b] hover:bg-[#2b357a] transition-colors flex items-center justify-center gap-2 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
+              {loading ? <Spinner /> : null}
               {loading ? 'Logging in...' : 'Log In'}
             </button>
           </form>
@@ -143,16 +199,15 @@ export default function LoginPage() {
             <div className="flex-grow border-t border-gray-200"></div>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 mb-8">
-            <button className="flex items-center justify-center py-2 border border-gray-200 hover:bg-gray-50 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
-                <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
-                <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
-                <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.519-3.317-11.161-7.921l-6.6,5.081C9.529,39.638,16.241,44,24,44z" />
-                <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
-              </svg>
-              <span className="ml-2 text-sm font-medium text-gray-700">Continue with Google</span>
-            </button>
+          <div className="flex justify-center mb-8">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => setError('Google login failed')}
+              width="460"
+              theme="outline"
+              shape="rectangular"
+              size="large"
+            />
           </div>
 
           <p className="text-[11px] text-gray-500 mb-4 leading-relaxed">
@@ -164,6 +219,46 @@ export default function LoginPage() {
 
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {isForgotOpen && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
+            <button 
+              onClick={() => setIsForgotOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-800"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2 className="text-xl font-bold text-[#0f0f0f] mb-4">Reset Password</h2>
+            <p className="text-[13px] text-gray-600 mb-6">Enter the email address associated with your account and we'll send you a link to reset your password.</p>
+            
+            {forgotError && <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm border border-red-200">{forgotError}</div>}
+            {forgotSuccess && <div className="mb-4 p-3 bg-green-50 text-green-600 text-sm border border-green-200">{forgotSuccess}</div>}
+            
+            <form onSubmit={handleForgotPassword} className="flex flex-col gap-4">
+              <div className="flex flex-col">
+                <label className="text-[13px] font-bold text-[#0f0f0f] mb-1.5">Email address</label>
+                <input 
+                  type="email" 
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  className="w-full border border-gray-300 p-2 text-sm focus:outline-none focus:border-black"
+                  required
+                />
+              </div>
+              <button 
+                type="submit" 
+                disabled={forgotLoading}
+                className={`w-full py-2.5 mt-2 text-white font-bold text-[14px] bg-[#e3120b] hover:bg-[#c90f09] transition-colors flex items-center justify-center gap-2 ${forgotLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+              >
+                {forgotLoading ? <Spinner /> : null}
+                {forgotLoading ? 'Sending link...' : 'Send Reset Link'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -14,38 +14,50 @@ export default function ArticleToolbar({ article }: ArticleToolbarProps) {
 
   useEffect(() => {
     if (!article || !article.slug) return;
-    const bookmarks = JSON.parse(localStorage.getItem('bookmarkedArticles') || '[]');
-    const exists = bookmarks.some((b: any) => b.slug === article.slug);
-    setIsBookmarked(exists);
+    const fetchBookmarkStatus = async () => {
+      const userStr = localStorage.getItem('user');
+      if (!userStr) return;
+      const user = JSON.parse(userStr);
+      try {
+        const res = await fetch(`http://localhost:5000/api/bookmarks?email=${user.email}`);
+        const data = await res.json();
+        if (data.success) {
+          setIsBookmarked(data.bookmarks.some((b: any) => b.slug === article.slug));
+        }
+      } catch (err) {
+        console.error('Failed to fetch bookmark status', err);
+      }
+    };
+    fetchBookmarkStatus();
   }, [article]);
 
-  const handleBookmark = () => {
-    const user = localStorage.getItem('user');
-    if (!user) {
+  const handleBookmark = async () => {
+    const userStr = localStorage.getItem('user');
+
+    if (!userStr) {
       router.push('/login');
     } else {
-      const newStatus = !isBookmarked;
-      setIsBookmarked(newStatus);
-      
-      if (article && article.slug) {
-        let bookmarks = JSON.parse(localStorage.getItem('bookmarkedArticles') || '[]');
-        if (newStatus) {
-          // Save bookmark
-          if (!bookmarks.some((b: any) => b.slug === article.slug)) {
-            bookmarks.push({
-              slug: article.slug,
-              image: article.image,
-              category: article.category,
-              date: article.date,
-              title: article.title,
-              author: "Ronda B" // Using the hardcoded author from the article page for now
-            });
-          }
-        } else {
-          // Remove bookmark
-          bookmarks = bookmarks.filter((b: any) => b.slug !== article.slug);
+      const user = JSON.parse(userStr);
+      try {
+        const res = await fetch('http://localhost:5000/api/bookmarks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            email: user.email, 
+            article_slug: article.slug,
+            title: article.title,
+            image: article.image,
+            category: article.category,
+            date: article.date,
+            author: article.authorName || 'The Economist'
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setIsBookmarked(data.bookmarked);
         }
-        localStorage.setItem('bookmarkedArticles', JSON.stringify(bookmarks));
+      } catch (err) {
+        console.error('Failed to toggle bookmark', err);
       }
     }
   };
