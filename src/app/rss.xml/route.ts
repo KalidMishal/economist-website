@@ -7,7 +7,8 @@ export async function GET() {
       return new NextResponse('Failed to fetch data', { status: 500 });
     }
     
-    const sections = await res.json();
+    const data = await res.json();
+    const sections = data.sections || data;
     
     // Flatten all articles from sections into a single array
     let allArticles: any[] = [];
@@ -70,6 +71,11 @@ export async function GET() {
         <description>The latest news, opinions, and analysis from Newyork Capital.</description>
         <language>en-us</language>
         <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+        <image>
+          <url>${baseUrl}/Newyork-Capital-Thumbnail.jpg</url>
+          <title>Newyork Capital</title>
+          <link>${baseUrl}</link>
+        </image>
         <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
         ${rssItems}
       </channel>
