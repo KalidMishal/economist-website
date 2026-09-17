@@ -5,7 +5,7 @@ import ShareDropdown from "@/components/ShareDropdown";
 import Link from "next/link";
 import ResponsiveArticleWrapper from "@/components/ResponsiveArticleWrapper";
 import { Metadata } from "next";
-import AuthorProfile from "@/components/AuthorProfile";
+import ArticleActions from "@/components/ArticleActions";
 import ScrollToTop from "@/components/ScrollToTop";
 
 // Mock Data Dictionary
@@ -302,16 +302,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   {article.subtitle}
                 </h2>
                 
-                {/* Author Block */}
-                <AuthorProfile 
-                  authorId={article.authorId}
-                  authorName={article.authorName || "Ronda B"} 
-                  authorEmail={article.authorEmail || ""} 
-                  authorPhoto={article.authorPhoto}
-                  authorLinkedin={article.authorLinkedin}
-                  publishDate={`${article.date} AT ${article.time || '9:00 AM EDT'}`}
-                  readTime={article.readTime}
-                />
+                {/* Action Buttons */}
+                <ArticleActions article={{ ...article, slug }} />
               </div>
 
               {/* Article Image */}
