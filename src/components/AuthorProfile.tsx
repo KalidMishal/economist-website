@@ -1,6 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import ShareDropdown from './ShareDropdown';
 
 interface AuthorProfileProps {
   authorId?: number | string;
@@ -12,6 +14,7 @@ interface AuthorProfileProps {
   publishDate?: string;
   readTime?: string;
   disableLinks?: boolean;
+  article?: any;
 }
 
 export default function AuthorProfile({
@@ -23,36 +26,64 @@ export default function AuthorProfile({
   authorLinkedin,
   publishDate,
   readTime,
-  disableLinks = false
+  disableLinks = false,
+  article
 }: AuthorProfileProps) {
-  const [imageError, setImageError] = useState(false);
+  const router = useRouter();
+  const [isBookmarked, setIsBookmarked] = useState(false);
   
-  const handleImageError = () => {
-    setImageError(true);
-  };
-  
-  const hasValidImage = authorPhoto && authorPhoto.trim() !== '' && !imageError;
-  const initials = authorName 
-    ? authorName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-    : 'A';
-    
   // If we have an authorName and links aren't disabled, wrap name/image in a Link
   const authorHref = authorName && !disableLinks ? `/author/${authorName.toLowerCase().replace(/\s+/g, '-')}` : undefined;
 
-  const AuthorImage = () => (
-    <div className="w-11 h-11 md:w-[50px] md:h-[50px] rounded-full overflow-hidden flex-shrink-0 bg-gray-200 border border-gray-100 flex items-center justify-center mr-3 relative shadow-sm">
-      {hasValidImage ? (
-        <img 
-          src={authorPhoto} 
-          alt={authorName} 
-          onError={handleImageError}
-          className="w-full h-full object-cover"
-        />
-      ) : (
-        <span className="text-[#0f0f0f] font-serif font-bold text-lg">{initials}</span>
-      )}
-    </div>
-  );
+  useEffect(() => {
+    if (!article || !article.slug) return;
+    const fetchBookmarkStatus = async () => {
+      const userStr = localStorage.getItem('user');
+      if (!userStr) return;
+      const user = JSON.parse(userStr);
+      try {
+        const res = await fetch(`http://localhost:5000/api/bookmarks?email=${user.email}`);
+        const data = await res.json();
+        if (data.success) {
+          setIsBookmarked(data.bookmarks.some((b: any) => b.slug === article.slug));
+        }
+      } catch (err) {
+        console.error('Failed to fetch bookmark status', err);
+      }
+    };
+    fetchBookmarkStatus();
+  }, [article]);
+
+  const handleBookmark = async () => {
+    const userStr = localStorage.getItem('user');
+
+    if (!userStr) {
+      router.push('/login');
+    } else {
+      const user = JSON.parse(userStr);
+      try {
+        const res = await fetch('http://localhost:5000/api/bookmarks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            email: user.email, 
+            article_slug: article.slug,
+            title: article.title,
+            image: article.image,
+            category: article.category,
+            date: article.date,
+            author: article.authorName || 'Newyork Capital'
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setIsBookmarked(data.bookmarked);
+        }
+      } catch (err) {
+        console.error('Failed to toggle bookmark', err);
+      }
+    }
+  };
 
   const AuthorNameText = () => (
     <span className={`font-serif font-bold text-[14.5px] text-[#0f0f0f] ${authorHref ? 'hover:text-[#E3120B] transition-colors cursor-pointer' : ''}`}>
@@ -62,13 +93,26 @@ export default function AuthorProfile({
 
   return (
     <div className="flex items-center w-full my-6 py-4 border-t border-b border-gray-100">
-      {authorHref ? (
-        <Link href={authorHref} className="flex-shrink-0">
-          <AuthorImage />
-        </Link>
-      ) : (
-        <AuthorImage />
-      )}
+      
+      {/* Save and Share Icons Replacing Avatar */}
+      <div className="flex items-center gap-3 mr-4">
+        <button 
+          onClick={handleBookmark}
+          className={`w-[42px] h-[42px] rounded-full border flex items-center justify-center transition-colors bg-white flex-shrink-0 ${
+            isBookmarked 
+              ? 'border-[#E3120B] text-[#E3120B]' 
+              : 'border-[#e6e6e6] text-gray-500 hover:text-[#E3120B] hover:border-[#E3120B]'
+          }`}
+          aria-label="Save Article"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+        <ShareDropdown title={article?.title}>
+          <div className="w-[42px] h-[42px] rounded-full border border-[#fbd5d5] flex items-center justify-center text-[#E3120B] bg-[#fffcfc] hover:bg-[#fcf0f0] transition-colors cursor-pointer flex-shrink-0" aria-label="Share Article">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          </div>
+        </ShareDropdown>
+      </div>
       
       <div className="flex flex-col flex-1 min-w-0">
         <div className="flex items-center flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar">
