@@ -29,7 +29,7 @@ export async function GET() {
     }, []);
     
     // Sort by created_at descending
-    uniqueArticles.sort((a, b) => {
+    uniqueArticles.sort((a: any, b: any) => {
       const dateA = new Date(a.createdAt || a.created_at || Date.now()).getTime();
       const dateB = new Date(b.createdAt || b.created_at || Date.now()).getTime();
       return dateB - dateA;
@@ -40,6 +40,28 @@ export async function GET() {
     
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://newyork-capital.com';
 
+    let rssItems = '';
+    
+    topArticles.forEach((article: any) => {
+      const articleUrl = `${baseUrl}/article/${article.slug || article.id}`;
+      const pubDate = new Date(article.createdAt || article.created_at || Date.now()).toUTCString();
+      
+      const mediaContent = article.imageUrl ? `<media:content url="${article.imageUrl.startsWith('http') ? article.imageUrl : baseUrl + article.imageUrl}" medium="image" />` : '';
+      const categoryContent = article.mainCategory ? `<category><![CDATA[${article.mainCategory}]]></category>` : '';
+      
+      rssItems += `
+        <item>
+          <title><![CDATA[${article.title}]]></title>
+          <link>${articleUrl}</link>
+          <guid isPermaLink="true">${articleUrl}</guid>
+          <pubDate>${pubDate}</pubDate>
+          <description><![CDATA[${article.cardSummary || article.title}]]></description>
+          ${mediaContent}
+          ${categoryContent}
+        </item>
+      `;
+    });
+
     const rssFeed = `<?xml version="1.0" encoding="UTF-8" ?>
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
       <channel>
@@ -49,20 +71,7 @@ export async function GET() {
         <language>en-us</language>
         <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
         <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
-        ${topArticles.map((article: any) => {
-          const articleUrl = \`\${baseUrl}/article/\${article.slug || article.id}\`;
-          const pubDate = new Date(article.createdAt || article.created_at || Date.now()).toUTCString();
-          return \`
-          <item>
-            <title><![CDATA[\${article.title}]]></title>
-            <link>\${articleUrl}</link>
-            <guid isPermaLink="true">\${articleUrl}</guid>
-            <pubDate>\${pubDate}</pubDate>
-            <description><![CDATA[\${article.cardSummary || article.title}]]></description>
-            \${article.imageUrl ? \`<media:content url="\${article.imageUrl.startsWith('http') ? article.imageUrl : baseUrl + article.imageUrl}" medium="image" />\` : ''}
-            \${article.mainCategory ? \`<category><![CDATA[\${article.mainCategory}]]></category>\` : ''}
-          </item>\`;
-        }).join('')}
+        ${rssItems}
       </channel>
     </rss>`;
 
