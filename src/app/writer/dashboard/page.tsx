@@ -247,13 +247,13 @@ export default function WriterDashboard() {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-full overflow-hidden bg-white text-[#0f0f0f]">
-        {/* Top Navigation Bar */}
-        <div className="w-full bg-white border-b border-gray-200 py-4 relative z-[100]">
-          <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between px-4 md:px-8">
-            <div className="flex items-center gap-3 md:gap-6">
-              <span className="text-xl font-bold text-[#131a26]">Writer Dashboard</span>
-              <span className="bg-[#eef5ff] text-[#1a65d6] text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded relative z-10">Writer Portal</span>
-            </div>
+        
+        {/* Header containing just profile dropdown */}
+        <header className="w-full bg-white border-b border-gray-200 py-4 px-4 md:px-8 relative z-[100] flex justify-between items-center">
+          <div className="flex items-center gap-3 md:gap-6">
+            <span className="text-xl font-bold text-[#131a26]">Writer Dashboard</span>
+            <span className="bg-[#eef5ff] text-[#1a65d6] text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded relative z-10">Writer Portal</span>
+          </div>
           
           <div className="relative" ref={dropdownRef}>
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-2 cursor-pointer bg-white border border-gray-200 hover:border-gray-300 px-2 py-1.5 rounded-full transition-all shadow-sm">
