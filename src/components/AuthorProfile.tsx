@@ -107,31 +107,9 @@ export default function AuthorProfile({
   );
 
   return (
-    <div className="flex items-center w-full my-6 py-4 border-t border-b border-gray-100">
+    <div className="flex items-center justify-between w-full my-6 py-4 border-t border-b border-gray-100">
       
-      {/* Save and Share Icons Replacing Avatar */}
-      <div className="flex items-center gap-3 mr-4">
-        {!isStaff && (
-          <button 
-            onClick={handleBookmark}
-            className={`w-[42px] h-[42px] rounded-full border flex items-center justify-center transition-colors bg-white flex-shrink-0 ${
-              isBookmarked 
-                ? 'border-[#E3120B] text-[#E3120B]' 
-                : 'border-[#e6e6e6] text-gray-500 hover:text-[#E3120B] hover:border-[#E3120B]'
-            }`}
-            aria-label="Save Article"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-          </button>
-        )}
-        <ShareDropdown title={article?.title}>
-          <div className="w-[42px] h-[42px] rounded-full border border-[#fbd5d5] flex items-center justify-center text-[#E3120B] bg-[#fffcfc] hover:bg-[#fcf0f0] transition-colors cursor-pointer flex-shrink-0" aria-label="Share Article">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-          </div>
-        </ShareDropdown>
-      </div>
-      
-      <div className="flex flex-col flex-1 min-w-0">
+      <div className="flex flex-col min-w-0">
         <div className="flex items-center flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar">
           <span className="text-[14.5px] font-serif font-bold text-[#0f0f0f] mr-1.5 uppercase">By</span>
           {authorHref ? (
@@ -157,6 +135,28 @@ export default function AuthorProfile({
             {readTime && <span className="whitespace-nowrap">{readTime}</span>}
           </div>
         )}
+      </div>
+
+      {/* Save and Share Icons next to Author details */}
+      <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+        {!isStaff && (
+          <button 
+            onClick={handleBookmark}
+            className={`w-[42px] h-[42px] rounded-full border flex items-center justify-center transition-colors bg-white flex-shrink-0 ${
+              isBookmarked 
+                ? 'border-[#E3120B] text-[#E3120B]' 
+                : 'border-[#e6e6e6] text-gray-500 hover:text-[#E3120B] hover:border-[#E3120B]'
+            }`}
+            aria-label="Save Article"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        )}
+        <ShareDropdown title={article?.title}>
+          <div className="w-[42px] h-[42px] rounded-full border border-[#fbd5d5] flex items-center justify-center text-[#E3120B] bg-[#fffcfc] hover:bg-[#fcf0f0] transition-colors cursor-pointer flex-shrink-0" aria-label="Share Article">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          </div>
+        </ShareDropdown>
       </div>
     </div>
   );
