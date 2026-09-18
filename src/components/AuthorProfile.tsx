@@ -110,8 +110,8 @@ export default function AuthorProfile({
     <div className="flex items-center justify-start gap-4 w-full my-6 py-4 border-t border-b border-gray-100">
       
       <div className="flex flex-col min-w-0">
-        <div className="flex items-baseline flex-nowrap whitespace-nowrap overflow-x-auto no-scrollbar">
-          <span className="text-[14.5px] font-serif font-bold text-[#0f0f0f] mr-1.5 uppercase relative top-[1px]">By</span>
+        <div className="flex items-center flex-wrap gap-y-1">
+          <span className="text-[14.5px] font-serif font-bold text-[#0f0f0f] mr-1.5 uppercase">BY</span>
           {authorHref ? (
             <Link href={authorHref}>
               <AuthorNameText />
