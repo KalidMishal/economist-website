@@ -1576,16 +1576,7 @@ export default function NewPost() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                 BACK TO NEWSFEED
               </button>
-              <div className="flex items-center gap-3">
-                <button className="w-9 h-9 rounded-full border border-[#e6e6e6] text-gray-500 hover:text-[#E3120B] hover:border-[#E3120B] flex items-center justify-center transition-colors bg-white">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                </button>
-                <ShareDropdown title={title}>
-                  <div className="w-9 h-9 rounded-full border border-[#fbd5d5] flex items-center justify-center text-[#E3120B] bg-[#fffcfc] hover:bg-[#fcf0f0] transition-colors cursor-pointer">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                  </div>
-                </ShareDropdown>
-              </div>
+              
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
