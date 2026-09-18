@@ -211,22 +211,49 @@ export default function WriterDashboard() {
   if (!user) return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#0f0f0f] font-sans">
-      {/* Top Navigation Bar */}
-      <div className="w-full bg-white border-b border-gray-200 py-5 relative z-[100]">
-        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between px-4 md:px-8">
-          <div className="flex items-center gap-3 md:gap-6">
-            <button onClick={() => router.push('/')} className="text-gray-500 hover:text-black">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </button>
-            <div className="flex items-center gap-2 md:gap-4 relative">
-              <img src="/Logo 2 Newyork capital.svg" alt="Newyork Capital" className="h-[25px] w-auto object-contain" />
+    <div className="flex h-screen bg-[#f8f9fa] font-sans">
+      {/* Sidebar */}
+      <aside className="w-[280px] bg-[#131a26] text-white flex flex-col shrink-0 h-full overflow-y-auto custom-scrollbar relative z-[150] transition-transform duration-300">
+        <div className="px-8 py-8 flex flex-col items-start border-b border-gray-800">
+          <img src="/Logo 2 Newyork capital.svg" alt="Newyork Capital" className="w-[200px] object-contain mb-8" />
+          <Link href="/" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to Home
+          </Link>
+        </div>
+        
+        <nav className="flex-1 px-4 py-8 space-y-2">
+          {['Published', 'Drafts', 'Pending review', 'Rejected', 'Trash'].map((tab) => {
+            const isActive = activeTab === tab;
+            const count = tab === 'Published' ? published.length :
+                          tab === 'Drafts' ? drafts.length :
+                          tab === 'Pending review' ? pending.length :
+                          tab === 'Rejected' ? rejected.length :
+                          tab === 'Trash' ? trash.length : 0;
+            return (
+              <a 
+                key={tab} 
+                href="#" 
+                onClick={(e) => { e.preventDefault(); setActiveTab(tab); }} 
+                className={`flex items-center justify-between px-4 py-3.5 rounded-lg font-medium text-[15px] transition-colors ${isActive ? 'bg-[#e3120b] text-white font-bold shadow-sm' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+              >
+                <span>{tab}</span>
+                <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-white text-[#e3120b]' : 'bg-gray-800 text-gray-300'}`}>{count}</span>
+              </a>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden bg-white text-[#0f0f0f]">
+        {/* Top Navigation Bar */}
+        <div className="w-full bg-white border-b border-gray-200 py-4 relative z-[100]">
+          <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between px-4 md:px-8">
+            <div className="flex items-center gap-3 md:gap-6">
+              <span className="text-xl font-bold text-[#131a26]">Writer Dashboard</span>
               <span className="bg-[#eef5ff] text-[#1a65d6] text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded relative z-10">Writer Portal</span>
             </div>
-          </div>
           
           <div className="relative" ref={dropdownRef}>
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-2 cursor-pointer bg-white border border-gray-200 hover:border-gray-300 px-2 py-1.5 rounded-full transition-all shadow-sm">
@@ -282,44 +309,23 @@ export default function WriterDashboard() {
               {toastMessage}
             </div>
           )}
-        </div>
-      </div>
+        </header>
 
-      {/* Main Content */}
-      <main className="flex-grow w-full max-w-[1400px] mx-auto p-4 md:p-8 mt-4 md:mt-4 overflow-hidden">
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-[28px] font-extrabold text-[#0f0f0f]">Posts</h1>
-          <button onClick={() => router.push('/writer/new-post?mode=new')} className="bg-[#1a65d6] hover:bg-blue-700 text-white font-medium text-sm px-5 py-2 rounded-full flex items-center gap-2 transition-colors shadow-sm">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Create New Post
-          </button>
-        </div>
-        
-        {/* Tabs */}
-        
-        <div className="flex items-center gap-4 md:gap-6 border-b border-gray-200 mb-6 px-1 overflow-x-auto whitespace-nowrap custom-scrollbar-hide">
-          {['Published', 'Drafts', 'Pending review', 'Rejected', 'Trash'].map(tab => (
-            <button 
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`shrink-0 font-medium text-[15px] pb-3 border-b-2 transition-colors ${activeTab === tab ? 'text-[#1a65d6] border-[#1a65d6]' : 'text-gray-500 hover:text-gray-800 border-transparent'}`}
-            >
-              {tab} 
-              {tab === 'Published' && published.length > 0 && <span className="ml-1 bg-[#f0f5ff] text-[#1a65d6] text-[10px] font-bold px-1.5 py-0.5 rounded-full">{published.length}</span>}
-              {tab === 'Drafts' && drafts.length > 0 && <span className="ml-1 bg-[#f0f5ff] text-[#1a65d6] text-[10px] font-bold px-1.5 py-0.5 rounded-full">{drafts.length}</span>}
-              {tab === 'Pending review' && pending.length > 0 && <span className="ml-1 bg-[#f0f5ff] text-[#1a65d6] text-[10px] font-bold px-1.5 py-0.5 rounded-full">{pending.length}</span>}
-              {tab === 'Rejected' && rejected.length > 0 && <span className="ml-1 bg-[#f0f5ff] text-[#1a65d6] text-[10px] font-bold px-1.5 py-0.5 rounded-full">{rejected.length}</span>}
-              {tab === 'Trash' && trash.length > 0 && <span className="ml-1 bg-[#f0f5ff] text-[#1a65d6] text-[10px] font-bold px-1.5 py-0.5 rounded-full">{trash.length}</span>}
-            </button>
-          ))}
-        </div>
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+          <div className="w-full max-w-[1400px] mx-auto">
+            {/* Header Section */}
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-[28px] font-extrabold text-[#0f0f0f]">Posts</h1>
+              <button onClick={() => router.push('/writer/new-post?mode=new')} className="bg-[#1a65d6] hover:bg-blue-700 text-white font-medium text-sm px-5 py-2 rounded-full flex items-center gap-2 transition-colors shadow-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Create New Post
+              </button>
+            </div>
 
-
-        {/* Content Box */}
+            {/* Content Box */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] overflow-hidden min-h-[500px] flex flex-col relative">
           
           {/* Search Bar inside Content Box */}
@@ -724,7 +730,9 @@ export default function WriterDashboard() {
           </div>
         </div>
       )}
-    </main>
+          </div>
+        </div>
+      </main>
 
       {/* Settings Modal */}
       <ReaderProfileSettingsModal 
