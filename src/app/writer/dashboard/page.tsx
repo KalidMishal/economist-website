@@ -211,7 +211,7 @@ export default function WriterDashboard() {
   if (!user) return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
 
   return (
-    <div className="flex h-screen bg-[#f8f9fa] font-sans">
+    <div className="flex h-screen bg-[#cbd1cc] font-sans">
       {/* Sidebar */}
       <aside className="w-[280px] bg-[#131a26] text-white flex flex-col shrink-0 h-full overflow-y-auto custom-scrollbar relative z-[150] transition-transform duration-300">
         <div className="px-8 py-8 flex flex-col items-start border-b border-gray-800">
@@ -246,10 +246,10 @@ export default function WriterDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-full overflow-hidden bg-white text-[#0f0f0f]">
+      <main className="flex-1 flex flex-col h-full overflow-hidden text-[#0f0f0f]">
         
         {/* Header containing just profile dropdown */}
-        <header className="w-full bg-white border-b border-gray-200 py-4 px-4 md:px-8 relative z-[100] flex justify-between items-center">
+        <header className="w-full border-b border-gray-200 py-4 px-4 md:px-8 relative z-[100] flex justify-between items-center">
           <div className="flex items-center gap-3 md:gap-6">
             <span className="text-xl font-bold text-[#131a26]">Writer Dashboard</span>
             <span className="bg-[#eef5ff] text-[#1a65d6] text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded relative z-10">Writer Portal</span>
