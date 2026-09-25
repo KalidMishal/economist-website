@@ -753,8 +753,9 @@ export default function ReviewPost() {
         imageUrl: firstImageSrc,
         status: newStatus,
         placement,
-        rejectionReason: overrideRejectReason || null
-      };
+        rejectionReason: overrideRejectReason || null,
+          targetedEmails: recipientEmails
+        };
       
       try {
         const res = await fetch(`http://localhost:5000/api/posts/${postId}`, {
