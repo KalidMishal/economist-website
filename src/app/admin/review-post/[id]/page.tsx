@@ -1494,7 +1494,7 @@ export default function ReviewPost() {
                     />
 
               </div>
-                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed">Press enter or comma to add • Click tag to remove • 8 tags max</p>
+                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed">Press enter or comma to add &bull; Click tag to remove &bull; 8 tags max</p>
                 </div>
 
                 {/* Read Duration */}
@@ -1946,7 +1946,7 @@ export default function ReviewPost() {
                     disabled={imageKeywords.length >= 4}
                   />
                 </div>
-                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed mt-1">Press enter, space, or comma to add • Click tag to remove</p>
+                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed mt-1">Press enter, space, or comma to add &bull; Click tag to remove</p>
               </div>
 
               {/* Caption */}
@@ -2105,7 +2105,7 @@ export default function ReviewPost() {
                 </button>
               </div>
               <p className="text-[11px] text-gray-500 mb-6 flex items-center gap-1">
-                <span className="text-orange-400">??</span> Press Enter or comma (,) to add. You can also paste multiple comma-separated emails.
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-400 flex-shrink-0"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg> Press Enter or comma (,) to add. You can also paste multiple comma-separated emails.
               </p>
 
               <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-3">
