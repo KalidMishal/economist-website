@@ -64,6 +64,12 @@ export default function ReviewPost() {
   const [readDuration, setReadDuration] = useState('5');
   const [placement, setPlacement] = useState('None(Category Only)');
   const [isPlacementDropdownOpen, setIsPlacementDropdownOpen] = useState(false);
+  const [isMailBoxOpen, setIsMailBoxOpen] = useState(false);
+  const [recipientEmails, setRecipientEmails] = useState<string[]>([]);
+  const [recipientInput, setRecipientInput] = useState('');
+  const [isSavingRecipients, setIsSavingRecipients] = useState(false);
+
+  const [postStatus, setPostStatus] = useState('pending');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
@@ -77,6 +83,7 @@ export default function ReviewPost() {
           const data = await res.json();
           if (data.post) {
             setTitle(data.post.title || '');
+            setPostStatus(data.post.status || 'pending');
             setSubtitle(data.post.subtitle || '');
             
             const parsedSubCats = Array.isArray(data.post.sub_categories) 
@@ -662,7 +669,61 @@ export default function ReviewPost() {
       return null;
     };
 
-    const handleUpdateStatus = async (newStatus: 'published' | 'trash' | 'rejected', overrideRejectReason?: string) => {
+    const handleAddRecipients = () => {
+    if (!recipientInput.trim()) return;
+    const emails = recipientInput.split(/[\s,]+/).filter(e => e.includes('@') && e.includes('.'));
+    if (emails.length > 0) {
+      setRecipientEmails(prev => Array.from(new Set([...prev, ...emails])));
+    }
+    setRecipientInput('');
+  };
+
+  const handleSaveRecipients = async () => {
+    setIsSavingRecipients(true);
+    try {
+      let firstImageSrc = '';
+      if (editorRef.current) {
+        const firstImg = editorRef.current.querySelector('img');
+        if (firstImg) firstImageSrc = firstImg.src;
+      }
+
+      const res = await fetch(`http://localhost:5000/api/posts/${params.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: title,
+          subtitle,
+          content: getCleanEditorContent() || previewContent || '',
+          mainCategory,
+          selectedSubCats,
+          tags,
+          cardSummary,
+          focusKeyword,
+          metaDescription,
+          readDuration,
+          imageUrl: firstImageSrc,
+          status: postStatus,
+          placement,
+          rejectionReason: '',
+          targetedEmails: recipientEmails
+        })
+      });
+      const data = await res.json();
+      if(data.success) {
+         setIsMailBoxOpen(false);
+         alert("Recipients saved successfully!");
+      } else {
+         alert("Failed to save recipients.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error saving recipients.");
+    } finally {
+      setIsSavingRecipients(false);
+    }
+  };
+
+  const handleUpdateStatus = async (newStatus: 'published' | 'trash' | 'rejected', overrideRejectReason?: string) => {
       setIsProcessing(true);
       const postContent = getCleanEditorContent() || previewContent || '';
       
