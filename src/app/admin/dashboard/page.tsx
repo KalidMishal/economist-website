@@ -396,7 +396,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-[#cbd1cc] font-sans">
+    <div className="flex h-screen bg-[#e6ebe7] font-sans">
       
       {/* Mobile Backdrop */}
       {isMobileMenuOpen && (

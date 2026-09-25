@@ -211,7 +211,7 @@ export default function WriterDashboard() {
   if (!user) return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
 
   return (
-    <div className="flex h-screen bg-[#cbd1cc] font-sans">
+    <div className="flex h-screen bg-[#e6ebe7] font-sans">
       {/* Sidebar */}
       <aside className="w-[280px] bg-[#131a26] text-white flex flex-col shrink-0 h-full overflow-y-auto custom-scrollbar relative z-[150] transition-transform duration-300">
         <div className="px-8 py-8 flex flex-col items-start border-b border-gray-800">
